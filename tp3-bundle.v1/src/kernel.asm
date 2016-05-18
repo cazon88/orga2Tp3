@@ -4,6 +4,7 @@
 ; ==============================================================================
 
 %include "imprimir.mac"
+%include "a20.asm"      ;FIRJOLITO
 
 global start
 
@@ -20,9 +21,13 @@ iniciando_mr_len equ    $ - iniciando_mr_msg
 iniciando_mp_msg db     'Iniciando kernel (Modo Protegido)...'
 iniciando_mp_len equ    $ - iniciando_mp_msg
 
+gdt_dir: dw 0x8FA0  ;REVISAR FRIJOLITO x2 ;dw porque es una dir de 16B
+
 ;;
 ;; Seccion de código.
 ;; -------------------------------------------------------------------------- ;;
+
+ORG 0x1200  ; Direccion de origen FRIJOLITO
 
 ;; Punto de entrada del kernel.
 BITS 16
@@ -42,16 +47,41 @@ start:
     
 
     ; Habilitar A20
+    call habilitar_A20      ; SE PUEDE HACEF CALL???
     
     ; Cargar la GDT
+    LGDT [gdt_dir] ;QUEVA ACA? gdt_dir es el offset??
+    ;O va esto: lgdt [gdtr]
 
     ; Setear el bit PE del registro CR0
-    
+    mov eax, cr0
+    or eax, 1
+    MOV cr0, eax
+
     ; Saltar a modo protegido
+    jmp 0x08:modoProtegido
+
+BITS  32
+modoProtegido:
 
     ; Establecer selectores de segmentos
+    xor eax, eax
+
+    mov ax, 0101000b     ;{index: 0101=5 |  gdt/ldt:0 | rpl:00}
+    mov ds, ax
+
+    mov ax, 0110000b     ;{index: 0110=6 |  gdt/ldt:0 | rpl:00}
+    mov es, ax
+
+    mov ax, 0111000b     ;{index: 0111=7 |  gdt/ldt:0 | rpl:00}
+    mov gs, ax
+
+    mov ax, 1000000b     ;{index: 1000=8 |  gdt/ldt:0 | rpl:00}
+    mov fs, ax    
+
 
     ; Establecer la base de la pila
+    mov sb, 0x27000
     
     ; Imprimir mensaje de bienvenida
 
