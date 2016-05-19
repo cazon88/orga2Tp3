@@ -21,7 +21,13 @@ iniciando_mr_len equ    $ - iniciando_mr_msg
 iniciando_mp_msg db     'Iniciando kernel (Modo Protegido)...'
 iniciando_mp_len equ    $ - iniciando_mp_msg
 
-gdt_dir: dw 0x8FA0  ;REVISAR FRIJOLITO x2 ;dw porque es una dir de 16B
+gdt_dir: dw 0x8FA0  ;REVISAR FRIJOLITO x2 ;dw porque es una dir de 16b
+
+memoria_video: dw 0xB800     ;CRISIS EN FRIJOLITOS INFINITOS
+fin_memoria_video: db 0xBFD0
+
+gris: dw 0x08
+caracter_espacio: dw 0x20
 
 ;;
 ;; Seccion de código.
@@ -47,10 +53,10 @@ start:
     
 
     ; Habilitar A20
-    call habilitar_A20      ; SE PUEDE HACEF CALL???
+    call habilitar_A20      ; SE PUEDE HACER CALL?
     
     ; Cargar la GDT
-    LGDT [gdt_dir] ;QUEVA ACA? gdt_dir es el offset??
+    LGDT [gdt_dir] ;QUE VA ACA? gdt_dir es el offset?
     ;O va esto: lgdt [gdtr]
 
     ; Setear el bit PE del registro CR0
@@ -81,12 +87,22 @@ modoProtegido:
 
 
     ; Establecer la base de la pila
-    mov sb, 0x27000
+    mov sb, 0x27000     ;FRIJOLITO SS?
     
     ; Imprimir mensaje de bienvenida
 
     ; Inicializar pantalla
-    
+
+    mov eax, [memoria_video] 
+    .ciclo
+    mov byte [eax], 0x08
+    add eax, 1
+    mov byte [eax], 0x20
+    add eax, 1
+    cmp eax, 0xBFD0
+    jne .ciclo
+
+
     ; Inicializar el manejador de memoria
  
     ; Inicializar el directorio de paginas
