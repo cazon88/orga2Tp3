@@ -3,8 +3,8 @@
 ; TRABAJO PRACTICO 3 - System Programming - ORGANIZACION DE COMPUTADOR II - FCEN
 ; ==============================================================================
 
+extern GDT_DESC
 %include "imprimir.mac"
-%include "a20.asm"      ;FIRJOLITO
 
 global start
 
@@ -15,29 +15,31 @@ jmp start
 ;;
 ;; Seccion de datos.
 ;; -------------------------------------------------------------------------- ;;
+
+
+%define videomemo 0xB8000		;CRISIS EN FRIJOLITOS INFINITOS
+%define finpantalla 2000		;80x25 = 2000 px
+;%define fin_memoria_video: dw 0xBFD0
+
 iniciando_mr_msg db     'Iniciando kernel (Modo Real)...'
 iniciando_mr_len equ    $ - iniciando_mr_msg
 
 iniciando_mp_msg db     'Iniciando kernel (Modo Protegido)...'
 iniciando_mp_len equ    $ - iniciando_mp_msg
 
-gdt_dir: dw 0x8FA0  ;REVISAR FRIJOLITO x2 ;dw porque es una dir de 16b
-
-memoria_video: dw 0xB800     ;CRISIS EN FRIJOLITOS INFINITOS
-fin_memoria_video: db 0xBFD0
-
-gris: dw 0x08
-caracter_espacio: dw 0x20
-
 ;;
 ;; Seccion de código.
 ;; -------------------------------------------------------------------------- ;;
 
-ORG 0x1200  ; Direccion de origen FRIJOLITO
+; ORG 0x1200
+; Direccion de origen FRIJOLITO
 
 ;; Punto de entrada del kernel.
 BITS 16
 start:
+
+xchg bx, bx
+
     ; Deshabilitar interrupciones
     cli
 
@@ -50,14 +52,12 @@ start:
 
     ; Imprimir mensaje de bienvenida
     imprimir_texto_mr iniciando_mr_msg, iniciando_mr_len, 0x07, 0, 0
-    
-
+  
     ; Habilitar A20
-    call habilitar_A20      ; SE PUEDE HACER CALL?
+    call habilitar_A20
     
     ; Cargar la GDT
-    LGDT [gdt_dir] ;QUE VA ACA? gdt_dir es el offset?
-    ;O va esto: lgdt [gdtr]
+    LGDT [GDT_DESC]
 
     ; Setear el bit PE del registro CR0
     mov eax, cr0
@@ -65,42 +65,49 @@ start:
     MOV cr0, eax
 
     ; Saltar a modo protegido
-    jmp 0x08:modoProtegido
+    jmp 0x20:modoProtegido
 
 BITS  32
+
+
+
 modoProtegido:
 
     ; Establecer selectores de segmentos
     xor eax, eax
 
-    mov ax, 0101000b     ;{index: 0101=5 |  gdt/ldt:0 | rpl:00}
+    mov ax, 110000b     ;{index: 0110=6 |  gdt/ldt:0 | rpl:00}
     mov ds, ax
-
-    mov ax, 0110000b     ;{index: 0110=6 |  gdt/ldt:0 | rpl:00}
-    mov es, ax
-
-    mov ax, 0111000b     ;{index: 0111=7 |  gdt/ldt:0 | rpl:00}
     mov gs, ax
+    mov es, ax
+    
+	;Segmento de video;
+	mov ax, 1000000b     ;{index: 1000=8 |  gdt/ldt:0 | rpl:00}
+    mov fs, ax
 
-    mov ax, 1000000b     ;{index: 1000=8 |  gdt/ldt:0 | rpl:00}
-    mov fs, ax    
+    mov ss, ax
 
 
     ; Establecer la base de la pila
-    mov sb, 0x27000     ;FRIJOLITO SS?
+    mov ebp, 0x27000     ;FRIJOLITO SS?
     
+			;mov word [0xb8000], 0x0041
+
     ; Imprimir mensaje de bienvenida
+    ;imprimir_texto_mp iniciando_mp_msg, iniciando_mp_len, 0x07, 3, 0
 
     ; Inicializar pantalla
-
-    mov eax, [memoria_video] 
-    .ciclo
-    mov byte [eax], 0x08
+	mov eax, videomemo		
+	xor edi, edi			;contador
+.ciclo:
+    mov byte[eax], ' '		;caracter: "espacio"
     add eax, 1
-    mov byte [eax], 0x20
-    add eax, 1
-    cmp eax, 0xBFD0
-    jne .ciclo
+   	mov byte [eax], 0x70	;color
+   	add eax, 1
+	add edi, 1
+  	;cmp eax, 0xBFD0				
+	cmp edi, 4000
+	jne .ciclo
 
 
     ; Inicializar el manejador de memoria
