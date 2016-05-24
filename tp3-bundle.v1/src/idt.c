@@ -48,14 +48,14 @@ idt_descriptor IDT_DESC = {
     idt[numero].attr = (unsigned short) 0x0000;                                                                  \
     idt[numero].offset_16_31 = (unsigned short) ((unsigned int)(&_isr ## numero) >> 16 & (unsigned int) 0xFFFF);
 
-attr:
-1##dpl0111##type
+//attr:
+//1##dpl0111##type
 
 void idt_inicializar() {
     // Excepciones
-	for(int i =0; i<20;i++){
-		IDT_ENTRY(i);
-	}
+/*	for(int i =0; i<20;i++){
+		IDT_ENTRY[i]; 
+	} */
 	
 	/*
 	0 	- Fault 		-  Priority 10
