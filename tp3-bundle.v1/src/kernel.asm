@@ -4,6 +4,10 @@
 ; ==============================================================================
 
 extern GDT_DESC
+extern IDT_DESC
+extern idt_inicializar
+extern habilitar_pic
+extern resetear_pic
 %include "imprimir.mac"
 
 global start
@@ -65,7 +69,7 @@ xchg bx, bx
     MOV cr0, eax
 
     ; Saltar a modo protegido
-    jmp 0x20:modoProtegido
+    jmp 0x20:modoProtegido				;segmento de codigo nivel 0 de la GDT (shifteado 3 veces a la izq)
 
 BITS  32
 
@@ -80,18 +84,21 @@ modoProtegido:
     mov ds, ax
     mov gs, ax
     mov es, ax
-    
+    mov ss, ax
+
+
 	;Segmento de video;
 	mov ax, 1000000b     ;{index: 1000=8 |  gdt/ldt:0 | rpl:00}
     mov fs, ax
 
-    mov ss, ax
+
 
 
     ; Establecer la base de la pila
-    mov ebp, 0x27000     ;FRIJOLITO SS?
+    mov ebp, 0x27000
+    mov esp, 0x27000
     
-			;mov word [0xb8000], 0x0041
+	;mov word [0xb8000], 0x0041
 
     ; Imprimir mensaje de bienvenida
     ;imprimir_texto_mp iniciando_mp_msg, iniciando_mp_len, 0x07, 3, 0
@@ -99,14 +106,16 @@ modoProtegido:
     ; Inicializar pantalla
 	mov eax, videomemo		
 	xor edi, edi			;contador
+	xor eax, eax
 .ciclo:
-    mov byte[eax], ' '		;caracter: "espacio"
+	;mov [ds:eax], ' '
+    ;mov byte[eax], ' '		;caracter: "espacio"
+    mov byte [fs:eax], ' '
     add eax, 1
-   	mov byte [eax], 0x70	;color
+   	mov byte [fs:eax], 0x70	;color
    	add eax, 1
-	add edi, 1
   	;cmp eax, 0xBFD0				
-	cmp edi, 4000
+	cmp eax, 8000
 	jne .ciclo
 
 
@@ -125,15 +134,23 @@ modoProtegido:
     ; Inicializar el scheduler
 
     ; Inicializar la IDT
+    call idt_inicializar
     
     ; Cargar IDT
+    LIDT [IDT_DESC]
+ 
  
     ; Configurar controlador de interrupciones
+    call resetear_pic
+    call habilitar_pic
 
     ; Cargar tarea inicial
 
     ; Habilitar interrupciones
-
+    sti
+    xchg bx, bx
+    xor eax, eax
+    div eax
     ; Saltar a la primera tarea: Idle
 
     ; Ciclar infinitamente (por si algo sale mal...)
