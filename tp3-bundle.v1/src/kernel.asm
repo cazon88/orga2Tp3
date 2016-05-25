@@ -8,6 +8,7 @@ extern IDT_DESC
 extern idt_inicializar
 extern habilitar_pic
 extern resetear_pic
+extern mmu_inicializar
 %include "imprimir.mac"
 
 global start
@@ -122,10 +123,19 @@ modoProtegido:
     ; Inicializar el manejador de memoria
  
     ; Inicializar el directorio de paginas
+    xchg bx, bx
+    call mmu_inicializar
     
     ; Cargar directorio de paginas
 
     ; Habilitar paginacion
+    mov eax, 0x27000
+    mov cr3, eax 
+    mov eax, cr0
+    or eax, 0x80000000
+    mov cr0, eax
+
+
     
     ; Inicializar tss
 
@@ -141,16 +151,17 @@ modoProtegido:
  
  
     ; Configurar controlador de interrupciones
-    call resetear_pic
-    call habilitar_pic
+    ;call resetear_pic
+    ;call habilitar_pic
 
     ; Cargar tarea inicial
 
     ; Habilitar interrupciones
-    sti
+    ;sti
     xchg bx, bx
     xor eax, eax
     div eax
+
     ; Saltar a la primera tarea: Idle
 
     ; Ciclar infinitamente (por si algo sale mal...)
