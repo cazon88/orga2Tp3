@@ -44,6 +44,8 @@ typedef struct str_pt_entry {
 	unsigned int  dir:20;
 } __attribute__((__packed__)) pt_entry;
 
+extern pd_entry* pd ;
+extern pt_entry* pt ;
 
 #endif	/* !__MMU_H__ */
 

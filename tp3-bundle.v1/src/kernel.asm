@@ -131,6 +131,8 @@ modoProtegido:
     ; Habilitar paginacion
     mov eax, 0x27000
     mov cr3, eax 
+    xchg bx, bx
+
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
