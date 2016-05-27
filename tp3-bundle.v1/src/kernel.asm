@@ -8,7 +8,7 @@ extern IDT_DESC
 extern idt_inicializar
 extern habilitar_pic
 extern resetear_pic
-extern mmu_inicializar
+extern mmu_inicializar_dir_kernel
 %include "imprimir.mac"
 
 global start
@@ -124,7 +124,7 @@ modoProtegido:
  
     ; Inicializar el directorio de paginas
     xchg bx, bx
-    call mmu_inicializar
+    call mmu_inicializar_dir_kernel
     
     ; Cargar directorio de paginas
 
@@ -137,7 +137,7 @@ modoProtegido:
     or eax, 0x80000000
     mov cr0, eax
 
-
+; xp / 1024w
     
     ; Inicializar tss
 

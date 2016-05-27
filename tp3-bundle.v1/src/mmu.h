@@ -13,7 +13,7 @@
 #include "tss.h"
 #include "game.h"
 
-void mmu_inicializar();
+void mmu_inicializar_dir_kernel();
 
 
 typedef struct str_pd_entry {
@@ -46,6 +46,7 @@ typedef struct str_pt_entry {
 
 extern pd_entry* pd ;
 extern pt_entry* pt ;
+extern unsigned int proxima_pagina_libre;
 
 #endif	/* !__MMU_H__ */
 
