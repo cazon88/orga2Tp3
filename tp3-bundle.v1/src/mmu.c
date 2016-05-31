@@ -53,6 +53,8 @@ void mmu_inicializar_dir_kernel() {   /*OJO CAMBIAR NOMBRE!!!*/
 	}
 }
 
+unsigned int proxima_pagina_libre;
+
 void inicializar_mmu(){
 	proxima_pagina_libre = 0x100000;
 }
@@ -63,10 +65,13 @@ unsigned int mmu_proxima_pagina_fisica_libre() {
 	return pagina_libre;
 }
 
+void llenar_entry(pd_entry* p, unsigned int direccion){
+	p->rw = 1;
+	p->p = 1;
+	p->dir = direccion >> 12;
+}
 
-
-
-void llenar_entry(pd_entry* pd, unsigned int direccion ){
+void llenar_entry_pt(pt_entry* p, unsigned int direccion){
 	p->rw = 1;
 	p->p = 1;
 	p->dir = direccion >> 12;
@@ -74,6 +79,7 @@ void llenar_entry(pd_entry* pd, unsigned int direccion ){
 }
 
 void vaciar_pageTable(pt_entry* pt){
+	int i;
 	for (i = 0; i < 1024; ++i) {
 		//pt[i] = (i << 12) | 3 ;
 		pt[i] = (pt_entry){
@@ -108,37 +114,37 @@ void mmu_mapear_pagina( unsigned int dirVirtual,
 	unsigned int id_directory = dirVirtual >> 22;
 	unsigned int id_table = (dirVirtual >> 12) & 0x3FF;
 
-	pd_entry* pd = (pd_entry*) (cr3 & 0xFFF);
+	pd_entry* pd = (pd_entry*) ((cr3 >> 12) << 12);
 	
 	unsigned char presente = pd[id_directory].p;
 
-	if( presente == 0){
-		llenar_entry(pd[id_directory], mmu_proxima_pagina_fisica_libre());
-		pt_entry* pt = (pt_entry*) pd[id_directory]->dir;
-		vaciar_pageTable(pt[table]);
-		llenar_entry(pt[table], fisica);
-
+	if(presente == 0){
+		llenar_entry(&(pd[id_directory]), mmu_proxima_pagina_fisica_libre());
+		pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
+		vaciar_pageTable(&(pt[id_table]));
+		llenar_entry_pt(&pt[id_table], fisica);
 	}else{
-		pt_entry* pt = (pt_entry*) pd[id_directory]->dir;
-		llenar_entry(pt[table], fisica);
+		pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);
+		llenar_entry_pt(&pt[id_table], fisica);
 	}
 
 	tlbflush();
 }
 
-void mmu unmapear pagina(unsigned int dirVirtual, unsigned int cr3){
+void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
 	
 	unsigned int id_directory = dirVirtual >> 22;
 	unsigned int id_table = (dirVirtual >> 12) & 0x3FF;
 
 	pd_entry* pd = (pd_entry*) (cr3 & 0xFFF);
-	pt_entry* pt = (pt_entry*) pd[id_directory]->dir;
-	pt[table]->p = 0;
+
+	pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);
+	pt[id_table].p = 0;
 
 
 }
 
-}
+
 
 
 

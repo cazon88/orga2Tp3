@@ -9,6 +9,8 @@ extern idt_inicializar
 extern habilitar_pic
 extern resetear_pic
 extern mmu_inicializar_dir_kernel
+extern inicializar_mmu
+extern mmu_mapear_pagina
 %include "imprimir.mac"
 
 global start
@@ -43,7 +45,6 @@ iniciando_mp_len equ    $ - iniciando_mp_msg
 BITS 16
 start:
 
-xchg bx, bx
 
     ; Deshabilitar interrupciones
     cli
@@ -123,7 +124,6 @@ modoProtegido:
     ; Inicializar el manejador de memoria
  
     ; Inicializar el directorio de paginas
-    xchg bx, bx
     call mmu_inicializar_dir_kernel
     
     ; Cargar directorio de paginas
@@ -131,11 +131,13 @@ modoProtegido:
     ; Habilitar paginacion
     mov eax, 0x27000
     mov cr3, eax 
-    xchg bx, bx
+
 
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
+
+ 
 
 ; xp / 1024w
     
@@ -160,11 +162,16 @@ modoProtegido:
 
     ; Habilitar interrupciones
     ;sti
-    xchg bx, bx
-    xor eax, eax
-    div eax
+   
 
     ; Saltar a la primera tarea: Idle
+   xchg bx, bx
+    call inicializar_mmu
+    push 0x14000402
+    push 0x27000
+    push 0x30000
+    call mmu_mapear_pagina
+    xchg bx, bx
 
     ; Ciclar infinitamente (por si algo sale mal...)
     mov eax, 0xFFFF

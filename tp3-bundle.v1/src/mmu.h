@@ -27,7 +27,7 @@ typedef struct str_pd_entry {
 	unsigned char   ps:1;
 	unsigned char   g:1;
 	unsigned char   dpl:3;
-	unsigned int  dir:20;
+	unsigned int  dir:20; //aca habia un 20
 } __attribute__((__packed__)) pd_entry;
 
 typedef struct str_pt_entry {
