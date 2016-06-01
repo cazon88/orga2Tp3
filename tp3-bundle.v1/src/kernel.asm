@@ -93,9 +93,6 @@ modoProtegido:
 	mov ax, 1000000b     ;{index: 1000=8 |  gdt/ldt:0 | rpl:00}
     mov fs, ax
 
-
-
-
     ; Establecer la base de la pila
     mov ebp, 0x27000
     mov esp, 0x27000
@@ -132,12 +129,9 @@ modoProtegido:
     mov eax, 0x27000
     mov cr3, eax 
 
-
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
-
- 
 
 ; xp / 1024w
     
@@ -155,25 +149,26 @@ modoProtegido:
  
  
     ; Configurar controlador de interrupciones
-    ;call resetear_pic
-    ;call habilitar_pic
+    call resetear_pic
+    call habilitar_pic
 
     ; Cargar tarea inicial
 
     ; Habilitar interrupciones
-    ;sti
-   
+    sti
+    jmp $
 
     ; Saltar a la primera tarea: Idle
-   xchg bx, bx
+
+    ; Ciclar infinitamente (por si algo sale mal...)
+    xchg bx, bx
     call inicializar_mmu
     push 0x14000402
     push 0x27000
     push 0x30000
     call mmu_mapear_pagina
     xchg bx, bx
-
-    ; Ciclar infinitamente (por si algo sale mal...)
+    
     mov eax, 0xFFFF
     mov ebx, 0xFFFF
     mov ecx, 0xFFFF
