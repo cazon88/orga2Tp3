@@ -104,3 +104,9 @@ gdt_descriptor GDT_DESC = {
 
 
 
+void gdt_agregar_tss(int p, tss* t) {
+//completar la entrada a la gdt
+gdt[p].
+
+}
+

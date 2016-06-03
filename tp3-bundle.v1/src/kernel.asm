@@ -95,7 +95,7 @@ modoProtegido:
 
     ; Establecer la base de la pila
     mov ebp, 0x27000
-    mov esp, 0x27000
+    mov esp, 0x27000    
     
 	;mov word [0xb8000], 0x0041
 
@@ -103,8 +103,6 @@ modoProtegido:
     ;imprimir_texto_mp iniciando_mp_msg, iniciando_mp_len, 0x07, 3, 0
 
     ; Inicializar pantalla
-	mov eax, videomemo		
-	xor edi, edi			;contador
 	xor eax, eax
 .ciclo:
 	;mov [ds:eax], ' '
@@ -116,6 +114,39 @@ modoProtegido:
   	;cmp eax, 0xBFD0				
 	cmp eax, 8000
 	jne .ciclo
+
+
+    xor eax, eax
+    add eax,  7200
+.bannerVidaNegro:
+    mov byte [fs:eax], ' '
+    add eax, 1
+    mov byte [fs:eax], 0x00 ;color
+    add eax, 1
+    ;cmp eax, 0xBFD0                
+    cmp eax, 8000
+    jne .bannerVidaNegro
+
+    xor eax, eax
+    add eax,  7294
+.bannerVidaRojo1:
+    mov byte [fs:eax], ' '
+    add eax, 1
+    mov byte [fs:eax], 0x40 ;color
+    add eax, 1
+    cmp eax, 7306
+    jne .bannerVidaRojo1
+
+    xor eax, eax
+    add eax,  7454
+.bannerVidaRojo2:
+    mov byte [fs:eax], ' '
+    add eax, 1
+    mov byte [fs:eax], 0x40 ;color
+    add eax, 1
+    cmp eax, 7466
+    jne .bannerVidaRojo2
+
 
 
     ; Inicializar el manejador de memoria
