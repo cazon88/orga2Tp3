@@ -144,6 +144,9 @@ void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
 
 }
 
+void mmu_inicializar_dir_tarea(){
+	
+}
 
 
 

@@ -5,6 +5,7 @@
 
 extern GDT_DESC
 extern IDT_DESC
+extern tss_inicializar
 extern idt_inicializar
 extern habilitar_pic
 extern resetear_pic
@@ -167,6 +168,7 @@ modoProtegido:
 ; xp / 1024w
     
     ; Inicializar tss
+    call tss_inicializar
 
     ; Inicializar tss de la tarea Idle
 
