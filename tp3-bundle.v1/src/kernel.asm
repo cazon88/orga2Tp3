@@ -171,6 +171,8 @@ modoProtegido:
     call tss_inicializar
 
     ; Inicializar tss de la tarea Idle
+    push 
+    call mmu_mapear_pagina
 
     ; Inicializar el scheduler
 

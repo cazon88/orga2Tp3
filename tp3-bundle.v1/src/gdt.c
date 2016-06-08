@@ -111,14 +111,14 @@ short base_1 = t;           //FRIJOLITO
 char base_2 = t >> 16;      //FRIJOLITO
 char base_3 = >> 24;        //FRIJOLITO
 
-gdt[p].limit_0_15 = 0x0067; //FRIJOLITO!! -1 ?
+gdt[p].limit_0_15 = tam; //FRIJOLITO!! -1 ?
 gdt[p].base_0_15 = base_1;
 gdt[p].base_23_16 = base_2;
 gdt[p].type = 0x09;
 gdt[p].s = 0x00;
 gdt[p].dpl = 0x00;          //FRIJOLITO
 gdt[p].p = 0x01;
-gdt[p].limit_16_19= 0x00;
+gdt[p].limit_16_19= tam >> 16;
 gdt[p].avl = 0x00;
 gdt[p].l = 0x00;
 gdt[p].db = 0x00;
