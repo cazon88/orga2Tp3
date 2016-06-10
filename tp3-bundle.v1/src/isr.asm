@@ -128,11 +128,11 @@ ISR 19
 global _isr32
 
 _isr32:
-    push ebx
+    pushad
     ;xchg bx, bx
     call proximo_reloj
     call fin_intr_pic1
-    pop ebx
+    popad
     iret
 
 ;;
@@ -141,7 +141,7 @@ _isr32:
 
 global _isr33
 _isr33:
-    push eax
+    pushad
 
     in al, 0x60
 
@@ -239,7 +239,7 @@ _isr33:
 
     .fin:
     call fin_intr_pic1
-    pop eax
+    popad
     iret
 
 

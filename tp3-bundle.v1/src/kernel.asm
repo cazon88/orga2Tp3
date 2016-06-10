@@ -171,8 +171,7 @@ modoProtegido:
     call tss_inicializar
 
     ; Inicializar tss de la tarea Idle
-    push 
-    call mmu_mapear_pagina
+
 
     ; Inicializar el scheduler
 
@@ -188,12 +187,16 @@ modoProtegido:
     call habilitar_pic
 
     ; Cargar tarea inicial
+    mov ax, 0x48
+    ltr ax
 
     ; Habilitar interrupciones
     sti
-    jmp $
 
     ; Saltar a la primera tarea: Idle
+    xchg bx, bx
+    jmp 0x50:0
+    jmp $
 
     ; Ciclar infinitamente (por si algo sale mal...)
     xchg bx, bx

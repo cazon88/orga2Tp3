@@ -140,10 +140,48 @@ void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
 
 	pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);
 	pt[id_table].p = 0;
-
-
 }
 
-void mmu_inicializar_dir_tarea(){
+unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
+	return (0x400000 + (x + (80*y) ) * 4096) ;
+}
+
+unsigned int mmu_inicializar_dir_tarea(unsigned int dir_codigo, unsigned int dir_fisica_cod){
+
+	//rcr3 lee el cr3
+	unsigned int cr3 = rcr3();
+	//Calcular la nueva dir fisica del codigo de la tarea
 	
+	//Mapear el kernel a esta nueva dir fisica
+	mmu_mapear_pagina(dir_fisica_cod, cr3, dir_fisica_cod);
+	
+	//Copiar el codigo de la tarea a la dir fisica
+	char * cod = (char*) dir_codigo;
+	char * a;
+	for (a = (char*) dir_fisica_cod; (int) a < (dir_fisica_cod + 4096); ++a, ++cod){
+	*a = *cod;
+	}
+	
+	//Desmapear
+	mmu_unmapear_pagina(dir_fisica_cod, cr3);
+
+	//Pedir memo libre -> esto es el  nuevo Cr3
+	int cr3_tarea = mmu_proxima_pagina_fisica_libre();
+	
+	//virtual es 0x08000000
+	unsigned int dirvirtual = 0x08000000;
+
+	int i;
+	for (i = 0; i < 4096; ++i){
+		mmu_mapear_pagina(i,cr3_tarea,i);
+	}
+
+	mmu_mapear_pagina(dirvirtual,cr3_tarea, dir_fisica_cod);
+
+	return cr3_tarea;
+}
+
+unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned int y){
+	unsigned int dir_fisica_tarea = mmu_calcular_dir_tarea(x,y);
+	return mmu_inicializar_dir_tarea (dir_codigo, dir_fisica_tarea);
 }

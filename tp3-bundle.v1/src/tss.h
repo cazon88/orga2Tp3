@@ -10,8 +10,8 @@
 
 #include "defines.h"
 #include "i386.h"
-#include "gdt.h"
 #include "sched.h"
+#include "gdt.h"
 
 typedef struct str_tss {
     unsigned short  ptl;

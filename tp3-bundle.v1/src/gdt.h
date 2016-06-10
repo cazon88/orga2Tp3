@@ -35,5 +35,4 @@ typedef struct str_gdt_entry {
 extern gdt_entry gdt[];
 extern gdt_descriptor GDT_DESC;
 
-
 #endif  /* !__GDT_H__ */

@@ -23,11 +23,12 @@ void inicializar_idle(tss* t) {
 	t->gs = 0x6 << 3;
     t->esp = 0x00027000;
     t->ebp = 0x00027000;
+    t->iomap = 0xFFFF;
    	};
 
-void inicializar_tarea(tss* t) {
-	t->cr3 = 0x27000;
-    t->eip = 0x00011000;
+void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, ) {
+	t->cr3 = mmu_mapear_tarea(dir_codigo_fisico,  x, y);
+    t->eip = 0x08000000;
     t->eflags = 0x202;
     t->es = 0x6 << 3;
 	t->cs = 0x4 << 3;
@@ -39,10 +40,31 @@ void inicializar_tarea(tss* t) {
     t->ebp = 0x00027000;
     t->esp2 = 0x00011000; //frijolito
 
-    mmu_inicializar_dir_tarea();
-
+    
    	};
 
+void gdt_agregar_tss(int p, tss* t) {
+//completar la entrada a la gdt
+short tam = sizeof(tss) -1;
+short base_1 = (int) t;           //FRIJOLITO
+char base_2 = (int) t >> 16;      //FRIJOLITO
+char base_3 = (int) t >> 24;        //FRIJOLITO
+
+gdt[p].limit_0_15 = tam; //FRIJOLITO!! -1 ?
+gdt[p].base_0_15 = base_1;
+gdt[p].base_23_16 = base_2;
+gdt[p].type = 0x09;
+gdt[p].s = 0x00;
+gdt[p].dpl = 0x00;          //FRIJOLITO
+gdt[p].p = 0x01;
+gdt[p].limit_16_19= tam >> 16;
+gdt[p].avl = 0x00;
+gdt[p].l = 0x00;
+gdt[p].db = 0x00;
+gdt[p].g = 0x00;  //4k??
+gdt[p].base_31_24 = base_3;
+
+}
 
 void tss_inicializar() {
 
@@ -50,12 +72,6 @@ void tss_inicializar() {
 	gdt_agregar_tss(9,&tss_inicial); 
 	gdt_agregar_tss(10,&tss_idle);
 	//cargar tarea idle a TR
-
-		
-	//kernel
-	//calll tss_inicializar 
-	//cargar inicial
-	//hacer jump a idle
 }
 
 /*	ptl = ;
