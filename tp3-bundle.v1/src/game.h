@@ -19,7 +19,22 @@ void game_soy(unsigned int soy);
 
 void game_donde(unsigned int* pos);
 
-void game_mover_cursor(int jugador, direccion dir);
+void game_mover_cursor(int jugador, direccio n dir);
 
+
+struct gameStatus{
+
+	unsigned int vidasA;	//cantidad corriendo simultaneamente. <=5
+	unsigned int vidasB;
+	unsigned int puntajeA;
+	unsigned int puntajeB;
+	unsigned int cursorAX;
+	unsigned int cursorAY;
+	unsigned int cursorBX;
+	unsigned int cursorBY;
+	unsigned int tareasRestantesA; //total tareas. 20
+	unsigned int tareasRestantesB;
+
+};
 
 #endif  /* !__GAME_H__ */

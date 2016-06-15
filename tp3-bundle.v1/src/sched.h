@@ -13,6 +13,17 @@
 #include "gdt.h"
 
 unsigned short sched_proximo_indice();
+void inicializar_sched();
 
+typedef enum infectado_e { A = 0x001, B = 0x002, N = 0x000 } infectado;
 
+struct tarea{
+	unsigned short x;
+	unsigned short y;
+	unsigned int   dir_fisica;
+	infectado infec;
+	unsigned short gdt;
+};
+
+	
 #endif	/* !__SCHED_H__ */

@@ -248,7 +248,31 @@ _isr33:
 ;; -------------------------------------------------------------------------- ;;
 global _isr66
 _isr66:
-mov eax, 0x42
+pushad
+cmp eax, 0x124
+je .donde
+cmp eax, 0xA6A
+je .soy
+cmp eax, 0xFF3
+je .mapear
+jmp .fin
+
+.donde:
+call game_donde
+jmp .fin
+
+.soy:
+call game_soy
+jmp .fin
+
+.mapear:
+call game_mapear
+jmp .fin
+
+;mov eax, 0x42
+
+.fin:
+popad
 iret
 
 ;;

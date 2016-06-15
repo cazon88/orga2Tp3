@@ -8,8 +8,11 @@
 #include "tss.h"
 
 tss tss_inicial;
-
 tss tss_idle;
+tss tss_h[15];
+tss tss_a[5];
+tss tss_b[5];
+
 
 void inicializar_idle(tss* t) {
 	t->cr3 = 0x27000;
@@ -26,7 +29,7 @@ void inicializar_idle(tss* t) {
     t->iomap = 0xFFFF;
    	};
 
-void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, ) {
+void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, unsigned short x, unsigned short y) {
 	t->cr3 = mmu_mapear_tarea(dir_codigo_fisico,  x, y);
     t->eip = 0x08000000;
     t->eflags = 0x202;
@@ -36,11 +39,10 @@ void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, ) {
 	t->ds = 0x6 << 3;
 	t->fs = 0x8 << 3;
 	t->gs = 0x6 << 3;
-    t->esp = 0x00027000;
-    t->ebp = 0x00027000;
-    t->esp2 = 0x00011000; //frijolito
-
-    
+    t->esp = 0x08001000;
+    t->ebp = 0x08001000;
+    t->esp0 = nueva libre + 0x1000; //frijolito
+    t->ss0 = segmento de dato del kernel (nivel 0)
    	};
 
 void gdt_agregar_tss(int p, tss* t) {
@@ -64,6 +66,15 @@ gdt[p].db = 0x00;
 gdt[p].g = 0x00;  //4k??
 gdt[p].base_31_24 = base_3;
 
+}
+
+void tss_inicializar_tarea_h(){
+    int i;
+    for (i = 0; i < 15; ++i){
+        inicializar_tarea(tss[i],0x00013000,i*3,i*2);
+        gdt_agregar_tss(i+11,&tss[i]); 
+        //pintar()
+    }    
 }
 
 void tss_inicializar() {
