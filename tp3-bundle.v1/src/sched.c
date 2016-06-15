@@ -9,10 +9,10 @@
 
 unsigned int sched[3];
 
-// [ A* | B* | H* ]
-//   /\
-//   ||
-// ACTUAL = 0
+/* [ A* | B* | H* ]
+*    |   
+*    |
+* ACTUAL = 0    */
 
 unsigned int actual = 0;
 tarea jugadorA[5];
@@ -25,9 +25,9 @@ tarea npc[15];
 unsigned int indiceNPC = 0;
 
 void inicializar_sched(){
-sched[0] = &jugadorA;
-sched[1] = &jugadorB;
-sched[2] = &npc;
+sched[0] = (unsigned int) &jugadorA;
+sched[1] = (unsigned int) &jugadorB;
+sched[2] = (unsigned int) &npc;
 }
 
 // - entradas de gdt  		OK
@@ -44,7 +44,7 @@ void inicializar_sched_h(){
 		t_h.dir_fisica = 0x00013000;
 		t_h.infec = N;
 		t_h.gdt = i+11;
-		sched[i] = t_h;
+		sched[i] = (unsigned int) &t_h;
 	}
 }
 
@@ -63,15 +63,15 @@ unsigned short sched_proximo_indice() {
   		actual = 1;
   	
   		if(totalA == 0){
-  		return sched_proximo_indice();
+  		  return sched_proximo_indice();
   		}
 
   		original = indiceA;
   	
   		if(indiceA < totalA){
-  		indiceA++;
+  		  indiceA++;
   		}else{
-  		indiceA = 0;
+  		  indiceA = 0;
   		}
   
   		return jugadorA[original].gdt;
@@ -81,13 +81,13 @@ unsigned short sched_proximo_indice() {
   if(actual == 1){
   	actual = 2;
   	if(totalB == 0){
-  	return sched_proximo_indice();
+  	 return sched_proximo_indice();
   	}
   	original = indiceB;
   	if(indiceB < totalB){
-  	indiceB++;
+  	 indiceB++;
   	}else{
-  	indiceB = 0;
+  	 indiceB = 0;
   	}
 
   	return jugadorB[original].gdt;
@@ -102,7 +102,7 @@ unsigned short sched_proximo_indice() {
   	}else{
   	indiceNPC = 0;
   	}
-  	return jugadorNPC[original].gdt;
+  	return npc[original].gdt;
   }
   return 0;
 }

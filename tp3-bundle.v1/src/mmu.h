@@ -14,6 +14,8 @@
 #include "game.h"
 
 void mmu_inicializar_dir_kernel();
+unsigned int mmu_proxima_pagina_fisica_libre();
+unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned int y);
 
 
 typedef struct str_pd_entry {
@@ -46,7 +48,6 @@ typedef struct str_pt_entry {
 
 extern pd_entry* pd ;
 extern pt_entry* pt ;
-extern unsigned int proxima_pagina_libre;
 
 #endif	/* !__MMU_H__ */
 

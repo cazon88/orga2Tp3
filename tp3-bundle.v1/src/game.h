@@ -19,7 +19,7 @@ void game_soy(unsigned int soy);
 
 void game_donde(unsigned int* pos);
 
-void game_mover_cursor(int jugador, direccio n dir);
+void game_mover_cursor(int jugador, direccion dir);
 
 
 struct gameStatus{

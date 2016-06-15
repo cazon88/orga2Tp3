@@ -41,8 +41,8 @@ void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, unsigned short x,
 	t->gs = 0x6 << 3;
     t->esp = 0x08001000;
     t->ebp = 0x08001000;
-    t->esp0 = nueva libre + 0x1000; //frijolito
-    t->ss0 = segmento de dato del kernel (nivel 0)
+    t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000; //frijolito
+    //t->ss0 = segmento de dato del kernel (nivel 0)  FALTA HACER!!!
    	};
 
 void gdt_agregar_tss(int p, tss* t) {
@@ -71,8 +71,8 @@ gdt[p].base_31_24 = base_3;
 void tss_inicializar_tarea_h(){
     int i;
     for (i = 0; i < 15; ++i){
-        inicializar_tarea(tss[i],0x00013000,i*3,i*2);
-        gdt_agregar_tss(i+11,&tss[i]); 
+        inicializar_tarea(&tss_h[i],0x00013000,i*3,i*2);
+        gdt_agregar_tss(i+11,&tss_h[i]); 
         //pintar()
     }    
 }

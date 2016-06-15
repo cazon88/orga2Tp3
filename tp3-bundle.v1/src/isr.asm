@@ -17,6 +17,11 @@ extern fin_intr_pic1
 ;; Sched
 extern sched_proximo_indice
 
+;; syscall
+extern game_donde
+extern game_soy
+extern game_mapear
+
 error_mp_msg_0: db     'Error! INTERRUPCION, numero: 0'
 error_mp_len_0: equ    $ - error_mp_msg_0
 
@@ -303,4 +308,4 @@ proximo_reloj:
                 popad
         ret
         
-        
+    
