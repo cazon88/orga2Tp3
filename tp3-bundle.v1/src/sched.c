@@ -7,42 +7,46 @@
 
 #include "sched.h"
 
-unsigned int sched[3];
 
-/* [ A* | B* | H* ]
-*    |   
-*    |
-* ACTUAL = 0    */
+unsigned int tipoActual = 0;
 
-unsigned int actual = 0;
 tarea jugadorA[5];
-unsigned int indiceA = 0;
+unsigned int actualA = 0;
 unsigned int totalA = 0; //total de tareas validas en A
+
 tarea jugadorB[5];
-unsigned int indiceB = 0; //va de 0 a 4
+unsigned int actualB = 0; //va de 0 a 4
 unsigned int totalB = 0; //total de tareas validas en B, va del 0 al 4
+
 tarea npc[15];
-unsigned int indiceNPC = 0;
+unsigned int actualNpc = 0;
 
 void inicializar_sched(){
-sched[0] = (unsigned int) &jugadorA;
-sched[1] = (unsigned int) &jugadorB;
-sched[2] = (unsigned int) &npc;
-inicializar_sched_h();
+  inicializar_sched_h();
 }
 
 unsigned int x_actual(){
 
-if(actual == 0){
- sched[actual][]
-}
-
+  if(tipoActual == 0){
+    return jugadorA[actualA].x;
+  }else if (tipoActual == 1){
+    return jugadorB[actualB].x;
+  }else {
+    return npc[actualNpc].x;
+  }
 }
 
 unsigned int y_actual(){
 
+if(tipoActual == 0){
+    return jugadorA[actualA].y;
+  }else if (tipoActual == 1){
+    return jugadorB[actualB].y;
+  }else {
+    return  npc[actualNpc].y;
+  }
 }
-
+ 
 // - entradas de gdt  		OK
 // - conectar a las tss  	OK
 
@@ -57,7 +61,7 @@ void inicializar_sched_h(){
 		t_h.dir_fisica = 0x00013000;
 		t_h.infec = N;
 		t_h.gdt = i+11;
-		sched[i] = (unsigned int) &t_h;
+		npc[i] = t_h;
   }
 }
 
@@ -72,48 +76,48 @@ void inicializar_sched_h(){
 
 unsigned short sched_proximo_indice() {
 	int original;
-	if(actual == 0){
-  		actual = 1;
+	if(tipoActual == 0){
+  		tipoActual = 1;
   	
   		if(totalA == 0){
   		  return sched_proximo_indice();
   		}
 
-  		original = indiceA;
+  		original = actualA;
   	
-  		if(indiceA < totalA){
-  		  indiceA++;
+  		if(actualA < totalA){
+  		  actualA++;
   		}else{
-  		  indiceA = 0;
+  		  actualA = 0;
   		}
   
   		return jugadorA[original].gdt;
   }
 
 
-  if(actual == 1){
-  	actual = 2;
+  if(tipoActual == 1){
+  	tipoActual = 2;
   	if(totalB == 0){
   	 return sched_proximo_indice();
   	}
-  	original = indiceB;
-  	if(indiceB < totalB){
-  	 indiceB++;
+  	original = actualB;
+  	if(actualB < totalB){
+  	 actualB++;
   	}else{
-  	 indiceB = 0;
+  	 actualB = 0;
   	}
 
   	return jugadorB[original].gdt;
  }
 
-  if(actual == 2){
- 	actual = 0; 
+  if(tipoActual == 2){
+ 	tipoActual = 0; 
 
-  	original = indiceNPC;
-  	if(indiceNPC < 14){
-  	indiceNPC++;
+  	original = actualNpc;
+  	if(actualNpc < 14){
+  	actualNpc++;
   	}else{
-  	indiceNPC = 0;
+  	actualNpc = 0;
   	}
   	return npc[original].gdt;
   }
