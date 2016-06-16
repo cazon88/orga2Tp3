@@ -11,6 +11,7 @@ extern habilitar_pic
 extern resetear_pic
 extern mmu_inicializar_dir_kernel
 extern inicializar_mmu
+extern inicializar_sched
 extern mmu_mapear_pagina
 extern pintar_pantalla
 %include "imprimir.mac"
@@ -175,6 +176,7 @@ modoProtegido:
 
 
     ; Inicializar el scheduler
+    call inicializar_sched
 
     ; Inicializar la IDT
     call idt_inicializar
@@ -198,8 +200,8 @@ modoProtegido:
     call pintar_pantalla
 
     ; Saltar a la primera tarea: Idle
-    xchg bx, bx
     jmp 0x50:0
+    xchg bx, bx
     jmp $
 
     ; Ciclar infinitamente (por si algo sale mal...)

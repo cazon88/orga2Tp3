@@ -70,8 +70,16 @@ void pintar_h(unsigned int x, unsigned int y) {
     print_uno(' ', x, y, C_BG_GREEN);
 }
 
-void pintar_g(unsigned int x, unsigned int y) {
+void pintar_gris(unsigned int x, unsigned int y) {
     print_uno(' ', x, y, C_BG_LIGHT_GREY);
+}
+
+void pintar_infectada_a(unsigned int x, unsigned int y) {
+    print_uno(' ', x, y, C_BG_RED);
+}
+
+void pintar_infectada_b(unsigned int x, unsigned int y) {
+    print_uno(' ', x, y, C_BG_RED);
 }
 
 void pintar_pantalla() {
@@ -89,4 +97,8 @@ void pintar_pantalla() {
             print_uno(' ', i+5, j, C_BG_BLUE);
         }
     }
+
+    pintar_a(4,4);
+    pintar_b(75,40);
+
 }

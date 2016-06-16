@@ -267,7 +267,9 @@ call game_donde
 jmp .fin
 
 .soy:
+push ebx
 call game_soy
+pop ebx
 jmp .fin
 
 .mapear:

@@ -28,6 +28,7 @@ void inicializar_sched(){
 sched[0] = (unsigned int) &jugadorA;
 sched[1] = (unsigned int) &jugadorB;
 sched[2] = (unsigned int) &npc;
+inicializar_sched_h();
 }
 
 // - entradas de gdt  		OK
@@ -39,13 +40,13 @@ void inicializar_sched_h(){
 	int i;
 	for(i = 0; i < 15 ; i++){
 		tarea t_h;
-		t_h.x = i*3;
-		t_h.y = i*2;
+		t_h.x = i*4 + 9;
+		t_h.y = i*3 + 2;
 		t_h.dir_fisica = 0x00013000;
 		t_h.infec = N;
 		t_h.gdt = i+11;
 		sched[i] = (unsigned int) &t_h;
-	}
+  }
 }
 
 

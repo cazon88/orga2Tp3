@@ -71,7 +71,7 @@ gdt[p].base_31_24 = base_3;
 void tss_inicializar_tarea_h(){
     int i;
     for (i = 0; i < 15; ++i){
-        inicializar_tarea(&tss_h[i],0x00013000,i*3,i*2);
+        inicializar_tarea(&tss_h[i],0x00013000,i*4 + 9, i*3 + 2);
         gdt_agregar_tss(i+11,&tss_h[i]); 
         //pintar()
     }    

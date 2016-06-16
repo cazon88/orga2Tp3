@@ -14,7 +14,6 @@ void game_lanzar(unsigned int jugador) {
 }
 
 void game_soy(unsigned int yoSoy) {
-
 }
 
 void game_donde(unsigned int* pos) {
@@ -22,4 +21,3 @@ void game_donde(unsigned int* pos) {
 
 void game_mapear(int x, int y) {
 }
-
