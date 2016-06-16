@@ -11,7 +11,7 @@
 #include "screen.h"
 #include "mmu.h"
 
-typedef enum direccion_e { IZQ = 0xAAA, DER = 0x441, ARB = 0xA33, ABA = 0x883  } direccion;
+typedef enum direccion_e { IZQ, DER, ARB, ABA } direccion; //se pasa desde asm por pila
 
 void game_lanzar(unsigned int jugador);
 
