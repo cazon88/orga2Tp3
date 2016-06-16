@@ -21,6 +21,13 @@ void print(const char * text, unsigned int x, unsigned int y, unsigned short att
     }
 }
 
+
+void print_uno(char text, unsigned int x, unsigned int y, unsigned short attr) {
+    ca (*p)[VIDEO_COLS] = (ca (*)[VIDEO_COLS]) VIDEO_SCREEN;
+        p[y][x].c = (unsigned char) text;
+        p[y][x].a = (unsigned char) attr;
+}
+
 void print_hex(unsigned int numero, int size, unsigned int x, unsigned int y, unsigned short attr) {
     ca (*p)[VIDEO_COLS] = (ca (*)[VIDEO_COLS]) VIDEO_SCREEN;
     int i;
@@ -51,7 +58,35 @@ void print_int(unsigned int n, unsigned int x, unsigned int y, unsigned short at
     p[y][x].a = attr;
 }
 
+void pintar_a(unsigned int x, unsigned int y) {
+    print_uno('a', x, y, C_BG_RED + C_FG_WHITE);
+}
 
+void pintar_b(unsigned int x, unsigned int y) {
+    print_uno('b', x, y, C_BG_BLUE + C_FG_WHITE);
+}
 
+void pintar_h(unsigned int x, unsigned int y) {
+    print_uno(' ', x, y, C_BG_GREEN);
+}
 
+void pintar_g(unsigned int x, unsigned int y) {
+    print_uno(' ', x, y, C_BG_LIGHT_GREY);
+}
 
+void pintar_pantalla() {
+    unsigned int i;
+    unsigned int j;
+
+    for (i = 0; i < 80; ++i){
+            print_uno(' ', i, 0, C_BG_BLACK);
+        }
+
+    
+    for (j = 45; j < 50; ++j){
+        for (i = 48; i < 53; ++i){
+            print_uno(' ', i, j, C_BG_RED);
+            print_uno(' ', i+5, j, C_BG_BLUE);
+        }
+    }
+}

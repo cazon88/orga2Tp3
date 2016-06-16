@@ -12,6 +12,7 @@ extern resetear_pic
 extern mmu_inicializar_dir_kernel
 extern inicializar_mmu
 extern mmu_mapear_pagina
+extern pintar_pantalla
 %include "imprimir.mac"
 
 global start
@@ -130,23 +131,23 @@ modoProtegido:
 
     xor eax, eax
     add eax,  7294
-.bannerVidaRojo1:
-    mov byte [fs:eax], ' '
-    add eax, 1
-    mov byte [fs:eax], 0x40 ;color
-    add eax, 1
-    cmp eax, 7306
-    jne .bannerVidaRojo1
+;.bannerVidaRojo1:
+;    mov byte [fs:eax], ' '
+;    add eax, 1
+;    mov byte [fs:eax], 0x40 ;color
+;    add eax, 1
+;    cmp eax, 7306
+;    jne .bannerVidaRojo1
 
-    xor eax, eax
-    add eax,  7454
-.bannerVidaRojo2:
-    mov byte [fs:eax], ' '
-    add eax, 1
-    mov byte [fs:eax], 0x40 ;color
-    add eax, 1
-    cmp eax, 7466
-    jne .bannerVidaRojo2
+;    xor eax, eax
+;    add eax,  7454
+;.bannerVidaRojo2:
+;    mov byte [fs:eax], ' '
+;    add eax, 1
+;    mov byte [fs:eax], 0x40 ;color
+;    add eax, 1
+;    cmp eax, 7466
+;    jne .bannerVidaRojo2
 
 
 
@@ -192,6 +193,9 @@ modoProtegido:
 
     ; Habilitar interrupciones
     sti
+
+    ; COLOREAR PANTALLA
+    call pintar_pantalla
 
     ; Saltar a la primera tarea: Idle
     xchg bx, bx
