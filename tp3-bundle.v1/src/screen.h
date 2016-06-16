@@ -26,5 +26,21 @@ void print_hex(unsigned int numero, int size, unsigned int x, unsigned int y, un
 
 void print_int(unsigned int n, unsigned int x, unsigned int y, unsigned short attr);
 
+void print_uno(char text, unsigned int x, unsigned int y, unsigned short attr);
+
+void pintar_a(unsigned int x, unsigned int y);
+
+void pintar_b(unsigned int x, unsigned int y);
+
+void pintar_h(unsigned int x, unsigned int y);
+
+void pintar_gris(unsigned int x, unsigned int y);
+
+void pintar_infectada_a(unsigned int x, unsigned int y);
+
+void pintar_infectada_b(unsigned int x, unsigned int y);
+
+void pintar_pantalla();
+
 
 #endif  /* !__SCREEN_H__ */

@@ -5,22 +5,19 @@
 */
 
 #include "game.h"
+gameStatus gStatus;
 
-gameStatus gStatus = nuevoJuego();
-
-gameStatus nuevoJuego(){
-	gameStatus gstatus = {
-		vidasA = 0;	//cantidad corriendo simultaneamente. <=5
-		vidasB = 0;
-		puntajeA = 0;
-		puntajeB = 0;
-		cursorAX = 4;
-		cursorAY = 4;
-		cursorBX = 75;
-		cursorBY = 40;
-		tareasRestantesA = 5; //total tareas. 
-		tareasRestantesB = 5;
-	}
+void nuevoJuego(){
+		gStatus.vidasA = 0;	//cantidad corriendo simultaneamente. <=5
+		gStatus.vidasB = 0;
+		gStatus.puntajeA = 0;
+		gStatus.puntajeB = 0;
+		gStatus.cursorAX = 4;
+		gStatus.cursorAY = 4;
+		gStatus.cursorBX = 75;
+		gStatus.cursorBY = 40;
+		gStatus.tareasRestantesA = 5; //total tareas. 
+		gStatus.tareasRestantesB = 5;
 }
 
 //1 <= x <= 44
@@ -29,7 +26,7 @@ gameStatus nuevoJuego(){
 void game_mover_cursor(int jugador, direccion dir) {
 	if (jugador == 0x0000){ //Preunto Jugador
 	
-		if (dir = ARB){ //Pregunto direccion
+		if (dir == ARB){ //Pregunto direccion
 		
 			if (gStatus.cursorAX < 44){ //Me aseguro que no se pase
 			
@@ -37,21 +34,21 @@ void game_mover_cursor(int jugador, direccion dir) {
 				gStatus.cursorAX++;
 				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 			}
-		} else if (dir = ABA){
+		} else if (dir == ABA){
 			if (gStatus.cursorAX > 1){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 				gStatus.cursorAX--;
 				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 			}
-		} else if (dir = IZQ){
+		} else if (dir == IZQ){
 			if (gStatus.cursorAY > 0){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 				gStatus.cursorAY--;
 				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 			}
-		} else if (dir = DER){
+		} else if (dir == DER){
 			if (gStatus.cursorAY < 79){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
@@ -60,7 +57,7 @@ void game_mover_cursor(int jugador, direccion dir) {
 			}
 		}
 	}else{
-		if (dir = ARB){ //Pregunto direccion
+		if (dir == ARB){ //Pregunto direccion
 		
 			if (gStatus.cursorBX < 44){ //Me aseguro que no se pase
 			
@@ -68,21 +65,21 @@ void game_mover_cursor(int jugador, direccion dir) {
 				gStatus.cursorBX++;
 				pintar_a(gStatus.cursorBX,gStatus.cursorBY);
 			}
-		} else if (dir = ABA){
+		} else if (dir == ABA){
 			if (gStatus.cursorBX > 1){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 				gStatus.cursorBX--;
 				pintar_a(gStatus.cursorBX,gStatus.cursorBY);
 			}
-		} else if (dir = IZQ){
+		} else if (dir == IZQ){
 			if (gStatus.cursorBY > 0){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 				gStatus.cursorBY--;
 				pintar_a(gStatus.cursorBX,gStatus.cursorBY);
 			}
-		} else if (dir = DER){
+		} else if (dir == DER){
 			if (gStatus.cursorBY < 79){ //Me aseguro que no se pase
 			
 				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);

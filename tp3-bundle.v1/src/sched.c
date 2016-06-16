@@ -31,6 +31,8 @@ sched[2] = (unsigned int) &npc;
 inicializar_sched_h();
 }
 
+
+/*
 unsigned int x_actual(){
 
 if(actual == 0){
@@ -40,8 +42,9 @@ if(actual == 0){
 }
 
 unsigned int y_actual(){
-
 }
+*/
+
 
 // - entradas de gdt  		OK
 // - conectar a las tss  	OK

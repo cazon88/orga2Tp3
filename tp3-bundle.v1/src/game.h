@@ -22,8 +22,7 @@ void game_donde(unsigned int* pos);
 void game_mover_cursor(int jugador, direccion dir);
 
 
-struct gameStatus{
-
+typedef struct game_Status{
 	unsigned int vidasA;	//cantidad corriendo simultaneamente. <=5
 	unsigned int vidasB;
 	unsigned int puntajeA;
@@ -35,6 +34,6 @@ struct gameStatus{
 	unsigned int tareasRestantesA; //total tareas. 20
 	unsigned int tareasRestantesB;
 
-};
+} gameStatus;
 
 #endif  /* !__GAME_H__ */
