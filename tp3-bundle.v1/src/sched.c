@@ -26,7 +26,6 @@ void inicializar_sched(){
 }
 
 
-
 unsigned int x_actual(){
 
   if(tipoActual == 0){
@@ -38,20 +37,7 @@ unsigned int x_actual(){
   }
 }
 
-unsigned int y_actual(){
-
-if(tipoActual == 0){
-    return jugadorA[actualA].y;
-  }else if (tipoActual == 1){
-    return jugadorB[actualB].y;
-  }else {
-    return  npc[actualNpc].y;
-  }
-}
  
-}
-
-
 
 // - entradas de gdt  		OK
 // - conectar a las tss  	OK

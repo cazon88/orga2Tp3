@@ -11,7 +11,7 @@
 #include "screen.h"
 #include "mmu.h"
 
-typedef enum direccion_e { IZQ = 0xAAA, DER = 0x441, ARB = 0xA33, ABA = 0x883  } direccion;
+typedef enum direccion_e { IZQ, DER, ARB, ABA } direccion; //se pasa desde asm por pila
 
 void game_lanzar(unsigned int jugador);
 
@@ -22,8 +22,7 @@ void game_donde(unsigned int* pos);
 void game_mover_cursor(int jugador, direccion dir);
 
 
-struct gameStatus{
-
+typedef struct game_Status{
 	unsigned int vidasA;	//cantidad corriendo simultaneamente. <=5
 	unsigned int vidasB;
 	unsigned int puntajeA;
@@ -35,6 +34,6 @@ struct gameStatus{
 	unsigned int tareasRestantesA; //total tareas. 20
 	unsigned int tareasRestantesB;
 
-};
+} gameStatus;
 
 #endif  /* !__GAME_H__ */
