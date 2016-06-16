@@ -25,6 +25,8 @@ void inicializar_sched(){
   inicializar_sched_h();
 }
 
+
+
 unsigned int x_actual(){
 
   if(tipoActual == 0){
@@ -47,6 +49,10 @@ if(tipoActual == 0){
   }
 }
  
+}
+
+
+
 // - entradas de gdt  		OK
 // - conectar a las tss  	OK
 
