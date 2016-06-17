@@ -21,6 +21,8 @@ extern sched_proximo_indice
 extern game_donde
 extern game_soy
 extern game_mapear
+extern game_mover_cursor
+extern mover_cursor_arriba_a
 
 error_mp_msg_0: db     'Error! INTERRUPCION, numero: 0'
 error_mp_len_0: equ    $ - error_mp_msg_0
@@ -179,11 +181,18 @@ _isr33:
     jne .fin
 
     .letraW:
-    xor eax, eax
-    mov byte [fs:eax], 'w'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+;    xor eax, eax
+;    mov byte [fs:eax], 'w'
+;    add eax, 1
+;    mov byte [fs:eax], 0x70 ;color
+;    add eax, 1
+   
+    push 0x00000000
+    push 0x00000000
+    call game_mover_cursor
+    pop eax
+    pop ebx
+;    call mover_cursor_arriba_a
     jmp .fin
 
     .letraA:

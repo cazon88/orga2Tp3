@@ -194,7 +194,7 @@ modoProtegido:
     ltr ax
 
     ; Habilitar interrupciones
-    sti
+    sti ;NO TOCAR
 
     ; COLOREAR PANTALLA
     call pintar_pantalla
