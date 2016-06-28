@@ -26,5 +26,6 @@ typedef struct s_tarea{
 	unsigned short gdt;
 }tarea;
 
+extern tarea* tarea_actual;
 	
 #endif	/* !__SCHED_H__ */

@@ -136,9 +136,14 @@ global _isr32
 
 _isr32:
     pushad
-    ;xchg bx, bx
-    call proximo_reloj
+    ;call proximo_reloj
+    ;call fin_intr_pic1
     call fin_intr_pic1
+    call sched_proximo_indice
+    cmp eax,0
+    je .fin
+    jmp ax:00
+,fin:
     popad
     iret
 

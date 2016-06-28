@@ -7,6 +7,7 @@
 
 #include "sched.h"
 
+tarea* tarea_actual; /*FALTA  HACER EL SET DE ESTE PUNTERO*/
 
 unsigned int tipoActual = 0;
 

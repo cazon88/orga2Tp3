@@ -5,6 +5,7 @@
 */
 
 #include "game.h"
+
 //gameStatus gStatus;
 
 // void nuevoJuego(){
@@ -112,13 +113,46 @@ void game_mover_cursor(int jugador, direccion dir) {
 void game_lanzar(unsigned int jugador) {
 }
 
+
+/*
+* Indica si esta infectado o no. Y pinta la
+* tarea del color que le corresponde
+*/
 void game_soy(unsigned int yoSoy) {
-
+	if(yoSoy == 0x841){
+		tarea_actual->infec = "A";
+		pintar_a(tarea_actual->x, tarea_actual->y);
+	}else if(yo soy == 0x325){
+		tarea_actual->infect = "B";
+		pintar_b(tarea_actual->x, tarea_actual->y);
+	}else{
+		tarea_actual->infect = "N";
+		pintar_h(tarea_actual->x, tarea_actual->y);
+	}
 }
 
+/*
+* Devuelve en la dirección de memoria pos
+* los vaores XY
+*/
 void game_donde(unsigned int* pos) {
+	int xy[2] = {tarea_actual->x, tarea_actual->y};
+	pos = {tarea_actual->x, tarea_actual->y};
 }
 
+
+/*
+*	Mapea la tarea_actual en las coordenadas dadas.
+*	Según el tipo de tarea, la dirección de código que copia.
+*/
 void game_mapear(int x, int y) {
+	if(tarea_actual->infec == A){
+		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual->x, tarea_actual->y);
+	}else if (tarea_actual->infec == B){
+		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual->x, tarea_actual->y);
+	}else{
+		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual->x, tarea_actual->y);
+	}
+	
 }
 
