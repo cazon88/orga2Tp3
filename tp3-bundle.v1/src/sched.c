@@ -58,6 +58,25 @@ void inicializar_sched_h(){
   }
 }
 
+tarea* crear_taea(short x, short y, unsigned int dir_fisica, infectado infec, unsigned int gdt_indice ){
+  tarea t;
+  t.x = x;
+  t.y = y;
+  t.dir_fisica = dir_fisica;
+  t.infec = infec;
+  t.gdt = gdt_indice;
+
+  return &t;
+}
+
+void agregar_tarea_a_scheduler(tarea * t, unsigned char tipo){
+  if (tipo == 'A'){
+
+  }else{
+    
+  }
+}
+
 
 // - lanzar_tarea(x,y,tipo,slot en el scheduler)
 // - - crear directorio cr3 para la tarea

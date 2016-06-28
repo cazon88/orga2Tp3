@@ -142,8 +142,8 @@ _isr32:
     call sched_proximo_indice
     cmp eax,0
     je .fin
-    jmp ax:00
-,fin:
+    jmp 0x00:0x00
+.fin:
     popad
     iret
 

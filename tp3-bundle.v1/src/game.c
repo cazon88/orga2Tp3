@@ -43,7 +43,7 @@ void mover_cursor_arriba_a(){
 }
 
 void game_mover_cursor(int jugador, direccion dir) {
-	if (jugador == 0x00000000){ //Preunto Jugador
+	if (jugador == 0x00000000){ //Pregunto Jugador
 	
 		if (dir == ARB){ //Pregunto direccion
 		
@@ -111,6 +111,11 @@ void game_mover_cursor(int jugador, direccion dir) {
 }
 
 void game_lanzar(unsigned int jugador) {
+	if (jugador == 0x00000000){ /* Jugador Azul */
+		mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
+	}else{
+		mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
+	}
 }
 
 
@@ -120,13 +125,13 @@ void game_lanzar(unsigned int jugador) {
 */
 void game_soy(unsigned int yoSoy) {
 	if(yoSoy == 0x841){
-		tarea_actual->infec = "A";
+		tarea_actual->infec = 'A'	;
 		pintar_a(tarea_actual->x, tarea_actual->y);
-	}else if(yo soy == 0x325){
-		tarea_actual->infect = "B";
+	}else if(yoSoy == 0x325){
+		tarea_actual->infec = 'B';
 		pintar_b(tarea_actual->x, tarea_actual->y);
 	}else{
-		tarea_actual->infect = "N";
+		tarea_actual->infec= 'N';
 		pintar_h(tarea_actual->x, tarea_actual->y);
 	}
 }
@@ -136,8 +141,7 @@ void game_soy(unsigned int yoSoy) {
 * los vaores XY
 */
 void game_donde(unsigned int* pos) {
-	int xy[2] = {tarea_actual->x, tarea_actual->y};
-	pos = {tarea_actual->x, tarea_actual->y};
+	(*pos) = ( (tarea_actual->x << 8) || (tarea_actual->y) );
 }
 
 
