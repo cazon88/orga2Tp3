@@ -58,15 +58,16 @@ void inicializar_sched_h(){
   }
 }
 
-tarea* crear_taea(short x, short y, unsigned int dir_fisica, infectado infec, unsigned int gdt_indice ){
-  tarea t;
+void crear_taea(short x, short y, unsigned int dir_fisica, infectado infec, unsigned int gdt_indice ){
+/*  tarea t;
   t.x = x;
   t.y = y;
   t.dir_fisica = dir_fisica;
   t.infec = infec;
   t.gdt = gdt_indice;
-
-  return &t;
+*/
+/* llenar array de tarea */
+  
 }
 
 void agregar_tarea_a_scheduler(tarea * t, unsigned char tipo){
@@ -114,7 +115,7 @@ unsigned short sched_proximo_indice() {
   	}
   	original = actualB;
   	if(actualB < totalB){
-  	 actualB++;
+  	 actualB++; 
   	}else{
   	 actualB = 0;
   	}
