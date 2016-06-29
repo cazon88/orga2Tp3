@@ -9,6 +9,10 @@
 
 tarea* tarea_actual; /*FALTA  HACER EL SET DE ESTE PUNTERO*/
 
+
+unsigned int gdt_a_proxima = 37;
+unsigned int gdt_b_proxima = 43; 
+
 unsigned int tipoActual = 0;
 
 tarea jugadorA[5];
@@ -52,29 +56,75 @@ void inicializar_sched_h(){
 		t_h.x = i*4 + 9;
 		t_h.y = i*3 + 2;
 		t_h.dir_fisica = 0x00013000;
-		t_h.infec = N;
+		t_h.infec = 'N';
 		t_h.gdt = i+11;
+    t_h.viva = 1;
 		npc[i] = t_h;
   }
 }
 
-void crear_taea(short x, short y, unsigned int dir_fisica, infectado infec, unsigned int gdt_indice ){
-/*  tarea t;
-  t.x = x;
-  t.y = y;
-  t.dir_fisica = dir_fisica;
-  t.infec = infec;
-  t.gdt = gdt_indice;
-*/
-/* llenar array de tarea */
+void inicializar_sched_a(){
+  int i;
+  for(i = 0; i < 15 ; i++){
+    tarea t_h;
+    t_h.x = 0;
+    t_h.y = 0;
+    t_h.dir_fisica = 0x00011000;
+    t_h.infec = 'A';
+    t_h.gdt = i+37;
+    t_h.viva = 0;
+    jugadorA[i] = t_h;
+  }
+}
+
+void inicializar_sched_b(){
+  int i;
+  for(i = 0; i < 15 ; i++){
+    tarea t_h;
+    t_h.x = 0;
+    t_h.y = 0;
+    t_h.dir_fisica = 0x00012000;
+    t_h.infec = 'B';
+    t_h.gdt = i+43;
+    t_h.viva = 0;
+    jugadorB[i] = t_h;
+  }
+}
+
   
 }
 
-void agregar_tarea_a_scheduler(tarea * t, unsigned char tipo){
-  if (tipo == 'A'){
+void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, unsigned char tipo){
+  if(tipo == 'A'){
+    unsigned int i = 0;
+    unsigned char encontrado = 0;
+    while(i < 5 && encontrado == 0){
+      if(jugadorA[i].viva == 0){
+        encontrado = true;
+        jugadorA[i].x = x;
+        jugadorA[i].y = y;
+        jugadorA[i].gdt = gdt_a_proxima;
+        gdt_a_proxima++;
+        jugadorA[i].viva = 1;
+      }
+      i++;
+    }
 
-  }else{
-    
+  }else{ /*tipo == 'B'*/
+    unsigned int i = 0;
+    unsigned char encontrado = 0;
+    while(i < 5 && encontrado == 0){
+      if(jugadorA[i].viva == 0){
+        encontrado = true;
+        jugadorA[i].x = x;
+        jugadorA[i].y = y;
+        jugadorA[i].gdt = gdt_a_proxima;
+        gdt_a_proxima++;
+        jugadorA[i].viva = 1;
+      }
+      i++;
+    }
+
   }
 }
 

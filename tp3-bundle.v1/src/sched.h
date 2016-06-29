@@ -24,8 +24,10 @@ typedef struct s_tarea{
 	unsigned int   dir_fisica;
 	infectado infec;
 	unsigned short gdt;
+	unsigned char viva;
 }tarea;
 
 extern tarea* tarea_actual;
+extern agregar_tarea_a_scheduler(unsigned short x, unsigned short y, unsigned char tipo);
 	
 #endif	/* !__SCHED_H__ */

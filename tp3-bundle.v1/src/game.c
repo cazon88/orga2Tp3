@@ -100,7 +100,7 @@ void game_mover_cursor(int jugador, direccion dir) {
 			}
 		} else if (dir == DER){
 			if (gStatus.cursorBX < 79){ //Me aseguro que no se pase
-			
+				
 				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 				gStatus.cursorBX++;
 				pintar_b(gStatus.cursorBX,gStatus.cursorBY);
@@ -112,9 +112,19 @@ void game_mover_cursor(int jugador, direccion dir) {
 
 void game_lanzar(unsigned int jugador) {
 	if (jugador == 0x00000000){ /* Jugador Azul */
+		/* Se agrega la tarea al scheduler*/
+		agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, 'A');
+		/* Se mapea la tarea */
 		mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
+		/*Se pinta en pantalla*/
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);  //OJO DEBERIA SER TAREA INFECTADA ????
 	}else{
+		/* Se agrega la tarea al scheduler*/
+		agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, 'B');
+		/* Se mapea la tarea */
 		mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
+		/*Se pinta en pantalla*/
+		pintar_b(gStatus.cursorBX,gStatus.cursorBY); //OJO DEBERIA SER TAREA INFECTADA ????
 	}
 }
 
