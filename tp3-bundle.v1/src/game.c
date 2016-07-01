@@ -113,14 +113,14 @@ void game_mover_cursor(int jugador, direccion dir) {
 void game_lanzar(unsigned int jugador) {
 	if (jugador == 0x00000000){ /* Jugador Azul */
 		/* Se agrega la tarea al scheduler*/
-		agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, 'A');
+		agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 		/* Se mapea la tarea */
 		mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
 		/*Se pinta en pantalla*/
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);  //OJO DEBERIA SER TAREA INFECTADA ????
 	}else{
 		/* Se agrega la tarea al scheduler*/
-		agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, 'B');
+		agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
 		/* Se mapea la tarea */
 		mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
 		/*Se pinta en pantalla*/
@@ -135,14 +135,14 @@ void game_lanzar(unsigned int jugador) {
 */
 void game_soy(unsigned int yoSoy) {
 	if(yoSoy == 0x841){
-		tarea_actual->infec = 'A'	;
-		pintar_a(tarea_actual->x, tarea_actual->y);
+		tarea_actual()->infec = A;
+		pintar_a(tarea_actual()->x, tarea_actual()->y);
 	}else if(yoSoy == 0x325){
-		tarea_actual->infec = 'B';
-		pintar_b(tarea_actual->x, tarea_actual->y);
+		tarea_actual()->infec = B;
+		pintar_b(tarea_actual()->x, tarea_actual()->y);
 	}else{
-		tarea_actual->infec= 'N';
-		pintar_h(tarea_actual->x, tarea_actual->y);
+		tarea_actual()->infec= N;
+		pintar_h(tarea_actual()->x, tarea_actual()->y);
 	}
 }
 
@@ -151,7 +151,7 @@ void game_soy(unsigned int yoSoy) {
 * los vaores XY
 */
 void game_donde(unsigned int* pos) {
-	(*pos) = ( (tarea_actual->x << 8) || (tarea_actual->y) );
+	(*pos) = ( (tarea_actual()->x << 8) || (tarea_actual()->y) );
 }
 
 
@@ -160,12 +160,12 @@ void game_donde(unsigned int* pos) {
 *	Según el tipo de tarea, la dirección de código que copia.
 */
 void game_mapear(int x, int y) {
-	if(tarea_actual->infec == A){
-		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual->x, tarea_actual->y);
-	}else if (tarea_actual->infec == B){
-		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual->x, tarea_actual->y);
+	if(tarea_actual()->infec == A){
+		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
+	}else if (tarea_actual()->infec == B){
+		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
 	}else{
-		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual->x, tarea_actual->y);
+		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
 	}
 	
 }

@@ -153,30 +153,28 @@ modoProtegido:
 
 
     ; Inicializar el manejador de memoria
- 
+     call inicializar_mmu
     ; Inicializar el directorio de paginas
     call mmu_inicializar_dir_kernel
     
     ; Cargar directorio de paginas
-
-    ; Habilitar paginacion
     mov eax, 0x27000
     mov cr3, eax 
+    ; Habilitar paginacion
+
 
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
 
 ; xp / 1024w
-    
+
     ; Inicializar tss
     call tss_inicializar
-
     ; Inicializar tss de la tarea Idle
 
-
     ; Inicializar el scheduler
-    call inicializar_sched
+    ;call inicializar_sched
 
     ; Inicializar la IDT
     call idt_inicializar
@@ -201,17 +199,14 @@ modoProtegido:
 
     ; Saltar a la primera tarea: Idle
     jmp 0x50:0
-    xchg bx, bx
     jmp $
 
     ; Ciclar infinitamente (por si algo sale mal...)
-    xchg bx, bx
     call inicializar_mmu
     push 0x14000402
     push 0x27000
     push 0x30000
     call mmu_mapear_pagina
-    xchg bx, bx
     
     mov eax, 0xFFFF
     mov ebx, 0xFFFF

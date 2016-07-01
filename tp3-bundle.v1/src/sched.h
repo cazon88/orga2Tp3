@@ -27,7 +27,7 @@ typedef struct s_tarea{
 	unsigned char viva;
 }tarea;
 
-extern tarea* tarea_actual;
-extern agregar_tarea_a_scheduler(unsigned short x, unsigned short y, unsigned char tipo);
-	
+extern tarea* tarea_actual();
+extern void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo);
+extern void matar_tarea();
 #endif	/* !__SCHED_H__ */

@@ -16,6 +16,7 @@ extern fin_intr_pic1
 
 ;; Sched
 extern sched_proximo_indice
+extern matar_tarea
 
 ;; syscall
 extern game_donde
@@ -94,7 +95,11 @@ global _isr%1
 _isr%1:
     ;mov eax, %1
     imprimir_texto_mp error_mp_msg_%1, error_mp_len_%1, 0x07, 0, 0
-    jmp $                                                                       ;OJO QUE SE QUEDA CLAVADO ACA!
+    ;jmp $                                                                       ;OJO QUE SE QUEDA CLAVADO ACA!
+    
+    call matar_tarea            ; cuando la tarea tira una excepcion, se muere 
+
+    ;//magia de saltar a la idle
 
 %endmacro
 
@@ -136,13 +141,14 @@ global _isr32
 
 _isr32:
     pushad
-    ;call proximo_reloj
-    ;call fin_intr_pic1
+    call proximo_reloj
     call fin_intr_pic1
-    call sched_proximo_indice
-    cmp eax,0
-    je .fin
-    jmp 0x00:0x00
+    ;call fin_intr_pic1
+    ;call sched_proximo_indice
+    ;cmp eax,0
+    ;je .fin
+    ;mov [sched_tarea_selector], ax
+    ;jmp far [sched_tarea_offset]
 .fin:
     popad
     iret
@@ -278,19 +284,20 @@ jmp .fin
 
 .donde:
 call game_donde
+jmp 0x20:00         ; Saltar a tarea Idle
 jmp .fin
 
 .soy:
 push ebx
 call game_soy
+jmp 0x20:00         ; Saltar a tarea Idle
 pop ebx
 jmp .fin
 
 .mapear:
 call game_mapear
+jmp 0x20:00         ; Saltar a tarea Idle
 jmp .fin
-
-;mov eax, 0x42
 
 .fin:
 popad

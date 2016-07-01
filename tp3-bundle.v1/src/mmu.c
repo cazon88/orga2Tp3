@@ -115,69 +115,77 @@ void mmu_mapear_pagina( unsigned int dirVirtual,
 	unsigned int id_table = (dirVirtual >> 12) & 0x3FF;
 
 	pd_entry* pd = (pd_entry*) ((cr3 >> 12) << 12);
-	
+	pt_entry* pt;// = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
+
 	unsigned char presente = pd[id_directory].p;
 
 	if(presente == 0){
-		llenar_entry(&(pd[id_directory]), mmu_proxima_pagina_fisica_libre());
-		pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
-		vaciar_pageTable(&(pt[id_table]));
-		llenar_entry_pt(&pt[id_table], fisica);
-	}else{
-		pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);
-		llenar_entry_pt(&pt[id_table], fisica);
+		pt = (pt_entry*) mmu_proxima_pagina_fisica_libre();
+		vaciar_pageTable(pt);
+		llenar_entry(&(pd[id_directory]), (unsigned int)pt);
 	}
+	else
+	{
+		pt = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
+	}
+
+	llenar_entry_pt(&pt[id_table], fisica);
 
 	tlbflush();
 }
 
 void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
-	
 	unsigned int id_directory = dirVirtual >> 22;
 	unsigned int id_table = (dirVirtual >> 12) & 0x3FF;
 
-	pd_entry* pd = (pd_entry*) (cr3 & 0xFFF);
+	pd_entry* pd = (pd_entry*) (cr3 & ~0xFFF);
 
 	pt_entry* pt = (pt_entry*) ((pd[id_directory].dir)<<12);
 	pt[id_table].p = 0;
+	tlbflush();
 }
 
 unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
-	return (0x400000 + (x + (80*y) ) * 4096) ;
+	//return (0x400000 + (x + (80*y) ) * 4096) ;
+	// FIRJOLITO CHEQUEO DE X E Y y no negativo
+	return 0x400000 + ( (x + (80*y) ) * 4096) ;
 }
 
-unsigned int mmu_inicializar_dir_tarea(unsigned int dir_codigo, unsigned int dir_fisica_cod){
-
+unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
+	breakpoint();
+	
 	//rcr3 lee el cr3
 	unsigned int cr3 = rcr3();
 	//Calcular la nueva dir fisica del codigo de la tarea
 	
 	//Mapear el kernel a esta nueva dir fisica
-	mmu_mapear_pagina(dir_fisica_cod, cr3, dir_fisica_cod);
-	
+	mmu_mapear_pagina(dir_fisica_codigo_en_mapa, cr3, dir_fisica_codigo_en_mapa);
 	//Copiar el codigo de la tarea a la dir fisica
-	char * cod = (char*) dir_codigo;
-	char * a;
-	for (a = (char*) dir_fisica_cod; (int) a < (dir_fisica_cod + 4096); ++a, ++cod){
-	*a = *cod;
+	int i;
+
+	/* Se copia el codigo de la tarea del Kernel al Mapa */
+	char* dir_virtual_codigo = (char*)dir_fisica_codigo_en_kernel;
+	char* dir_virtual_mapa = (char*)dir_fisica_codigo_en_mapa;
+
+	for(i=0;i<4096;i++) {
+		dir_virtual_mapa[i] = dir_virtual_codigo[i];
 	}
-	
+
 	//Desmapear
-	mmu_unmapear_pagina(dir_fisica_cod, cr3);
+	mmu_unmapear_pagina(dir_fisica_codigo_en_mapa, cr3);
 
 	//Pedir memo libre -> esto es el  nuevo Cr3
 	int cr3_tarea = mmu_proxima_pagina_fisica_libre();
+	//TODO: Limpiar esa pagina!!
 	
 	//virtual es 0x08000000
 	unsigned int dirvirtual = 0x08000000;
-
-	int i;
+	/* Mapeo del kernel y el area libre a la Tarea */
 	for (i = 0; i < 4096; ++i){
-		mmu_mapear_pagina(i,cr3_tarea,i);
+		mmu_mapear_pagina(i*4096,cr3_tarea,i*4096);
 	}
 
-	mmu_mapear_pagina(dirvirtual,cr3_tarea, dir_fisica_cod);
-
+	mmu_mapear_pagina(dirvirtual,cr3_tarea, dir_fisica_codigo_en_mapa);
 	return cr3_tarea;
 }
 

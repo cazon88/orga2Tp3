@@ -29,13 +29,13 @@ typedef struct game_Status{
 	unsigned int vidasB;
 	unsigned int puntajeA;
 	unsigned int puntajeB;
-	unsigned int cursorAX;
-	unsigned int cursorAY;
-	unsigned int cursorBX;
-	unsigned int cursorBY;
+	unsigned short cursorAX;
+	unsigned short cursorAY;
+	unsigned short cursorBX;
+	unsigned short cursorBY;
 	unsigned int tareasRestantesA; //total tareas. 20
 	unsigned int tareasRestantesB;
 
-} gameStatus;
+}gameStatus;
 
 #endif  /* !__GAME_H__ */

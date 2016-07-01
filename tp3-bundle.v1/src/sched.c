@@ -7,9 +7,6 @@
 
 #include "sched.h"
 
-tarea* tarea_actual; /*FALTA  HACER EL SET DE ESTE PUNTERO*/
-
-
 unsigned int gdt_a_proxima = 37;
 unsigned int gdt_b_proxima = 43; 
 
@@ -30,6 +27,20 @@ void inicializar_sched(){
   inicializar_sched_h();
 }
 
+tarea* tarea_actual(){
+  int original;
+  if(tipoActual == 0){
+      original = actualA;
+      return &jugadorA[original];
+  }else  if(tipoActual == 1){
+    original = actualB;
+    return &jugadorB[original];
+ }else{
+  tipoActual = 0; 
+    original = actualNpc;
+    return &npc[original];
+  }
+}
 
 unsigned int x_actual(){
 
@@ -91,16 +102,14 @@ void inicializar_sched_b(){
   }
 }
 
-  
-}
 
-void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, unsigned char tipo){
+void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
   if(tipo == 'A'){
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
       if(jugadorA[i].viva == 0){
-        encontrado = true;
+        encontrado = 1; /* true */
         jugadorA[i].x = x;
         jugadorA[i].y = y;
         jugadorA[i].gdt = gdt_a_proxima;
@@ -115,7 +124,7 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, unsigned char
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
       if(jugadorA[i].viva == 0){
-        encontrado = true;
+        encontrado = 1; /* true */
         jugadorA[i].x = x;
         jugadorA[i].y = y;
         jugadorA[i].gdt = gdt_a_proxima;
@@ -188,6 +197,10 @@ unsigned short sched_proximo_indice() {
 }
 
 
+/* Mata una tarea. El atributo viva se vuelve falso */
+void matar_tarea(){
+  tarea_actual()->viva = 0;
+}
 
 
 
