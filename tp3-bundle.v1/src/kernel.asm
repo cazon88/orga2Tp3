@@ -174,7 +174,7 @@ modoProtegido:
     ; Inicializar tss de la tarea Idle
 
     ; Inicializar el scheduler
-    ;call inicializar_sched
+    call inicializar_sched
 
     ; Inicializar la IDT
     call idt_inicializar

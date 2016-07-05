@@ -152,7 +152,6 @@ unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
 }
 
 unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
-	breakpoint();
 	
 	//rcr3 lee el cr3
 	unsigned int cr3 = rcr3();

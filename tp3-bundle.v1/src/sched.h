@@ -15,6 +15,8 @@
 unsigned short sched_proximo_indice();
 void inicializar_sched();
 void inicializar_sched_h();
+void inicializar_sched_a();
+void inicializar_sched_b();
 
 typedef enum infectado_e { A = 0x001, B = 0x002, N = 0x000 } infectado;
 

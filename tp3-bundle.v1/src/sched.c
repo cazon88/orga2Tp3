@@ -25,6 +25,8 @@ unsigned int actualNpc = 0;
 
 void inicializar_sched(){
   inicializar_sched_h();
+  inicializar_sched_a();
+  inicializar_sched_b();
 }
 
 tarea* tarea_actual(){

@@ -99,6 +99,6 @@ void tss_inicializar() {
 	gdt_agregar_tss(9,&tss_inicial); 
 	gdt_agregar_tss(10,&tss_idle);
 	tss_inicializar_tarea_h();
-    //tss_inicializar_tarea_a();
-    //tss_inicializar_tarea_b();
+    tss_inicializar_tarea_a();
+    tss_inicializar_tarea_b();
 }

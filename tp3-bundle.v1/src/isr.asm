@@ -189,6 +189,12 @@ _isr33:
     cmp eax, 0x26
     je .letraL
 
+    cmp eax, 0x2F
+    je .LShift
+
+    cmp eax, 0x31
+    je .RShift
+
     jne .fin
 
     .letraW:
@@ -260,6 +266,12 @@ _isr33:
     add eax, 1
     mov byte [fs:eax], 0x70 ;color
     add eax, 1
+    jmp .fin
+
+    .LShift:
+    call 
+    jmp .fin
+    .RShift:
     jmp .fin
 
     .fin:
