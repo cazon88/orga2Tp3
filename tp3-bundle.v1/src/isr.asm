@@ -24,6 +24,8 @@ extern game_soy
 extern game_mapear
 extern game_mover_cursor
 extern mover_cursor_arriba_a
+extern game_lanzar_jug1
+extern game_lanzar_jug2
 
 error_mp_msg_0: db     'Error! INTERRUPCION, numero: 0'
 error_mp_len_0: equ    $ - error_mp_msg_0
@@ -93,7 +95,8 @@ error_mp_len_19: equ    $ - error_mp_msg_19
 global _isr%1
 
 _isr%1:
-    ;mov eax, %1
+    mov eax, %1
+    ;fxchg bx, bx
     imprimir_texto_mp error_mp_msg_%1, error_mp_len_%1, 0x07, 0, 0
     ;jmp $                                                                       ;OJO QUE SE QUEDA CLAVADO ACA!
     
@@ -144,11 +147,12 @@ _isr32:
     call proximo_reloj
     call fin_intr_pic1
     ;call fin_intr_pic1
-    ;call sched_proximo_indice
-    ;cmp eax,0
-    ;je .fin
-    ;mov [sched_tarea_selector], ax
-    ;jmp far [sched_tarea_offset]
+    call sched_proximo_indice
+    cmp eax, 0
+    je .fin
+    mov [sched_tarea_selector], ax
+    ;xchg bx, bx
+    jmp far [sched_tarea_offset]
 .fin:
     popad
     iret
@@ -269,13 +273,23 @@ _isr33:
     jmp .fin
 
     .LShift:
-    call 
+    ;xchg bx, bx
+;    push 0x0000000
+;    call game_lanzar
+;    add esp, 4
+    call game_lanzar_jug1
     jmp .fin
+
     .RShift:
+;    push 0xFFFFFFFE
+;    call game_lanzar
+;    add esp, 4
+    call game_lanzar_jug2
     jmp .fin
 
     .fin:
     call fin_intr_pic1
+
     popad
     iret
 
@@ -343,4 +357,3 @@ proximo_reloj:
                 popad
         ret
         
-    

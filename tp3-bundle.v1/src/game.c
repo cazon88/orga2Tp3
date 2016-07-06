@@ -25,9 +25,9 @@ gameStatus gStatus = {
 		(unsigned int) 0,
 		(unsigned int) 0,
 		(unsigned int) 0,
-		(unsigned int) 4,
-		(unsigned int) 4,
-		(unsigned int) 75,
+		(unsigned int) 10,
+		(unsigned int) 10,
+		(unsigned int) 40,//75,
 		(unsigned int) 40,
 		(unsigned int) 5, //total tareas. 
 		(unsigned int) 5,
@@ -110,24 +110,33 @@ void game_mover_cursor(int jugador, direccion dir) {
 	}
 }
 
-void game_lanzar(unsigned int jugador) {
-	/*if (jugador == 0x00000000){ /* Jugador Azul */
+//void game_lanzar(unsigned int jugador) {
+//	if (jugador == 0x00000000){ /* Jugador Azul */
 		/* Se agrega la tarea al scheduler*/
-/*		agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
+		//agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 		/* Se mapea la tarea */
-/*		mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
+		//mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
 		/*Se pinta en pantalla*/
-/*		pintar_a(gStatus.cursorAX,gStatus.cursorAY);  //OJO DEBERIA SER TAREA INFECTADA ????
-	}else{
+	//	pintar_a(gStatus.cursorAX,gStatus.cursorAY);  //OJO DEBERIA SER TAREA INFECTADA ????
+//	}else{
 		/* Se agrega la tarea al scheduler*/
-/*		agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
+		//agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
 		/* Se mapea la tarea */
-/*		mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
+		//mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
 		/*Se pinta en pantalla*/
-/*		pintar_b(gStatus.cursorBX,gStatus.cursorBY); //OJO DEBERIA SER TAREA INFECTADA ????
-	}*/
+	//	pintar_b(gStatus.cursorBX,gStatus.cursorBY); //OJO DEBERIA SER TAREA INFECTADA ????
+//	}
+//}
+
+void game_lanzar_jug1(){
+	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
+	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
 }
 
+void game_lanzar_jug2(){
+	agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
+	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+}
 
 /*
 * Indica si esta infectado o no. Y pinta la

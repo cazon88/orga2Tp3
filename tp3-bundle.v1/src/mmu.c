@@ -66,12 +66,14 @@ unsigned int mmu_proxima_pagina_fisica_libre() {
 }
 
 void llenar_entry(pd_entry* p, unsigned int direccion){
+	p->us = 1;
 	p->rw = 1;
 	p->p = 1;
 	p->dir = direccion >> 12;
 }
 
 void llenar_entry_pt(pt_entry* p, unsigned int direccion){
+	p->us = 1;
 	p->rw = 1;
 	p->p = 1;
 	p->dir = direccion >> 12;
@@ -111,7 +113,7 @@ void mmu_mapear_pagina( unsigned int dirVirtual,
 						unsigned int cr3, 
 						unsigned int fisica){
 
-	unsigned int id_directory = dirVirtual >> 22;
+	unsigned int id_directory = dirVirtual >> 22;	
 	unsigned int id_table = (dirVirtual >> 12) & 0x3FF;
 
 	pd_entry* pd = (pd_entry*) ((cr3 >> 12) << 12);
@@ -152,7 +154,6 @@ unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
 }
 
 unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
-	
 	//rcr3 lee el cr3
 	unsigned int cr3 = rcr3();
 	//Calcular la nueva dir fisica del codigo de la tarea

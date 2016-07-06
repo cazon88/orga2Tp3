@@ -13,7 +13,11 @@
 
 typedef enum direccion_e { IZQ = 0x00 , DER = 0x01, ARB = 0x10, ABA = 0x11 } direccion; //se pasa desde asm por pila
 
-void game_lanzar(unsigned int jugador);
+//void game_lanzar(unsigned int jugador);
+
+void game_lanzar_jug1();
+
+void game_lanzar_jug2();
 
 void game_soy(unsigned int soy);
 

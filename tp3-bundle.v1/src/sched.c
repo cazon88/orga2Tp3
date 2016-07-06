@@ -30,19 +30,20 @@ void inicializar_sched(){
 }
 
 tarea* tarea_actual(){
-  int original;
   if(tipoActual == 0){
-      original = actualA;
-      return &jugadorA[original];
+      return &jugadorA[actualA];
   }else  if(tipoActual == 1){
-    original = actualB;
-    return &jugadorB[original];
+    return &jugadorB[actualB];
  }else{
   tipoActual = 0; 
-    original = actualNpc;
-    return &npc[original];
+    return &npc[actualNpc];
   }
 }
+
+/*int cr3_actual(){
+  tarea* tarea_actual();
+  return tarea->cr3;
+}*/
 
 unsigned int x_actual(){
 
@@ -69,7 +70,7 @@ void inicializar_sched_h(){
 		t_h.x = i*4 + 9;
 		t_h.y = i*3 + 2;
 		t_h.dir_fisica = 0x00013000;
-		t_h.infec = 'N';
+		t_h.infec = N;
 		t_h.gdt = i+11;
     t_h.viva = 1;
 		npc[i] = t_h;
@@ -78,13 +79,13 @@ void inicializar_sched_h(){
 
 void inicializar_sched_a(){
   int i;
-  for(i = 0; i < 15 ; i++){
+  for(i = 0; i < 5 ; i++){
     tarea t_h;
     t_h.x = 0;
     t_h.y = 0;
     t_h.dir_fisica = 0x00011000;
-    t_h.infec = 'A';
-    t_h.gdt = i+37;
+    t_h.infec = A;
+    t_h.gdt = i+26;
     t_h.viva = 0;
     jugadorA[i] = t_h;
   }
@@ -92,13 +93,13 @@ void inicializar_sched_a(){
 
 void inicializar_sched_b(){
   int i;
-  for(i = 0; i < 15 ; i++){
+  for(i = 0; i < 5 ; i++){
     tarea t_h;
     t_h.x = 0;
     t_h.y = 0;
     t_h.dir_fisica = 0x00012000;
-    t_h.infec = 'B';
-    t_h.gdt = i+43;
+    t_h.infec = B;
+    t_h.gdt = i+31;
     t_h.viva = 0;
     jugadorB[i] = t_h;
   }
@@ -106,7 +107,7 @@ void inicializar_sched_b(){
 
 
 void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
-  if(tipo == 'A'){
+  if(tipo == A){
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
@@ -114,14 +115,14 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         encontrado = 1; /* true */
         jugadorA[i].x = x;
         jugadorA[i].y = y;
-        jugadorA[i].gdt = gdt_a_proxima;
-        gdt_a_proxima++;
+        //jugadorA[i].gdt = gdt_a_proxima;
+        //gdt_a_proxima++;
         jugadorA[i].viva = 1;
       }
       i++;
     }
-
-  }else{ /*tipo == 'B'*/
+    totalA++;
+  }else{ /*tipo == B*/
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
@@ -129,13 +130,13 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         encontrado = 1; /* true */
         jugadorA[i].x = x;
         jugadorA[i].y = y;
-        jugadorA[i].gdt = gdt_a_proxima;
-        gdt_a_proxima++;
+        //jugadorA[i].gdt = gdt_a_proxima;
+       // gdt_a_proxima++;
         jugadorA[i].viva = 1;
       }
       i++;
     }
-
+    totalB++;
   }
 }
 
@@ -149,54 +150,69 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
 
 
 unsigned short sched_proximo_indice() {
-	int original;
+	//int original;
+  int j = 0;
 	if(tipoActual == 0){
+
   		tipoActual = 1;
-  	
   		if(totalA == 0){
   		  return sched_proximo_indice();
   		}
 
-  		original = actualA;
-  	
-  		if(actualA < totalA){
-  		  actualA++;
-  		}else{
-  		  actualA = 0;
-  		}
-  
-  		return jugadorA[original].gdt;
-  }
+      int i = 1;
+      j = actualA;
+      while(i < 6) {
+        actualA = (j + i) % 5;
+
+        if(jugadorA[actualA].viva == 1){
+          breakpoint();
+          return (jugadorA[actualA].gdt << 3);
+        }
+
+        i++;
+      }
+    	
+    }
 
 
   if(tipoActual == 1){
   	tipoActual = 2;
-  	if(totalB == 0){
+    if(totalB == 0){
   	 return sched_proximo_indice();
   	}
-  	original = actualB;
-  	if(actualB < totalB){
-  	 actualB++; 
-  	}else{
-  	 actualB = 0;
-  	}
 
-  	return jugadorB[original].gdt;
- }
+      int i = 1;
+      j = actualB;
+      while(i < 6) {
+        actualB = (j + i) % 5;
+
+        if(jugadorB[actualB].viva == 1){
+          return (jugadorB[actualB].gdt << 3);
+        }
+
+        i++;
+      }
+  }
 
   if(tipoActual == 2){
  	tipoActual = 0; 
 
-  	original = actualNpc;
-  	if(actualNpc < 14){
-  	actualNpc++;
-  	}else{
-  	actualNpc = 0;
-  	}
-  	return npc[original].gdt;
-  }
+    int i = 1;
+    j = actualNpc;
+    while(i < 16){
+        actualNpc = (j + i) % 15;
+
+        if(npc[actualNpc].viva == 1){
+          return (npc[actualNpc].gdt << 3); /* Shifteado 3 porque los primeros dos bits es el RPL y el tercer bit es TI */
+        }
+
+        i++;
+      }
+  
+}
   return 0;
 }
+
 
 
 /* Mata una tarea. El atributo viva se vuelve falso */

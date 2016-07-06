@@ -26,7 +26,7 @@
 
 /* Indices en la gdt */
 /* -------------------------------------------------------------------------- */
-#define GDT_COUNT 36
+#define GDT_COUNT 38
 
 #define GDT_IDX_NULL_DESC           0
 

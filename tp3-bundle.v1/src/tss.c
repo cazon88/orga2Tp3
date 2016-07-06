@@ -33,16 +33,16 @@ void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, unsigned short x,
 	t->cr3 = mmu_mapear_tarea(dir_codigo_fisico,  x, y);
     t->eip = 0x08000000;
     t->eflags = 0x202;
-    t->es = 0x6 << 3;
-	t->cs = 0x4 << 3;
-	t->ss = 0x6 << 3;
-	t->ds = 0x6 << 3;
-	t->fs = 0x8 << 3;
-	t->gs = 0x6 << 3;
+    t->es = 0x38|3;
+    t->cs = 0x28|3;
+	t->ss = 0x38|3;
+	t->ds = 0x38|3;
+	t->fs = 0x38|3;
+	t->gs = 0x38|3;
     t->esp = 0x08001000;
     t->ebp = 0x08001000;
     t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000; //frijolito
-    //t->ss0 = segmento de dato del kernel (nivel 0)  FALTA HACER!!!
+    t->ss0 = 0x30; // segmento de dato del kernel (nivel 0)  FALTA HACER!!!
    	};
 
 void gdt_agregar_tss(int p, tss* t) {
@@ -80,7 +80,7 @@ void tss_inicializar_tarea_a(){
     int i;
     for (i = 0; i < 5; ++i){
         inicializar_tarea(&tss_a[i],0x00011000,0, 0);
-        gdt_agregar_tss(i+37,&tss_a[i]); 
+        gdt_agregar_tss(i+26,&tss_a[i]); 
     }    
 }
 
@@ -88,7 +88,7 @@ void tss_inicializar_tarea_b(){
     int i;
     for (i = 0; i < 5; ++i){
         inicializar_tarea(&tss_b[i],0x00012000,0, 0);
-        gdt_agregar_tss(i+43,&tss_b[i]); 
+        gdt_agregar_tss(i+31,&tss_b[i]); 
     }    
 }
 
