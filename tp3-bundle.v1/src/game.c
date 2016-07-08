@@ -11,24 +11,82 @@ gameStatus gStatus = {
 /*vidasB*/				(unsigned int) 0,
 /*pntajeA*/				(unsigned int) 0,
 /*puntajeB*/			(unsigned int) 0,
-/*cursorAX*/			(unsigned int) 10,
-/*cursorAY*/			(unsigned int) 10,
-/*cursorBX*/			(unsigned int) 40,//75,
+/*cursorAX*/			(unsigned int) 4,
+/*cursorAY*/			(unsigned int) 4,
+/*cursorBX*/			(unsigned int) 75,
 /*cursorBY*/			(unsigned int) 40,
 /*tareasRestantesA*/	(unsigned int) 5, //total tareas. 
 /*tareasREstantesB*/	(unsigned int) 5,
 };
 
-//1 <= x <= 44
-//0 <= y <= 79 
+//1 <= y <= 44
+//0 <= x <= 79 
 
-void mover_cursor_arriba_a(){
-	pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-	gStatus.cursorAY--;
-	pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+void game_mover_A_arriba(){
+	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
+		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+		gStatus.cursorAY--;
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+	}
 }
 
-void game_mover_cursor(int jugador, direccion dir) {
+void game_mover_A_abajo(){
+	if (gStatus.cursorAY < 44){ //Me aseguro que no se pase	
+		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+		gStatus.cursorAY++;
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+	}
+}
+
+void game_mover_A_derecha(){
+	if (gStatus.cursorAX < 79){ //Me aseguro que no se pase
+		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+		gStatus.cursorAX++;
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+	}
+}
+
+void game_mover_A_izquierda(){
+	if (gStatus.cursorAX > 0){ //Me aseguro que no se pase
+		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+		gStatus.cursorAX--;
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+	}
+}
+
+void game_mover_B_arriba(){
+	if (gStatus.cursorBY > 1){ //Me aseguro que no se pase	
+		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+		gStatus.cursorBY--;
+		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+	}
+}
+
+void game_mover_B_abajo(){
+	if (gStatus.cursorBY < 44){ //Me aseguro que no se pase	
+		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+		gStatus.cursorBY++;
+		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+	}
+}
+
+void game_mover_B_derecha(){
+	if (gStatus.cursorBX < 79){ //Me aseguro que no se pase
+		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+		gStatus.cursorBX++;
+		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+	}
+}
+
+void game_mover_B_izquierda(){
+	if (gStatus.cursorBX > 0){ //Me aseguro que no se pase
+		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+		gStatus.cursorBX--;
+		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+	}
+}
+
+/*void game_mover_cursor(int jugador, direccion dir) {
 	if (jugador == 0x00000000){ //Pregunto Jugador
 	
 		if (dir == ARB){ //Pregunto direccion
@@ -94,7 +152,7 @@ void game_mover_cursor(int jugador, direccion dir) {
 		}
 
 	}
-}
+}*/
 
 void game_lanzar_jug1(){
 	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
@@ -111,7 +169,7 @@ void game_lanzar_jug2(){
 * tarea del color que le corresponde
 */
 void game_soy(unsigned int yoSoy) {
-	breakpoint();
+	//breakpoint();
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
 		pintar_a(tarea_actual()->x, tarea_actual()->y);

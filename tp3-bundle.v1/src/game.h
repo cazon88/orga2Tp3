@@ -23,9 +23,17 @@ void game_soy(unsigned int soy);
 
 void game_donde(unsigned int* pos);
 
-void game_mover_cursor(int jugador, direccion dir);
+void game_mover_A_arriba();
+void game_mover_A_abajo();
+void game_mover_A_derecha();
+void game_mover_A_izquierda();
 
-void mover_cursor_arriba_a();
+void game_mover_B_arriba();
+void game_mover_B_abajo();
+void game_mover_B_derecha();
+void game_mover_B_izquierda();
+
+
 
 
 typedef struct game_Status{

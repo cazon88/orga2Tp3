@@ -18,12 +18,21 @@ extern fin_intr_pic1
 extern sched_proximo_indice
 extern matar_tarea
 
+;; Teclado
+extern game_mover_A_arriba
+extern game_mover_A_abajo
+extern game_mover_A_derecha
+extern game_mover_A_izquierda
+
+extern game_mover_B_arriba
+extern game_mover_B_abajo
+extern game_mover_B_derecha
+extern game_mover_B_izquierda
+
 ;; syscall
 extern game_donde
 extern game_soy
 extern game_mapear
-extern game_mover_cursor
-extern mover_cursor_arriba_a
 extern game_lanzar_jug1
 extern game_lanzar_jug2
 
@@ -202,88 +211,42 @@ _isr33:
     jne .fin
 
     .letraW:
-;    xor eax, eax
-;    mov byte [fs:eax], 'w'
-;    add eax, 1
-;    mov byte [fs:eax], 0x70 ;color
-;    add eax, 1
-   
-    push 0x00000000
-    push 0x00000000
-    call game_mover_cursor
-    pop eax
-    pop ebx
-;    call mover_cursor_arriba_a
+    call game_mover_A_arriba
     jmp .fin
 
     .letraA:
-    xor eax, eax
-    mov byte [fs:eax], 'a'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_A_izquierda
     jmp .fin
 
     .letraS:
-    xor eax, eax
-    mov byte [fs:eax], 's'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_A_abajo
     jmp .fin
 
     .letraD:
-    xor eax, eax
-    mov byte [fs:eax], 'd'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_A_derecha
     jmp .fin
 
     .letraI:
-    xor eax, eax
-    mov byte [fs:eax], 'i'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_B_arriba
     jmp .fin
 
     .letraJ:
-    xor eax, eax
-    mov byte [fs:eax], 'j'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_B_izquierda
     jmp .fin
 
     .letraK:
-    xor eax, eax
-    mov byte [fs:eax], 'k'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_B_abajo
     jmp .fin
 
     .letraL:
-    xor eax, eax
-    mov byte [fs:eax], 'l'
-    add eax, 1
-    mov byte [fs:eax], 0x70 ;color
-    add eax, 1
+    call game_mover_B_derecha
     jmp .fin
 
     .LShift:
-    ;xchg bx, bx
-;    push 0x0000000
-;    call game_lanzar
-;    add esp, 4
     call game_lanzar_jug1
     jmp .fin
 
     .RShift:
-;    push 0xFFFFFFFE
-;    call game_lanzar
-;    add esp, 4
     call game_lanzar_jug2
     jmp .fin
 

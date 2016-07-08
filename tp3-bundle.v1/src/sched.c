@@ -216,11 +216,11 @@ unsigned short sched_proximo_indice() {
     if(totalH == 0){
      return sched_proximo_indice();
     }
-
+      //breakpoint();
       int i = 1;
       j = actualNpc;
-      while(i < 6) {
-        actualNpc = (j + i) % 5;
+      while(i < 16) {
+        actualNpc = (j + i) % 15;
 
         if(npc[actualNpc].viva == 1){
           return (npc[actualNpc].gdt << 3);
@@ -235,10 +235,11 @@ unsigned short sched_proximo_indice() {
     if(totalA == 0){
      return sched_proximo_indice();
     }
+
     int i = 1;
     j = actualA;
-    while(i < 16){
-        actualA = (j + i) % 15;
+    while(i < 6){
+        actualA = (j + i) % 5;
 
         if(jugadorA[actualA].viva == 1){
           return (jugadorA[actualA].gdt << 3); // Shifteado 3 porque los primeros dos bits es el RPL y el tercer bit es TI 
