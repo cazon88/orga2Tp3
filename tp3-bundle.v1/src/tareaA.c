@@ -35,9 +35,9 @@ void task() {
   while(1) { 
     for(y=pos[1];y<44;y++) {
       for(x=pos[0];x<80;x++) {
+  breakpoint();
           syscall_soy(0x841); 
           syscall_mapear(x,y);
-          breakpoint();
           for(i=0;i<1024;i++) otro[i] = yo[i];
       }
     }

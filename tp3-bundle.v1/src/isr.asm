@@ -316,12 +316,15 @@ jmp .fin
 .soy:
 push ebx
 call game_soy
+add esp, 4
 jmp 0x50:0         ; Saltar a tarea Idle
-pop ebx
 jmp .fin
 
 .mapear:
+push ecx
+push ebx
 call game_mapear
+add esp, 8
 jmp 0x50:0         ; Saltar a tarea Idle
 jmp .fin
 
