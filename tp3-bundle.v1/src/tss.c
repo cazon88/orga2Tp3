@@ -41,8 +41,8 @@ void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, unsigned short x,
 	t->gs = 0x38|3;
     t->esp = 0x08001000;
     t->ebp = 0x08001000;
-    t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000; //frijolito
-    t->ss0 = 0x30; // segmento de dato del kernel (nivel 0)  FALTA HACER!!!
+    t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000;
+    t->ss0 = 0x30; // segmento de dato del kernel (nivel 0) 
    	};
 
 void gdt_agregar_tss(int p, tss* t) {

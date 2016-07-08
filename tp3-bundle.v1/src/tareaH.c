@@ -11,5 +11,6 @@
 
 void task() {
 //   breakpoint();
+	syscall_soy(0x841);
   while(1) { __asm __volatile("mov $2, %%eax":::"eax"); }
 }

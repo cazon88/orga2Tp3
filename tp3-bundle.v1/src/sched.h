@@ -23,7 +23,6 @@ typedef enum infectado_e { A = 0x001, B = 0x002, N = 0x000 } infectado;
 typedef struct s_tarea{
 	unsigned short x;
 	unsigned short y;
-	unsigned int   dir_fisica;
 	infectado infec;
 	unsigned short gdt;
 	unsigned char viva;

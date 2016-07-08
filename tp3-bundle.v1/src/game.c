@@ -6,31 +6,17 @@
 
 #include "game.h"
 
-//gameStatus gStatus;
-
-// void nuevoJuego(){
-// 		gStatus.vidasA = 0;	//cantidad corriendo simultaneamente. <=5
-// 		gStatus.vidasB = 0;
-// 		gStatus.puntajeA = 0;
-// 		gStatus.puntajeB = 0;
-// 		gStatus.cursorAX = 4;
-// 		gStatus.cursorAY = 4;
-// 		gStatus.cursorBX = 75;
-// 		gStatus.cursorBY = 40;
-// 		gStatus.tareasRestantesA = 5; //total tareas. 
-// 		gStatus.tareasRestantesB = 5;
-// }
 gameStatus gStatus = {
-		(unsigned int) 0,	//cantidad corriendo simultaneamente. <=5
-		(unsigned int) 0,
-		(unsigned int) 0,
-		(unsigned int) 0,
-		(unsigned int) 10,
-		(unsigned int) 10,
-		(unsigned int) 40,//75,
-		(unsigned int) 40,
-		(unsigned int) 5, //total tareas. 
-		(unsigned int) 5,
+/*vidasA*/				(unsigned int) 0,	//cantidad corriendo simultaneamente. <=5
+/*vidasB*/				(unsigned int) 0,
+/*pntajeA*/				(unsigned int) 0,
+/*puntajeB*/			(unsigned int) 0,
+/*cursorAX*/			(unsigned int) 10,
+/*cursorAY*/			(unsigned int) 10,
+/*cursorBX*/			(unsigned int) 40,//75,
+/*cursorBY*/			(unsigned int) 40,
+/*tareasRestantesA*/	(unsigned int) 5, //total tareas. 
+/*tareasREstantesB*/	(unsigned int) 5,
 };
 
 //1 <= x <= 44
@@ -110,24 +96,6 @@ void game_mover_cursor(int jugador, direccion dir) {
 	}
 }
 
-//void game_lanzar(unsigned int jugador) {
-//	if (jugador == 0x00000000){ /* Jugador Azul */
-		/* Se agrega la tarea al scheduler*/
-		//agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
-		/* Se mapea la tarea */
-		//mmu_mapear_tarea(/* dir_codigo */ 0x11000, gStatus.cursorAX, gStatus.cursorAY);
-		/*Se pinta en pantalla*/
-	//	pintar_a(gStatus.cursorAX,gStatus.cursorAY);  //OJO DEBERIA SER TAREA INFECTADA ????
-//	}else{
-		/* Se agrega la tarea al scheduler*/
-		//agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
-		/* Se mapea la tarea */
-		//mmu_mapear_tarea(/* dir_codigo */ 0x12000, gStatus.cursorBX, gStatus.cursorBY);
-		/*Se pinta en pantalla*/
-	//	pintar_b(gStatus.cursorBX,gStatus.cursorBY); //OJO DEBERIA SER TAREA INFECTADA ????
-//	}
-//}
-
 void game_lanzar_jug1(){
 	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
@@ -143,6 +111,7 @@ void game_lanzar_jug2(){
 * tarea del color que le corresponde
 */
 void game_soy(unsigned int yoSoy) {
+	breakpoint();
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
 		pintar_a(tarea_actual()->x, tarea_actual()->y);
