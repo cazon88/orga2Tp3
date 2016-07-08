@@ -21,10 +21,62 @@ gameStatus gStatus = {
 
 //1 <= y <= 44
 //0 <= x <= 79 
-
+/*
 void game_mover_A_arriba(){
 	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+		gStatus.cursorAY--;
+		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+	}
+}*/
+
+void game_mover_A_arriba(){
+	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
+
+		pintar_gris(gStatus.cursorAX,gStatus.cursorAY); //Pinto de gris, y eventualmente piso.
+		
+			int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
+				if (npc[i].infec == A){
+					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (npc[i].infec == B){
+					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
+					if (jugadorA[i].infec == A){
+					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorA[i].infec == B){
+					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
+				if (jugadorB[i].infec == A){
+					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorB[i].infec == B){
+					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
 		gStatus.cursorAY--;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 	}
@@ -130,13 +182,12 @@ void game_donde(unsigned int* pos) {
 *	Según el tipo de tarea, la dirección de código que copia.
 */
 void game_mapear(int x, int y) {
-if((1 <= x) && (x <= 44) && (0 <= y) && (y <= 79)){
-		if(tarea_actual()->infec == A){
-			mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
-		}else if (tarea_actual()->infec == B){
-			mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
-		}else{
-			mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
-		}
-	}	
+	if(tarea_actual()->infec == A){
+		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
+	}else if (tarea_actual()->infec == B){
+		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
+	}else{
+		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
+	}
+
 }	
