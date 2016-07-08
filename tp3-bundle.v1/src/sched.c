@@ -40,11 +40,6 @@ tarea* tarea_actual(){
   }
 }
 
-/*int cr3_actual(){
-  tarea* tarea_actual();
-  return tarea->cr3;
-}*/
-
 unsigned int x_actual(){
 
   if(tipoActual == 0){
@@ -126,13 +121,13 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
-      if(jugadorA[i].viva == 0){
+      if(jugadorB[i].viva == 0){
         encontrado = 1; /* true */
-        jugadorA[i].x = x;
-        jugadorA[i].y = y;
+        jugadorB[i].x = x;
+        jugadorB[i].y = y;
         //jugadorA[i].gdt = gdt_a_proxima;
        // gdt_a_proxima++;
-        jugadorA[i].viva = 1;
+        jugadorB[i].viva = 1;
       }
       i++;
     }
@@ -165,7 +160,6 @@ unsigned short sched_proximo_indice() {
         actualA = (j + i) % 5;
 
         if(jugadorA[actualA].viva == 1){
-          breakpoint();
           return (jugadorA[actualA].gdt << 3);
         }
 

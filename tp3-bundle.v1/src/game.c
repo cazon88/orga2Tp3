@@ -160,7 +160,8 @@ void game_soy(unsigned int yoSoy) {
 * los vaores XY
 */
 void game_donde(unsigned int* pos) {
-	(*pos) = ( (tarea_actual()->x << 8) || (tarea_actual()->y) );
+	pos[0] = tarea_actual()->x;
+	pos[1] = tarea_actual()->y;
 }
 
 
@@ -170,11 +171,11 @@ void game_donde(unsigned int* pos) {
 */
 void game_mapear(int x, int y) {
 	if(tarea_actual()->infec == A){
-		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
 	}else if (tarea_actual()->infec == B){
-		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
 	}else{
-		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
 	}
 	
 }

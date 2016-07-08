@@ -193,10 +193,10 @@ _isr33:
     cmp eax, 0x26
     je .letraL
 
-    cmp eax, 0x2F
+    cmp eax, 0x2A
     je .LShift
 
-    cmp eax, 0x31
+    cmp eax, 0x36
     je .RShift
 
     jne .fin
@@ -297,8 +297,8 @@ _isr33:
 ;;
 ;; Rutina de atención MISTERIO
 ;; -------------------------------------------------------------------------- ;;
-global _isr66
-_isr66:
+global _isr102
+_isr102:
 pushad
 cmp eax, 0x124
 je .donde
@@ -310,19 +310,19 @@ jmp .fin
 
 .donde:
 call game_donde
-jmp 0x20:00         ; Saltar a tarea Idle
+jmp 0x50:0         ; Saltar a tarea Idle
 jmp .fin
 
 .soy:
 push ebx
 call game_soy
-jmp 0x20:00         ; Saltar a tarea Idle
+jmp 0x50:0         ; Saltar a tarea Idle
 pop ebx
 jmp .fin
 
 .mapear:
 call game_mapear
-jmp 0x20:00         ; Saltar a tarea Idle
+jmp 0x50:0         ; Saltar a tarea Idle
 jmp .fin
 
 .fin:

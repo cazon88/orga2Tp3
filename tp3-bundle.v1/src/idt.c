@@ -42,37 +42,37 @@ idt_descriptor IDT_DESC = {
 */
 
 
-#define IDT_ENTRY(numero)                                                                                        \
+#define IDT_ENTRY(numero,atributos)                                                                                        \
     idt[numero].offset_0_15 = (unsigned short) ((unsigned int)(&_isr ## numero) & (unsigned int) 0xFFFF);        \
     idt[numero].segsel = (unsigned short) 0x20;    /*Segmento de codigo nivel 0*/                                \
-    idt[numero].attr = (unsigned short) 0x8E00;                                                                  \
+    idt[numero].attr = atributos;                                                                                \
     idt[numero].offset_16_31 = (unsigned short) ((unsigned int)(&_isr ## numero) >> 16 & (unsigned int) 0xFFFF);
 
 
 
 void idt_inicializar() {
     // Excepciones
-	IDT_ENTRY(0);
-	IDT_ENTRY(1);
-	IDT_ENTRY(2);
-	IDT_ENTRY(3);
-	IDT_ENTRY(4);
-	IDT_ENTRY(5);
-	IDT_ENTRY(6);
-	IDT_ENTRY(7);
-	IDT_ENTRY(8);
-	IDT_ENTRY(9);
-	IDT_ENTRY(10);
-	IDT_ENTRY(11);
-	IDT_ENTRY(12);
-	IDT_ENTRY(13);
-	IDT_ENTRY(14);
-	IDT_ENTRY(16);
-	IDT_ENTRY(17);
-	IDT_ENTRY(18);
-	IDT_ENTRY(19);
+	IDT_ENTRY(0, (unsigned short) 0x8E00);
+	IDT_ENTRY(1, (unsigned short) 0x8E00);
+	IDT_ENTRY(2, (unsigned short) 0x8E00);
+	IDT_ENTRY(3, (unsigned short) 0x8E00);
+	IDT_ENTRY(4, (unsigned short) 0x8E00);
+	IDT_ENTRY(5, (unsigned short) 0x8E00);
+	IDT_ENTRY(6, (unsigned short) 0x8E00);
+	IDT_ENTRY(7, (unsigned short) 0x8E00);
+	IDT_ENTRY(8, (unsigned short) 0x8E00);
+	IDT_ENTRY(9, (unsigned short) 0x8E00);
+	IDT_ENTRY(10, (unsigned short) 0x8E00);
+	IDT_ENTRY(11, (unsigned short) 0x8E00);
+	IDT_ENTRY(12, (unsigned short) 0x8E00);
+	IDT_ENTRY(13, (unsigned short) 0x8E00);
+	IDT_ENTRY(14, (unsigned short) 0x8E00);
+	IDT_ENTRY(16, (unsigned short) 0x8E00);
+	IDT_ENTRY(17, (unsigned short) 0x8E00);
+	IDT_ENTRY(18, (unsigned short) 0x8E00);
+	IDT_ENTRY(19, (unsigned short) 0x8E00);
 
-    IDT_ENTRY(32);
-    IDT_ENTRY(33);
-    IDT_ENTRY(66);
+    IDT_ENTRY(32, (unsigned short) 0x8E00);
+    IDT_ENTRY(33, (unsigned short) 0x8E00); // DPL = 00 (0)
+    IDT_ENTRY(102, (unsigned short) 0xEE00); //102 = 0x66 en dec. DPL = 11 (3)
 }

@@ -16,7 +16,7 @@
 void mmu_inicializar_dir_kernel();
 unsigned int mmu_proxima_pagina_fisica_libre();
 unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned int y);
-
+void mmu_mapear_tarea_solo_mapa(unsigned int dir_codigo, unsigned int x, unsigned int y);
 
 typedef struct str_pd_entry {
 	unsigned char   p:1;

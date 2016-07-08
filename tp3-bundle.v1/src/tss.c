@@ -79,7 +79,7 @@ void tss_inicializar_tarea_h(){
 void tss_inicializar_tarea_a(){
     int i;
     for (i = 0; i < 5; ++i){
-        inicializar_tarea(&tss_a[i],0x00011000,0, 0);
+        inicializar_tarea(&tss_a[i],0x00011000,0+i, 0+i);
         gdt_agregar_tss(i+26,&tss_a[i]); 
     }    
 }
@@ -87,7 +87,7 @@ void tss_inicializar_tarea_a(){
 void tss_inicializar_tarea_b(){
     int i;
     for (i = 0; i < 5; ++i){
-        inicializar_tarea(&tss_b[i],0x00012000,0, 0);
+        inicializar_tarea(&tss_b[i],0x00012000,40+i, 40+i);
         gdt_agregar_tss(i+31,&tss_b[i]); 
     }    
 }
@@ -99,6 +99,7 @@ void tss_inicializar() {
 	gdt_agregar_tss(9,&tss_inicial); 
 	gdt_agregar_tss(10,&tss_idle);
 	tss_inicializar_tarea_h();
-    tss_inicializar_tarea_a();
     tss_inicializar_tarea_b();
+    tss_inicializar_tarea_a();
+    
 }
