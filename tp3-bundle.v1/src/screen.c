@@ -82,6 +82,14 @@ void pintar_infectada_b(unsigned int x, unsigned int y) {
     print_uno(' ', x, y, C_BG_RED);
 }
 
+void pintar_palabra_vidas(unsigned int x, unsigned int y) {
+    print_uno('v', x,   y, C_FG_WHITE);
+    print_uno('i', x+1, y, C_FG_WHITE);
+    print_uno('d', x+2, y, C_FG_WHITE);
+    print_uno('a', x+3, y, C_FG_WHITE);
+    print_uno('s', x+4, y, C_FG_WHITE);
+}
+
 void pintar_pantalla() {
     unsigned int i;
     unsigned int j;
@@ -97,6 +105,19 @@ void pintar_pantalla() {
             print_uno(' ', i+5, j, C_BG_BLUE);
         }
     }
+
+    /*Vidas*/
+    pintar_palabra_vidas(41,46);
+    pintar_palabra_vidas(60,46);
+
+    /*<A   B>*/
+    print_uno('<', 13,   46, C_FG_WHITE);
+    print_uno('A', 14,   46, C_FG_WHITE);
+    for(i=0; i<7; ++i){
+        print_uno(' ', i+15,   46, C_FG_WHITE);    
+    }
+    print_uno('B', 21,   46, C_FG_WHITE);
+    print_uno('>', 22,   46, C_FG_WHITE);
 
     pintar_a(4,4);
     pintar_b(75,40);
