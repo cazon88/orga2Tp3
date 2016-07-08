@@ -15,8 +15,8 @@ gameStatus gStatus = {
 /*cursorAY*/			(unsigned int) 4,
 /*cursorBX*/			(unsigned int) 75,
 /*cursorBY*/			(unsigned int) 40,
-/*tareasRestantesA*/	(unsigned int) 5, //total tareas. 
-/*tareasREstantesB*/	(unsigned int) 5,
+/*tareasRestantesA*/	(unsigned int) 20, //total tareas. 
+/*tareasREstantesB*/	(unsigned int) 20,
 };
 
 //1 <= y <= 44
@@ -475,11 +475,13 @@ void game_mover_B_izquierda(){
 
 
 void game_lanzar_jug1(){
+	if (gStatus.tareasRestantesA == 0){return;} 
 	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
 }
 
 void game_lanzar_jug2(){
+	if (gStatus.tareasRestantesB == 0){return;}
 	agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
 	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 }
@@ -526,3 +528,4 @@ void game_mapear(int x, int y) {
 	}
 
 }	
+

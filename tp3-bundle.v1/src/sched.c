@@ -87,6 +87,9 @@ void inicializar_sched_b(){
 
 void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
   if(tipo == A){
+
+    if (totalA == 5){return;}
+
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
@@ -95,11 +98,14 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         jugadorA[i].x = x;
         jugadorA[i].y = y;
         jugadorA[i].viva = 1;
+        totalA++;
       }
       i++;
     }
-    totalA++;
+   
   }else{ /*tipo == B*/
+    if (totalB == 5){return;}
+
     unsigned int i = 0;
     unsigned char encontrado = 0;
     while(i < 5 && encontrado == 0){
@@ -108,10 +114,11 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         jugadorB[i].x = x;
         jugadorB[i].y = y;
         jugadorB[i].viva = 1;
+        totalB++;
       }
       i++;
     }
-    totalB++;
+   
   }
 }
 
@@ -183,6 +190,13 @@ unsigned short sched_proximo_indice() {
 /* Mata una tarea. El atributo viva se vuelve falso */
 void matar_tarea(){
   tarea_actual()->viva = 0;
+  if (tipoActual == 0){
+    totalA--;
+  }else if (tipoActual == 1){
+    totalB--;
+  } else if (tipoActual == 2){
+    totalH--;
+  }
 }
 
 
