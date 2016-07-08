@@ -41,9 +41,9 @@ void game_mover_A_arriba(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -55,9 +55,9 @@ void game_mover_A_arriba(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -68,13 +68,17 @@ void game_mover_A_arriba(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
 			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
 		}
 
 		gStatus.cursorAY--;
@@ -92,9 +96,9 @@ void game_mover_A_abajo(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -106,9 +110,9 @@ void game_mover_A_abajo(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -119,15 +123,18 @@ void game_mover_A_abajo(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
 			}
 		}
 
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
 
 		gStatus.cursorAY++;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
@@ -144,9 +151,9 @@ void game_mover_A_derecha(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -158,9 +165,9 @@ void game_mover_A_derecha(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -171,14 +178,19 @@ void game_mover_A_derecha(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
 			}
 		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 
 		gStatus.cursorAX++;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
@@ -195,9 +207,9 @@ void game_mover_A_izquierda(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -209,9 +221,9 @@ void game_mover_A_izquierda(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -222,14 +234,19 @@ void game_mover_A_izquierda(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
 			}
 		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
+		
 
 		gStatus.cursorAX--;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
@@ -246,9 +263,9 @@ void game_mover_B_arriba(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -260,9 +277,9 @@ void game_mover_B_arriba(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -273,15 +290,18 @@ void game_mover_B_arriba(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
 			}
 		}
 
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
 
 		gStatus.cursorBY--;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
@@ -298,9 +318,9 @@ void game_mover_B_abajo(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -312,9 +332,9 @@ void game_mover_B_abajo(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -325,15 +345,18 @@ void game_mover_B_abajo(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
 			}
 		}
 
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
 
 		gStatus.cursorBY++;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
@@ -350,9 +373,9 @@ void game_mover_B_derecha(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -364,9 +387,9 @@ void game_mover_B_derecha(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -377,15 +400,18 @@ void game_mover_B_derecha(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
 			}
 		}
 
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
 
 		gStatus.cursorBX++;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
@@ -402,9 +428,9 @@ void game_mover_B_izquierda(){
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -416,9 +442,9 @@ void game_mover_B_izquierda(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
@@ -429,13 +455,17 @@ void game_mover_B_izquierda(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
 				}
 			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 		}
 
 		gStatus.cursorBX--;
