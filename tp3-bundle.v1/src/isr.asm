@@ -105,13 +105,10 @@ global _isr%1
 
 _isr%1:
     mov eax, %1
-    ;fxchg bx, bx
     imprimir_texto_mp error_mp_msg_%1, error_mp_len_%1, 0x07, 0, 0
-    ;jmp $                                                                       ;OJO QUE SE QUEDA CLAVADO ACA!
-    
-    call matar_tarea            ; cuando la tarea tira una excepcion, se muere 
-
-    ;//magia de saltar a la idle
+    xchg bx, bx
+    call matar_tarea    ; cuando la tarea tira una excepcion, se muere 
+    jmp 0x50:0          ; Saltar a tarea Idle
 
 %endmacro
 
@@ -155,7 +152,6 @@ _isr32:
     pushad
     call proximo_reloj
     call fin_intr_pic1
-    ;call fin_intr_pic1
     call sched_proximo_indice
     cmp eax, 0
     je .fin

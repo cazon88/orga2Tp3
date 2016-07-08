@@ -69,11 +69,73 @@ gdt[p].base_31_24 = base_3;
 }
 
 void tss_inicializar_tarea_h(){
-    int i;
-    for (i = 0; i < 15; ++i){
+    //int i;
+    /*for (i = 0; i < 15; ++i){
         inicializar_tarea(&tss_h[i],0x00013000,i*4 + 9, i*3 + 2);
         gdt_agregar_tss(i+11,&tss_h[i]); 
-    }
+    }*/
+
+
+//TAREA 1
+inicializar_tarea(&tss_h[0],0x00013000, 10, 2);
+gdt_agregar_tss(11,&tss_h[0]);
+
+//TAREA 2
+inicializar_tarea(&tss_h[1],0x00013000, 55, 2);
+gdt_agregar_tss(12,&tss_h[1]);
+
+//TAREA 3
+inicializar_tarea(&tss_h[2],0x00013000, 29, 6);
+gdt_agregar_tss(13,&tss_h[2]);
+
+//TAREA 4
+inicializar_tarea(&tss_h[3],0x00013000, 71, 9);
+gdt_agregar_tss(14,&tss_h[3]);
+
+//TAREA 5
+inicializar_tarea(&tss_h[4],0x00013000, 39, 13);
+gdt_agregar_tss(15,&tss_h[4]);
+
+//TAREA 6
+inicializar_tarea(&tss_h[5],0x00013000, 3, 16);
+gdt_agregar_tss(16,&tss_h[5]);
+
+//TAREA 7
+inicializar_tarea(&tss_h[6],0x00013000, 52, 17);
+gdt_agregar_tss(17,&tss_h[6]);
+
+//TAREA 8
+inicializar_tarea(&tss_h[7],0x00013000, 70, 19);
+gdt_agregar_tss(18,&tss_h[7]);
+
+//TAREA 9
+inicializar_tarea(&tss_h[8],0x00013000, 37, 22);
+gdt_agregar_tss(19,&tss_h[8]);
+
+//TAREA 10
+inicializar_tarea(&tss_h[9],0x00013000, 18, 26);
+gdt_agregar_tss(20,&tss_h[9]);
+
+//TAREA 11
+inicializar_tarea(&tss_h[10],0x00013000, 7, 31);
+gdt_agregar_tss(21,&tss_h[10]);
+
+//TAREA 12
+inicializar_tarea(&tss_h[11],0x00013000, 56, 30);
+gdt_agregar_tss(22,&tss_h[11]);
+
+//TAREA 13
+inicializar_tarea(&tss_h[12],0x00013000, 33, 34);
+gdt_agregar_tss(23,&tss_h[12]);
+
+//TAREA 14
+inicializar_tarea(&tss_h[13],0x00013000, 74, 35);
+gdt_agregar_tss(24,&tss_h[13]);
+
+//TAREA 15
+inicializar_tarea(&tss_h[14],0x00013000, 47, 42);
+gdt_agregar_tss(25,&tss_h[14]);
+
 }
 
 void tss_inicializar_tarea_a(){

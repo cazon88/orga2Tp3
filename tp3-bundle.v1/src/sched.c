@@ -44,16 +44,18 @@ tarea* tarea_actual(){
 
 void inicializar_sched_h(){
 	int i;
-	for(i = 0; i < 15 ; i++){
-		tarea t_h;
-		t_h.x = i*4 + 9;
-		t_h.y = i*3 + 2;
-		t_h.infec = N;
-		t_h.gdt = i+11;
+  int x[15] = { 10, 55, 29, 71, 39, 3, 52, 70, 37, 18, 7, 56, 33, 74, 47 };
+  int y[15] = { 2, 3, 6, 9, 13, 16, 17, 19, 22, 26, 31, 30, 34, 35, 42 };
+  for(i = 0; i < 15 ; i++){
+    tarea t_h;
+    t_h.x = x[i];
+    t_h.y = y[i];
+    t_h.infec = N;
+    t_h.gdt = i+11;
     t_h.viva = 1;
-		npc[i] = t_h;
+    npc[i] = t_h;
     totalH++;
-  }
+ } 
 }
 
 void inicializar_sched_a(){
@@ -113,79 +115,6 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
   }
 }
 
-
-// - lanzar_tarea(x,y,tipo,slot en el scheduler)
-// - - crear directorio cr3 para la tarea
-// - - completar la tss correspondiente ( slot en el scheduler)
-// - - listop
-
-
-/*OLD*/
-/*
-unsigned short sched_proximo_indice() {
-	//int original;
-  int j = 0;
-	if(tipoActual == 0){
-
-  		tipoActual = 1;
-  		if(totalA == 0){
-  		  return sched_proximo_indice();
-  		}
-
-      int i = 1;
-      j = actualA;
-      while(i < 6) {
-        actualA = (j + i) % 5;
-
-        if(jugadorA[actualA].viva == 1){
-          return (jugadorA[actualA].gdt << 3);
-        }
-
-        i++;
-      }
-    	
-    }
-
-
-  if(tipoActual == 1){
-  	tipoActual = 2;
-    if(totalB == 0){
-  	 return sched_proximo_indice();
-  	}
-
-      int i = 1;
-      j = actualB;
-      while(i < 6) {
-        actualB = (j + i) % 5;
-
-        if(jugadorB[actualB].viva == 1){
-          return (jugadorB[actualB].gdt << 3);
-        }
-
-        i++;
-      }
-  }
-
-  if(tipoActual == 2){
- 	tipoActual = 0; 
-
-    int i = 1;
-    j = actualNpc;
-    while(i < 16){
-        actualNpc = (j + i) % 15;
-
-        if(npc[actualNpc].viva == 1){
-          return (npc[actualNpc].gdt << 3);  Shifteado 3 porque los primeros dos bits es el RPL y el tercer bit es TI 
-        }
-
-        i++;
-      }
-  
-}
-  return 0;
-}*/
-
-
 unsigned short sched_proximo_indice() {
   //int original;
   int j = 0;
@@ -216,7 +145,6 @@ unsigned short sched_proximo_indice() {
     if(totalH == 0){
      return sched_proximo_indice();
     }
-      //breakpoint();
       int i = 1;
       j = actualNpc;
       while(i < 16) {

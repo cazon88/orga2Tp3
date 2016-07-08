@@ -86,73 +86,6 @@ void game_mover_B_izquierda(){
 	}
 }
 
-/*void game_mover_cursor(int jugador, direccion dir) {
-	if (jugador == 0x00000000){ //Pregunto Jugador
-	
-		if (dir == ARB){ //Pregunto direccion
-		
-			if (gStatus.cursorAY < 1){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-				gStatus.cursorAY--;
-				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
-			}
-		} else if (dir == ABA){
-			if (gStatus.cursorAY < 44){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-				gStatus.cursorAY++;
-				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
-			}
-		} else if (dir == IZQ){
-			if (gStatus.cursorAX < 0){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-				gStatus.cursorAX--;
-				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
-			}
-		} else if (dir == DER){
-			if (gStatus.cursorAX < 79){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-				gStatus.cursorAX++;
-				pintar_a(gStatus.cursorAX,gStatus.cursorAY);
-			}
-		}
-	}else{
-		if (dir == ARB){ //Pregunto direccion
-		
-			if (gStatus.cursorBY < 1){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
-				gStatus.cursorBY--;
-				pintar_b(gStatus.cursorBX,gStatus.cursorBY);
-			}
-		} else if (dir == ABA){
-			if (gStatus.cursorBY < 44){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
-				gStatus.cursorBY++;
-				pintar_b(gStatus.cursorBX,gStatus.cursorBY);
-			}
-		} else if (dir == IZQ){
-			if (gStatus.cursorBX < 0){ //Me aseguro que no se pase
-			
-				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
-				gStatus.cursorBX--;
-				pintar_b(gStatus.cursorBX,gStatus.cursorBY);
-			}
-		} else if (dir == DER){
-			if (gStatus.cursorBX < 79){ //Me aseguro que no se pase
-				
-				pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
-				gStatus.cursorBX++;
-				pintar_b(gStatus.cursorBX,gStatus.cursorBY);
-			}
-		}
-
-	}
-}*/
 
 void game_lanzar_jug1(){
 	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
@@ -169,7 +102,7 @@ void game_lanzar_jug2(){
 * tarea del color que le corresponde
 */
 void game_soy(unsigned int yoSoy) {
-	//breakpoint();
+	breakpoint();
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
 		pintar_a(tarea_actual()->x, tarea_actual()->y);
