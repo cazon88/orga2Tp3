@@ -130,13 +130,13 @@ void game_donde(unsigned int* pos) {
 *	Según el tipo de tarea, la dirección de código que copia.
 */
 void game_mapear(int x, int y) {
-	if(tarea_actual()->infec == A){
-		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
-	}else if (tarea_actual()->infec == B){
-		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
-	}else{
-		mmu_mapear_tarea_solo_mapa(0x08001000, (unsigned short)x, (unsigned short)y);
-	}
-	
-}
-
+if((1 <= x) && (x <= 44) && (0 <= y) && (y <= 79)){
+		if(tarea_actual()->infec == A){
+			mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
+		}else if (tarea_actual()->infec == B){
+			mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
+		}else{
+			mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
+		}
+	}	
+}	
