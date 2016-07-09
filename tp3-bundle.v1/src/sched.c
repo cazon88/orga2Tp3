@@ -86,35 +86,44 @@ void inicializar_sched_b(){
 
 
 unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
-  if(tipo == A){
-    unsigned int i = 0;
-    unsigned char encontrado = 0;
-    while(i < 5 && encontrado == 0){
-      if(jugadorA[i].viva == 0){
-        encontrado = 1; /* true */
-        jugadorA[i].x = x;
-        jugadorA[i].y = y;
-        jugadorA[i].viva = 1;
-        totalA++;
-      }
-      i++;
-    }
-    return jugadorA[i-1].gdt;
-  }else{ /*tipo == B*/
-    unsigned int i = 0;
-    unsigned char encontrado = 0;
-    while(i < 5 && encontrado == 0){
-      if(jugadorB[i].viva == 0){
-        encontrado = 1; /* true */
-        jugadorB[i].x = x;
-        jugadorB[i].y = y;
-        jugadorB[i].viva = 1;
-        totalB++;
-      }
-      i++;
-    }
-  return jugadorB[i-1].gdt;
-  }
+	if(tipo == A){
+
+    	if (totalA == 5){return;}
+
+	    unsigned int i = 0;
+	    unsigned char encontrado = 0;
+	    while(i < 5 && encontrado == 0){
+	    	if(jugadorA[i].viva == 0){
+	        	encontrado = 1; /* true */
+	        	jugadorA[i].x = x;
+	        	jugadorA[i].y = y;
+	        	jugadorA[i].viva = 1;
+	        	totalA++;
+	      	}
+	     	i++;
+	    }
+	    
+	    return jugadorA[i-1].gdt;
+  	
+  	}else{ /*tipo == B*/
+	    
+	    if (totalB == 5){return;}
+
+	    unsigned int i = 0;
+	    unsigned char encontrado = 0;
+	    while(i < 5 && encontrado == 0){
+	    	if(jugadorB[i].viva == 0){
+	        	encontrado = 1; /* true */
+	        	jugadorB[i].x = x;
+	        	jugadorB[i].y = y;
+	        	jugadorB[i].viva = 1;
+	        	totalB++;
+	    	}
+	    	i++;
+    	}
+  		
+  		return jugadorB[i-1].gdt;
+  	}
 }
 
 unsigned short sched_proximo_indice() {
@@ -186,6 +195,13 @@ unsigned short sched_proximo_indice() {
 /* Mata una tarea. El atributo viva se vuelve falso */
 void matar_tarea(){
   tarea_actual()->viva = 0;
+  if (tipoActual == 0){
+    totalA--;
+  }else if (tipoActual == 1){
+    totalB--;
+  } else if (tipoActual == 2){
+    totalH--;
+  }
 }
 
 

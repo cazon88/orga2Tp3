@@ -15,12 +15,13 @@ gameStatus gStatus = {
 /*cursorAY*/			(unsigned int) 4,
 /*cursorBX*/			(unsigned int) 75,
 /*cursorBY*/			(unsigned int) 40,
-/*tareasRestantesA*/	(unsigned int) 5, //total tareas. 
-/*tareasREstantesB*/	(unsigned int) 5,
+/*tareasRestantesA*/	(unsigned int) 20, //total tareas. 
+/*tareasREstantesB*/	(unsigned int) 20,
 };
 
 //1 <= y <= 44
 //0 <= x <= 79 
+
 /*
 void game_mover_A_arriba(){
 	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
@@ -35,15 +36,15 @@ void game_mover_A_arriba(){
 
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY); //Pinto de gris, y eventualmente piso.
 		
-			int i,j,k;
+		int i,j,k;
 		for (i= 0; i < 16; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
 				if (npc[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (npc[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (npc[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -55,9 +56,9 @@ void game_mover_A_arriba(){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorA[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorA[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
@@ -68,13 +69,17 @@ void game_mover_A_arriba(){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
-					pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
 				}else if (jugadorB[i].infec == B){
-					pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
 				} else if (jugadorB[i].infec == N){
 					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
 				}
 			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
 		}
 
 		gStatus.cursorAY--;
@@ -85,6 +90,53 @@ void game_mover_A_arriba(){
 void game_mover_A_abajo(){
 	if (gStatus.cursorAY < 44){ //Me aseguro que no se pase	
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+
+		int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 		gStatus.cursorAY++;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 	}
@@ -93,6 +145,54 @@ void game_mover_A_abajo(){
 void game_mover_A_derecha(){
 	if (gStatus.cursorAX < 79){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+
+		int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
+
 		gStatus.cursorAX++;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 	}
@@ -101,6 +201,54 @@ void game_mover_A_derecha(){
 void game_mover_A_izquierda(){
 	if (gStatus.cursorAX > 0){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
+
+		int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorAX,gStatus.cursorAY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorAX,gStatus.cursorAY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorAX,gStatus.cursorAY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_b(gStatus.cursorAX,gStatus.cursorAY);
+		}
+		
+
 		gStatus.cursorAX--;
 		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
 	}
@@ -109,6 +257,53 @@ void game_mover_A_izquierda(){
 void game_mover_B_arriba(){
 	if (gStatus.cursorBY > 1){ //Me aseguro que no se pase	
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+
+		int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 		gStatus.cursorBY--;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
@@ -117,6 +312,53 @@ void game_mover_B_arriba(){
 void game_mover_B_abajo(){
 	if (gStatus.cursorBY < 44){ //Me aseguro que no se pase	
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+
+			int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 		gStatus.cursorBY++;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
@@ -125,6 +367,53 @@ void game_mover_B_abajo(){
 void game_mover_B_derecha(){
 	if (gStatus.cursorBX < 79){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+
+			int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 		gStatus.cursorBX++;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
@@ -133,6 +422,53 @@ void game_mover_B_derecha(){
 void game_mover_B_izquierda(){
 	if (gStatus.cursorBX > 0){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
+
+			int i,j,k;
+		for (i= 0; i < 16; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (npc[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < 6; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		for (k = 0; k < 6; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(gStatus.cursorBX,gStatus.cursorBY);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(gStatus.cursorBX,gStatus.cursorBY);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(gStatus.cursorBX,gStatus.cursorBY);
+				}
+			}
+		}
+
+		if (gStatus.cursorAX == gStatus.cursorBX && gStatus.cursorAY == gStatus.cursorBY){
+			pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+		}
+
 		gStatus.cursorBX--;
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
@@ -140,14 +476,14 @@ void game_mover_B_izquierda(){
 
 
 void game_lanzar_jug1(){
+	if (gStatus.tareasRestantesA == 0){return;} 
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
-	breakpoint();
 	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
-	breakpoint();
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
 }
 
 void game_lanzar_jug2(){
+	if (gStatus.tareasRestantesB == 0){return;}
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
 	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
 	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
@@ -194,3 +530,4 @@ void game_mapear(int x, int y) {
 	}
 
 }	
+
