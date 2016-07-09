@@ -154,7 +154,6 @@ void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
 }
 
 unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
-	//return (0x400000 + (x + (80*y) ) * 4096) ;
 	// FIRJOLITO CHEQUEO DE X E Y y no negativo
 	return 0x400000 + ( (x + (80*y) ) * 4096) ;
 }

@@ -40,7 +40,7 @@ void pintar_infectada_a(unsigned int x, unsigned int y);
 
 void pintar_infectada_b(unsigned int x, unsigned int y);
 
-void pintar_pantalla();
+void pintar_pantalla(unsigned int x_a, unsigned int y_a, unsigned int x_b, unsigned int y_b);
 
 
 #endif  /* !__SCREEN_H__ */

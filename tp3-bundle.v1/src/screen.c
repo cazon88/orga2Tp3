@@ -90,21 +90,34 @@ void pintar_palabra_vidas(unsigned int x, unsigned int y) {
     print_uno('s', x+4, y, C_FG_WHITE);
 }
 
-void pintar_pantalla() {
+void pintar_pantalla(unsigned int x_a, unsigned int y_a,
+                     unsigned int x_b, unsigned int y_b) {
     unsigned int i;
     unsigned int j;
 
+    /*Cabecera*/
     for (i = 0; i < 80; ++i){
             print_uno(' ', i, 0, C_BG_BLACK);
         }
 
-    
-    for (j = 45; j < 50; ++j){
-        for (i = 48; i < 53; ++i){
-            print_uno(' ', i, j, C_BG_RED);
-            print_uno(' ', i+5, j, C_BG_BLUE);
+    /*Banner pie*/
+    for (j = 44; j < 50; ++j){    
+    for (i = 0; i < 80; ++i){
+            print_uno(' ', i, j, C_BG_BLACK);
         }
     }
+
+    /*Cuadrados de puntos Rojo y Azul*/
+    for (j = 44; j < 50; ++j){
+        for (i = 47; i < 53; ++i){
+            print_uno(' ', i, j, C_BG_RED);
+            print_uno(' ', i+6, j, C_BG_BLUE);
+        }
+    }
+
+    /*Inicial score*/
+    print_int(0,48,46,C_FG_LIGHT_RED + C_BG_RED);
+    print_int(0,54,46,C_FG_LIGHT_BLUE + C_BG_BLUE);
 
     /*Vidas*/
     pintar_palabra_vidas(41,46);
@@ -119,7 +132,8 @@ void pintar_pantalla() {
     print_uno('B', 21,   46, C_FG_WHITE);
     print_uno('>', 22,   46, C_FG_WHITE);
 
-    pintar_a(4,4);
-    pintar_b(75,40);
+    /* Pintar jugadores*/
+    pintar_a(x_a,y_a);
+    pintar_b(x_b,y_b);
 
 }

@@ -44,23 +44,6 @@ void inicializar_tarea(tss* t, unsigned int dir_codigo_fisico, unsigned short x,
     t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000;
     t->ss0 = 0x30; // segmento de dato del kernel (nivel 0) 
    	};
-/*
-void inicializar_tarea_jugador(tss* t, unsigned int dir_codigo_fisico, unsigned short x, unsigned short y) {
-    t->cr3 = 0;
-    t->eip = 0x08000000;
-    t->eflags = 0x202;
-    t->es = 0x38|3;
-    t->cs = 0x28|3;
-    t->ss = 0x38|3;
-    t->ds = 0x38|3;
-    t->fs = 0x38|3;
-    t->gs = 0x38|3;
-    t->esp = 0x08001000;
-    t->ebp = 0x08001000;
-    t->esp0 = mmu_proxima_pagina_fisica_libre() + 0x1000;
-    t->ss0 = 0x30; // segmento de dato del kernel (nivel 0) 
-    };*/
-
 
 void gdt_agregar_tss(int p, tss* t) {
 //completar la entrada a la gdt
@@ -148,26 +131,10 @@ void tss_inicializar_tarea_h(){
     gdt_agregar_tss(25,&tss_h[14]);
 
 }
-/*
-void tss_inicializar_tarea_a(){
-    int i;
-    for (i = 0; i < 5; ++i){
-        inicializar_tarea_jugador(&tss_a[i],0x00011000,0+i, 0+i);
-        gdt_agregar_tss(i+26,&tss_a[i]); 
-    }    
-}
-
-void tss_inicializar_tarea_b(){
-    int i;
-    for (i = 0; i < 5; ++i){
-        inicializar_tarea_jugador(&tss_b[i],0x00012000,40+i, 40+i);
-        gdt_agregar_tss(i+31,&tss_b[i]); 
-    }    
-}*/
 
 void crear_tss_a(unsigned int i_gdt, unsigned short x, unsigned short y){
-     inicializar_tarea(&tss_a[0],0x00011000, x, y);
-     gdt_agregar_tss(i_gdt,&tss_a[0]); 
+     inicializar_tarea(&tss_a[i_gdt],0x00011000, x, y);
+     gdt_agregar_tss(i_gdt,&tss_a[i_gdt]); 
 }
 
 void crear_tss_b(unsigned int i_gdt, unsigned short x, unsigned short y){
@@ -181,8 +148,5 @@ void tss_inicializar() {
 	gdt_agregar_tss(9,&tss_inicial); 
 	gdt_agregar_tss(10,&tss_idle);
     inicilizar_cr3_kernel();
-	tss_inicializar_tarea_h();
-  //  tss_inicializar_tarea_b();
-  //  tss_inicializar_tarea_a();
-    
+	tss_inicializar_tarea_h();    
 }

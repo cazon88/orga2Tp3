@@ -7,7 +7,6 @@
 
 #include "sched.h"
 
-
 unsigned int gdt_a_proxima = 37;
 unsigned int gdt_b_proxima = 43; 
 
@@ -182,6 +181,7 @@ unsigned short sched_proximo_indice() {
         actualA = (j + i) % 5;
 
         if(jugadorA[actualA].viva == 1){
+          breakpoint();
           return (jugadorA[actualA].gdt << 3); // Shifteado 3 porque los primeros dos bits es el RPL y el tercer bit es TI 
         }
 

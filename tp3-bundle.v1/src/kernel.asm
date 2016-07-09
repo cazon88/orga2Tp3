@@ -13,7 +13,7 @@ extern mmu_inicializar_dir_kernel
 extern inicializar_mmu
 extern inicializar_sched
 extern mmu_mapear_pagina
-extern pintar_pantalla
+extern inicializar_juego
 %include "imprimir.mac"
 
 global start
@@ -108,8 +108,7 @@ modoProtegido:
     ; Inicializar pantalla
 	xor eax, eax
 .ciclo:
-	;mov [ds:eax], ' '
-    ;mov byte[eax], ' '		;caracter: "espacio"
+
     mov byte [fs:eax], ' '
     add eax, 1
    	mov byte [fs:eax], 0x70	;color
@@ -117,39 +116,6 @@ modoProtegido:
   	;cmp eax, 0xBFD0				
 	cmp eax, 8000
 	jne .ciclo
-
-
-    xor eax, eax
-    add eax,  7200
-.bannerVidaNegro:
-    mov byte [fs:eax], ' '
-    add eax, 1
-    mov byte [fs:eax], 0x00 ;color
-    add eax, 1
-    ;cmp eax, 0xBFD0                
-    cmp eax, 8000
-    jne .bannerVidaNegro
-
-    xor eax, eax
-    add eax,  7294
-;.bannerVidaRojo1:
-;    mov byte [fs:eax], ' '
-;    add eax, 1
-;    mov byte [fs:eax], 0x40 ;color
-;    add eax, 1
-;    cmp eax, 7306
-;    jne .bannerVidaRojo1
-
-;    xor eax, eax
-;    add eax,  7454
-;.bannerVidaRojo2:
-;    mov byte [fs:eax], ' '
-;    add eax, 1
-;    mov byte [fs:eax], 0x40 ;color
-;    add eax, 1
-;    cmp eax, 7466
-;    jne .bannerVidaRojo2
-
 
 
     ; Inicializar el manejador de memoria
@@ -195,9 +161,10 @@ modoProtegido:
     sti ;NO TOCAR
 
     ; COLOREAR PANTALLA
-    call pintar_pantalla
+    call inicializar_juego
 
     ; Saltar a la primera tarea: Idle
+
     jmp 0x50:0
     jmp $
 

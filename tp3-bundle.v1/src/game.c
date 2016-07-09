@@ -6,33 +6,104 @@
 
 #include "game.h"
 
+#define MIN_X   		0
+#define MAX_X   		79
+#define MIN_Y   		1
+#define MAX_Y   		43
+#define DIR_TAREA_A		0x11000
+#define DIR_TAREA_B		0x12000
+#define DIR_TAREA_H		0x13000
+
+
 gameStatus gStatus = {
 /*vidasA*/				(unsigned int) 0,	//cantidad corriendo simultaneamente. <=5
 /*vidasB*/				(unsigned int) 0,
 /*pntajeA*/				(unsigned int) 0,
 /*puntajeB*/			(unsigned int) 0,
-/*cursorAX*/			(unsigned int) 4,
-/*cursorAY*/			(unsigned int) 4,
-/*cursorBX*/			(unsigned int) 75,
-/*cursorBY*/			(unsigned int) 40,
+/*cursorAX*/			(unsigned int) 2,
+/*cursorAY*/			(unsigned int) 43,
+/*cursorBX*/			(unsigned int) 77,
+/*cursorBY*/			(unsigned int) 43,
 /*tareasRestantesA*/	(unsigned int) 20, //total tareas. 
 /*tareasREstantesB*/	(unsigned int) 20,
 };
 
-//1 <= y <= 44
+//1 <= y <= 43
 //0 <= x <= 79 
 
+
+void inicializar_juego(){
+	pintar_pantalla(gStatus.cursorAX, gStatus.cursorAY, gStatus.cursorBX, gStatus.cursorBY);
+}
+
+void game_lanzar_jug1(){
+	breakpoint();
+	if (gStatus.tareasRestantesA == 0 ){return;} 
+	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
+	breakpoint();
+	if (i_gdt == 0 ){return;} 
+	breakpoint();
+	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
+	breakpoint();
+	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
+}
+
+void game_lanzar_jug2(){
+	if (gStatus.tareasRestantesB == 0){return;}
+	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
+	if (i_gdt == 0 ){return;} 
+	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
+	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
+}
+
 /*
-void game_mover_A_arriba(){
-	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
-		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
-		gStatus.cursorAY--;
-		pintar_a(gStatus.cursorAX,gStatus.cursorAY);
+* Indica si esta infectado o no. Y pinta la
+* tarea del color que le corresponde
+*/
+void game_soy(unsigned int yoSoy) {
+	if(yoSoy == 0x841){
+		tarea_actual()->infec = A;
+		pintar_a(tarea_actual()->x, tarea_actual()->y);
+	}else if(yoSoy == 0x325){
+		tarea_actual()->infec = B;
+		pintar_b(tarea_actual()->x, tarea_actual()->y);
+	}else{
+		tarea_actual()->infec= N;
+		pintar_h(tarea_actual()->x, tarea_actual()->y);
 	}
-}*/
+}
+
+/*
+* Devuelve en la dirección de memoria pos
+* los vaores XY
+*/
+void game_donde(unsigned int* pos) {
+	pos[0] = tarea_actual()->x;
+	pos[1] = tarea_actual()->y;
+}
+
+
+/*
+*	Mapea la tarea_actual en las coordenadas dadas.
+*	Según el tipo de tarea, la dirección de código que copia.
+*/
+void game_mapear(int x, int y) {
+	if(tarea_actual()->infec == A){
+		mmu_mapear_tarea(DIR_TAREA_A, tarea_actual()->x, tarea_actual()->y);
+	}else if (tarea_actual()->infec == B){
+		mmu_mapear_tarea(DIR_TAREA_B, tarea_actual()->x, tarea_actual()->y);
+	}else{
+		mmu_mapear_tarea(DIR_TAREA_H, tarea_actual()->x, tarea_actual()->y);
+	}
+
+}	
+
+/* **************************
+*	MOVIMIENTO DE CURSORES  *
+*************************** */
 
 void game_mover_A_arriba(){
-	if (gStatus.cursorAY > 1){ //Me aseguro que no se pase	
+	if (gStatus.cursorAY > MIN_Y){ //Me aseguro que no se pase	
 
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY); //Pinto de gris, y eventualmente piso.
 		
@@ -88,7 +159,7 @@ void game_mover_A_arriba(){
 }
 
 void game_mover_A_abajo(){
-	if (gStatus.cursorAY < 44){ //Me aseguro que no se pase	
+	if (gStatus.cursorAY < MAX_Y){ //Me aseguro que no se pase	
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
@@ -143,7 +214,7 @@ void game_mover_A_abajo(){
 }
 
 void game_mover_A_derecha(){
-	if (gStatus.cursorAX < 79){ //Me aseguro que no se pase
+	if (gStatus.cursorAX < MAX_X){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
@@ -199,7 +270,7 @@ void game_mover_A_derecha(){
 }
 
 void game_mover_A_izquierda(){
-	if (gStatus.cursorAX > 0){ //Me aseguro que no se pase
+	if (gStatus.cursorAX > MIN_X){ //Me aseguro que no se pase
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
@@ -473,63 +544,4 @@ void game_mover_B_izquierda(){
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
 }
-
-
-void game_lanzar_jug1(){
-	if (gStatus.tareasRestantesA == 0 ){return;} 
-	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
-	if (i_gdt == 0 ){return;} 
-	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
-	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
-}
-
-void game_lanzar_jug2(){
-	if (gStatus.tareasRestantesB == 0){return;}
-	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
-	if (i_gdt == 0 ){return;} 
-	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
-	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
-}
-
-/*
-* Indica si esta infectado o no. Y pinta la
-* tarea del color que le corresponde
-*/
-void game_soy(unsigned int yoSoy) {
-	if(yoSoy == 0x841){
-		tarea_actual()->infec = A;
-		pintar_a(tarea_actual()->x, tarea_actual()->y);
-	}else if(yoSoy == 0x325){
-		tarea_actual()->infec = B;
-		pintar_b(tarea_actual()->x, tarea_actual()->y);
-	}else{
-		tarea_actual()->infec= N;
-		pintar_h(tarea_actual()->x, tarea_actual()->y);
-	}
-}
-
-/*
-* Devuelve en la dirección de memoria pos
-* los vaores XY
-*/
-void game_donde(unsigned int* pos) {
-	pos[0] = tarea_actual()->x;
-	pos[1] = tarea_actual()->y;
-}
-
-
-/*
-*	Mapea la tarea_actual en las coordenadas dadas.
-*	Según el tipo de tarea, la dirección de código que copia.
-*/
-void game_mapear(int x, int y) {
-	if(tarea_actual()->infec == A){
-		mmu_mapear_tarea(/* dir_codigo */ 0x11000, tarea_actual()->x, tarea_actual()->y);
-	}else if (tarea_actual()->infec == B){
-		mmu_mapear_tarea(/* dir_codigo */ 0x12000, tarea_actual()->x, tarea_actual()->y);
-	}else{
-		mmu_mapear_tarea(/* dir_codigo */ 0x13000, tarea_actual()->x, tarea_actual()->y);
-	}
-
-}	
 

@@ -14,7 +14,7 @@
 
 typedef enum direccion_e { IZQ = 0x00 , DER = 0x01, ARB = 0x10, ABA = 0x11 } direccion; //se pasa desde asm por pila
 
-//void game_lanzar(unsigned int jugador);
+void inicializar_juego();
 
 void game_lanzar_jug1();
 
@@ -50,5 +50,6 @@ typedef struct game_Status{
 	unsigned int tareasRestantesB;
 
 }gameStatus;
+
 
 #endif  /* !__GAME_H__ */

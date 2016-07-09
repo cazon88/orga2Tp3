@@ -106,7 +106,7 @@ global _isr%1
 _isr%1:
     mov eax, %1
     imprimir_texto_mp error_mp_msg_%1, error_mp_len_%1, 0x07, 0, 0
-    xchg bx, bx
+    ;xchg bx, bx
     call matar_tarea    ; cuando la tarea tira una excepcion, se muere 
     jmp 0x50:0          ; Saltar a tarea Idle
 
@@ -156,7 +156,6 @@ _isr32:
     cmp eax, 0
     je .fin
     mov [sched_tarea_selector], ax
-    ;xchg bx, bx
     jmp far [sched_tarea_offset]
 .fin:
     popad
