@@ -140,12 +140,16 @@ void game_mover_B_izquierda(){
 
 
 void game_lanzar_jug1(){
-	agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
+	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
+	breakpoint();
+	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
+	breakpoint();
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
 }
 
 void game_lanzar_jug2(){
-	agregar_tarea_a_scheduler(gStatus.cursorBX, gStatus.cursorBY, B);
+	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
+	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
 	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 }
 
@@ -154,7 +158,6 @@ void game_lanzar_jug2(){
 * tarea del color que le corresponde
 */
 void game_soy(unsigned int yoSoy) {
-	breakpoint();
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
 		pintar_a(tarea_actual()->x, tarea_actual()->y);

@@ -7,6 +7,7 @@
 
 #include "sched.h"
 
+
 unsigned int gdt_a_proxima = 37;
 unsigned int gdt_b_proxima = 43; 
 
@@ -28,7 +29,6 @@ void inicializar_sched(){
   inicializar_sched_h();
   inicializar_sched_a();
   inicializar_sched_b();
-  //TODO: Hacer un inicializar tarea actual
 }
 
 tarea* tarea_actual(){
@@ -85,7 +85,7 @@ void inicializar_sched_b(){
 }
 
 
-void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
+unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
   if(tipo == A){
     unsigned int i = 0;
     unsigned char encontrado = 0;
@@ -95,10 +95,11 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         jugadorA[i].x = x;
         jugadorA[i].y = y;
         jugadorA[i].viva = 1;
+        totalA++;
       }
       i++;
     }
-    totalA++;
+    return jugadorA[i-1].gdt;
   }else{ /*tipo == B*/
     unsigned int i = 0;
     unsigned char encontrado = 0;
@@ -108,10 +109,11 @@ void agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tip
         jugadorB[i].x = x;
         jugadorB[i].y = y;
         jugadorB[i].viva = 1;
+        totalB++;
       }
       i++;
     }
-    totalB++;
+  return jugadorB[i-1].gdt;
   }
 }
 
@@ -166,6 +168,7 @@ unsigned short sched_proximo_indice() {
 
     int i = 1;
     j = actualA;
+
     while(i < 6){
         actualA = (j + i) % 5;
 

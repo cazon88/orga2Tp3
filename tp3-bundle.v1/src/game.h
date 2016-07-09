@@ -8,6 +8,7 @@
 #define __GAME_H__
 
 #include "defines.h"
+#include "tss.h"
 #include "screen.h"
 #include "mmu.h"
 
