@@ -88,7 +88,7 @@ void inicializar_sched_b(){
 unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infectado tipo){
 	if(tipo == A){
 
-    	if (totalA == 5){return;}
+    	if (totalA == 5){return 0;}
 
 	    unsigned int i = 0;
 	    unsigned char encontrado = 0;
@@ -107,7 +107,7 @@ unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infec
   	
   	}else{ /*tipo == B*/
 	    
-	    if (totalB == 5){return;}
+	    if (totalB == 5){return 0;}
 
 	    unsigned int i = 0;
 	    unsigned char encontrado = 0;
