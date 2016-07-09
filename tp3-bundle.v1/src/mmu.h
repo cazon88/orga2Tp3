@@ -17,6 +17,7 @@ void mmu_inicializar_dir_kernel();
 unsigned int mmu_proxima_pagina_fisica_libre();
 unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned int y);
 void mmu_mapear_tarea_solo_mapa(unsigned int dir_codigo, unsigned int x, unsigned int y);
+void inicilizar_cr3_kernel();
 
 typedef struct str_pd_entry {
 	unsigned char   p:1;
@@ -48,6 +49,7 @@ typedef struct str_pt_entry {
 
 extern pd_entry* pd ;
 extern pt_entry* pt ;
+extern unsigned int cr3_kernel;
 
 #endif	/* !__MMU_H__ */
 

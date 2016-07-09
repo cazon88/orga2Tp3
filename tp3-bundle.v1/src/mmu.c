@@ -6,9 +6,15 @@
 */
 
 #include "mmu.h"
+
+  unsigned int cr3_kernel = 0;
+
+  void inicilizar_cr3_kernel(){
+  	cr3_kernel = rcr3();
+  }
   
 
-void mmu_inicializar_dir_kernel() {   /*OJO CAMBIAR NOMBRE!!!*/
+void mmu_inicializar_dir_kernel() { 
 
 	pd_entry* pd = (pd_entry*)0x27000;
 	pt_entry* pt = (pt_entry*)0x28000;
@@ -155,7 +161,7 @@ unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
 
 unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
 	//rcr3 lee el cr3
-	unsigned int cr3 = rcr3();
+	unsigned int cr3 = cr3_kernel;
 	//Calcular la nueva dir fisica del codigo de la tarea
 	
 	//Mapear el kernel a esta nueva dir fisica
@@ -195,6 +201,7 @@ unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned 
 }
 
 void mmu_mapear_tarea_solo_mapa(unsigned int dir_virtual, unsigned int x, unsigned int y){
+	breakpoint();
 	unsigned int dir_fisica_tarea = mmu_calcular_dir_tarea(x,y);
 	mmu_mapear_pagina(dir_virtual,rcr3(),dir_fisica_tarea);
 }
