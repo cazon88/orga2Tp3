@@ -148,6 +148,5 @@ void tss_inicializar() {
 	gdt_agregar_tss(9,&tss_inicial); 
 	gdt_agregar_tss(10,&tss_idle);
     inicilizar_cr3_kernel();
-	tss_inicializar_tarea_h(); 
-    breakpoint();  
+	tss_inicializar_tarea_h();
 }
