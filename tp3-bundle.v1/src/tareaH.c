@@ -10,9 +10,7 @@
 #include "syscall.h" 
 
 void task() {
-//   breakpoint();
 	syscall_soy(0x842);
   while(1) { 
-  	//syscall_soy(0x842);
   	__asm __volatile("mov $2, %%eax":::"eax"); }
 }

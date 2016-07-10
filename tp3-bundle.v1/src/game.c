@@ -41,7 +41,6 @@ void game_lanzar_jug1(){
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 	if (i_gdt == 0 ){return;} 
 	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
-	breakpoint();
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
 }
 

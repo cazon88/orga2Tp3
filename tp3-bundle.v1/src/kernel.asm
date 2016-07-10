@@ -76,9 +76,7 @@ start:
     ; Saltar a modo protegido
     jmp 0x20:modoProtegido				;segmento de codigo nivel 0 de la GDT (shifteado 3 veces a la izq)
 
-BITS  32
-
-
+BITS 32
 
 modoProtegido:
 
