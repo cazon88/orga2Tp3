@@ -157,7 +157,7 @@ unsigned int obtenerK(){
 unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
 	//rcr3 lee el cr3
 	unsigned int cr3 = rcr3();
-	
+
 	//Calcular la nueva dir fisica del codigo de la tarea
 	//Mapear el kernel a esta nueva dir fisica
 	mmu_mapear_pagina(dir_fisica_codigo_en_mapa, cr3, dir_fisica_codigo_en_mapa);

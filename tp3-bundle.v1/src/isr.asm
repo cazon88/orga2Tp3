@@ -160,7 +160,6 @@ _isr32:
     je .fin
     mov [sched_tarea_selector], ax
     call actualizar_vidas
-    xchg bx, bx
     jmp far [sched_tarea_offset]
 .fin:
     popad
@@ -272,7 +271,9 @@ je .mapear
 jmp .fin
 
 .donde:
+push ebx
 call game_donde
+add esp, 4
 jmp 0x50:0         ; Saltar a tarea Idle
 jmp .fin
 

@@ -51,11 +51,7 @@ void inicializar_sched_h(){
     t_h.y = y[i];
     t_h.infec = N;
     t_h.gdt = i+11;
-    if(i == 0 || i == 1){
       t_h.viva = 1;  
-    }else{
-      t_h.viva = 0;
-    }
     npc[i] = t_h;
     totalH++;
  } 

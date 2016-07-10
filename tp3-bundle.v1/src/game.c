@@ -92,11 +92,11 @@ void game_donde(unsigned int* pos) {
 */
 void game_mapear(int x, int y) {
 	if(tarea_actual()->infec == A){
-		mmu_mapear_tarea(DIR_TAREA_A, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
 	}else if (tarea_actual()->infec == B){
-		mmu_mapear_tarea(DIR_TAREA_B, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
 	}else{
-		mmu_mapear_tarea(DIR_TAREA_H, tarea_actual()->x, tarea_actual()->y);
+		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
 	}
 
 }	
