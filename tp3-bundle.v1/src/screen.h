@@ -44,5 +44,7 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a, unsigned int x_b, unsig
 void pintar_letra_b(unsigned int x, unsigned int y);
 void pintar_letra_a(unsigned int x, unsigned int y);
 
+void avanzarRelojito(unsigned int x, unsigned int y);
+
 
 #endif  /* !__SCREEN_H__ */

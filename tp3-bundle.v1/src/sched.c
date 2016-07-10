@@ -142,6 +142,7 @@ unsigned short sched_proximo_indice() {
 
       int i = 1;
       j = actualB;
+      avanzarRelojito((23 + (actualB*2)) , 46);
       while(i < 6) {
         actualB = (j + i) % 5;
 
@@ -162,6 +163,7 @@ unsigned short sched_proximo_indice() {
     }
       int i = 1;
       j = actualNpc;
+      avanzarRelojito((3 + (actualNpc*2)) , 48);
       while(i < 16) {
         actualNpc = (j + i) % 15;
 
@@ -181,7 +183,7 @@ unsigned short sched_proximo_indice() {
 
     int i = 1;
     j = actualA;
-
+    avanzarRelojito((3 + (actualA*2)) , 46);
     while(i < 6){
         actualA = (j + i) % 5;
 

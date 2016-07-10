@@ -90,6 +90,28 @@ void pintar_letra_b(unsigned int x, unsigned int y){
     print_uno('B', x, y, C_FG_DARK_GREY);
 }
 
+void avanzarRelojito(unsigned int x, unsigned int y){
+ ca (*p)[VIDEO_COLS] = (ca (*)[VIDEO_COLS]) VIDEO_SCREEN;
+    char par = '|';
+    char der = '/';
+    char aco = '-';
+    char izq = '\\';
+    if(p[y][x].c == par){
+    p[y][x].c = der;
+    }else{
+        if(p[y][x].c == der){
+        p[y][x].c = aco;
+        }else{
+            if(p[y][x].c == aco){
+            p[y][x].c = izq;
+            }else{
+                if(p[y][x].c == izq){
+                p[y][x].c = par;
+                } 
+            }
+        }
+    }    
+}
 
 void pintar_pantalla(unsigned int x_a, unsigned int y_a,
                      unsigned int x_b, unsigned int y_b) {
@@ -122,6 +144,11 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
 
     /*<A   B>*/
     print("<A   B>",14,46,C_FG_WHITE);
+
+    /* Relojitos */
+    print("| / - \\ |",3,46,C_FG_WHITE);
+    print("| / - \\ |",23,46,C_FG_WHITE);    
+    print("- - - / / / / | \\ \\ \\ \\ - - -",3,48,C_FG_WHITE);
 
     /* Pintar jugadores*/
     pintar_a(x_a,y_a);
