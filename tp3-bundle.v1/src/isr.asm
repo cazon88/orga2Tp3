@@ -36,6 +36,9 @@ extern game_mapear
 extern game_lanzar_jug1
 extern game_lanzar_jug2
 
+;;
+extern actualizar_vidas
+
 error_mp_msg_0: db     'Error! INTERRUPCION, numero: 0'
 error_mp_len_0: equ    $ - error_mp_msg_0
 
@@ -156,6 +159,8 @@ _isr32:
     cmp eax, 0
     je .fin
     mov [sched_tarea_selector], ax
+    call actualizar_vidas
+    xchg bx, bx
     jmp far [sched_tarea_offset]
 .fin:
     popad

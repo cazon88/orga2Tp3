@@ -13,6 +13,10 @@
 #define DIR_TAREA_A		0x11000
 #define DIR_TAREA_B		0x12000
 #define DIR_TAREA_H		0x13000
+#define TOTAL_TAREAS_H	15
+#define TOTAL_TAREAS_A	5
+#define TOTAL_TAREAS_B	5
+
 
 
 gameStatus gStatus = {
@@ -40,16 +44,18 @@ void game_lanzar_jug1(){
 	if (gStatus.tareasRestantesA == 0 ){return;} 
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
 	if (i_gdt == 0 ){return;} 
+	gStatus.tareasRestantesA--;
 	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
+
 }
 
 void game_lanzar_jug2(){
 	if (gStatus.tareasRestantesB == 0){return;}
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
 	if (i_gdt == 0 ){return;} 
+	gStatus.tareasRestantesB--;
 	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
-
 	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 }
 
@@ -105,7 +111,7 @@ void game_mover_A_arriba(){
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY); //Pinto de gris, y eventualmente piso.
 		
 		int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
@@ -120,7 +126,7 @@ void game_mover_A_arriba(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
@@ -133,7 +139,7 @@ void game_mover_A_arriba(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
@@ -160,7 +166,7 @@ void game_mover_A_abajo(){
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
@@ -175,7 +181,7 @@ void game_mover_A_abajo(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
@@ -188,7 +194,7 @@ void game_mover_A_abajo(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
@@ -215,7 +221,7 @@ void game_mover_A_derecha(){
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
@@ -230,7 +236,7 @@ void game_mover_A_derecha(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
@@ -243,7 +249,7 @@ void game_mover_A_derecha(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
@@ -271,7 +277,7 @@ void game_mover_A_izquierda(){
 		pintar_gris(gStatus.cursorAX,gStatus.cursorAY);
 
 		int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorAX) && (npc[i].y == gStatus.cursorAY) ){
@@ -286,7 +292,7 @@ void game_mover_A_izquierda(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorAX) && (jugadorA[i].y == gStatus.cursorAY) ){
 					if (jugadorA[i].infec == A){
@@ -299,7 +305,7 @@ void game_mover_A_izquierda(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorAX) && (jugadorB[i].y == gStatus.cursorAY) ){
 				if (jugadorB[i].infec == A){
@@ -327,7 +333,7 @@ void game_mover_B_arriba(){
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 
 		int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
@@ -342,7 +348,7 @@ void game_mover_B_arriba(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
@@ -355,7 +361,7 @@ void game_mover_B_arriba(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
@@ -382,7 +388,7 @@ void game_mover_B_abajo(){
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 
 			int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
@@ -397,7 +403,7 @@ void game_mover_B_abajo(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
@@ -410,7 +416,7 @@ void game_mover_B_abajo(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
@@ -437,7 +443,7 @@ void game_mover_B_derecha(){
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 
 			int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
@@ -452,7 +458,7 @@ void game_mover_B_derecha(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
@@ -465,7 +471,7 @@ void game_mover_B_derecha(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
@@ -492,7 +498,7 @@ void game_mover_B_izquierda(){
 		pintar_gris(gStatus.cursorBX,gStatus.cursorBY);
 
 			int i,j,k;
-		for (i= 0; i < 16; ++i){
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
 			
 			if (npc[i].viva == 1 && 
 				(npc[i].x == gStatus.cursorBX) && (npc[i].y == gStatus.cursorBY) ){
@@ -507,7 +513,7 @@ void game_mover_B_izquierda(){
 			}
 		}
 
-		for (j = 0; j < 6; ++j){
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
 			if (jugadorA[i].viva == 1 && 
 				(jugadorA[i].x == gStatus.cursorBX) && (jugadorA[i].y == gStatus.cursorBY) ){
 					if (jugadorA[i].infec == A){
@@ -520,7 +526,7 @@ void game_mover_B_izquierda(){
 			}
 		}
 
-		for (k = 0; k < 6; ++k){
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
 			if (jugadorB[i].viva == 1 && 
 				(jugadorB[i].x == gStatus.cursorBX) && (jugadorB[i].y == gStatus.cursorBY) ){
 				if (jugadorB[i].infec == A){
@@ -541,4 +547,10 @@ void game_mover_B_izquierda(){
 		pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 	}
 }
+
+void actualizar_vidas(){
+	print_int(gStatus.tareasRestantesA,44,47,C_FG_LIGHT_RED + C_BG_RED);
+    print_int(gStatus.tareasRestantesB,63,47,C_FG_LIGHT_BLUE + C_BG_BLUE);
+}
+
 

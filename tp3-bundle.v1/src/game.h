@@ -34,6 +34,8 @@ void game_mover_B_abajo();
 void game_mover_B_derecha();
 void game_mover_B_izquierda();
 
+void actualizar_vidas();
+
 
 
 
