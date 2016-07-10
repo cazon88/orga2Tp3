@@ -132,12 +132,12 @@ void tss_inicializar_tarea_h(){
 
 }
 
-void crear_tss_a(unsigned int i_gdt, unsigned short x, unsigned short y){
-     inicializar_tarea(&tss_a[i_gdt],0x00011000, x, y);
-     gdt_agregar_tss(i_gdt,&tss_a[i_gdt]); 
+void crear_tss_a(unsigned int i_gdt, unsigned int x, unsigned int y){
+     inicializar_tarea(&tss_a[0],0x00011000, x, y);
+     gdt_agregar_tss(i_gdt,&tss_a[0]); 
 }
 
-void crear_tss_b(unsigned int i_gdt, unsigned short x, unsigned short y){
+void crear_tss_b(unsigned int i_gdt, unsigned int x, unsigned int y){
      inicializar_tarea(&tss_b[i_gdt - 31],0x00012000, x, y);
      gdt_agregar_tss(i_gdt,&tss_b[i_gdt - 31]); 
 }

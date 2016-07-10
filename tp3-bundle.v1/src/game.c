@@ -9,7 +9,7 @@
 #define MIN_X   		0
 #define MAX_X   		79
 #define MIN_Y   		1
-#define MAX_Y   		43
+#define MAX_Y   		44
 #define DIR_TAREA_A		0x11000
 #define DIR_TAREA_B		0x12000
 #define DIR_TAREA_H		0x13000
@@ -21,14 +21,14 @@ gameStatus gStatus = {
 /*pntajeA*/				(unsigned int) 0,
 /*puntajeB*/			(unsigned int) 0,
 /*cursorAX*/			(unsigned int) 2,
-/*cursorAY*/			(unsigned int) 43,
+/*cursorAY*/			(unsigned int) 44,
 /*cursorBX*/			(unsigned int) 77,
-/*cursorBY*/			(unsigned int) 43,
+/*cursorBY*/			(unsigned int) 44,
 /*tareasRestantesA*/	(unsigned int) 20, //total tareas. 
 /*tareasREstantesB*/	(unsigned int) 20,
 };
 
-//1 <= y <= 43
+//1 <= y <= 44
 //0 <= x <= 79 
 
 
@@ -37,12 +37,9 @@ void inicializar_juego(){
 }
 
 void game_lanzar_jug1(){
-	breakpoint();
 	if (gStatus.tareasRestantesA == 0 ){return;} 
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorAX, gStatus.cursorAY, A);
-	breakpoint();
 	if (i_gdt == 0 ){return;} 
-	breakpoint();
 	crear_tss_a(i_gdt, gStatus.cursorAX, gStatus.cursorAY);
 	breakpoint();
 	pintar_a(gStatus.cursorAX,gStatus.cursorAY); 
@@ -53,6 +50,7 @@ void game_lanzar_jug2(){
 	unsigned int i_gdt = agregar_tarea_a_scheduler( gStatus.cursorBX, gStatus.cursorBY, B);
 	if (i_gdt == 0 ){return;} 
 	crear_tss_b(i_gdt, gStatus.cursorBX, gStatus.cursorBY);
+
 	pintar_b(gStatus.cursorBX,gStatus.cursorBY);
 }
 

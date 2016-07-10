@@ -119,7 +119,7 @@ modoProtegido:
 
 
     ; Inicializar el manejador de memoria
-     call inicializar_mmu
+    call inicializar_mmu
     ; Inicializar el directorio de paginas
     call mmu_inicializar_dir_kernel
     
@@ -164,8 +164,8 @@ modoProtegido:
     call inicializar_juego
 
     ; Saltar a la primera tarea: Idle
-
     jmp 0x50:0
+
     jmp $
 
     ; Ciclar infinitamente (por si algo sale mal...)

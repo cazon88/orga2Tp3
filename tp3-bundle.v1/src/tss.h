@@ -56,8 +56,8 @@ typedef struct str_tss {
 } __attribute__((__packed__, aligned (8))) tss;
 
 void tss_inicializar();
-void crear_tss_a(unsigned int i_gdt, unsigned short x, unsigned short y);
-void crear_tss_b(unsigned int i_gdt, unsigned short x, unsigned short y);
+void crear_tss_a(unsigned int i_gdt, unsigned int x, unsigned int y);
+void crear_tss_b(unsigned int i_gdt, unsigned int x, unsigned int y);
 
 extern tss tss_h[15];
 extern tss tss_a[5];

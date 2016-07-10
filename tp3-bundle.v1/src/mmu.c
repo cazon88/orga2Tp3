@@ -106,14 +106,6 @@ void vaciar_pageTable(pt_entry* pt){
 	}
 }
 
-/*
-struct lineal {
-	unsigned int offset:12,
-	unsigned int table:10,
-	unsigned int directory:10
-}__attribute__((__packed__));
-struct lineal *dir = (struct lineal*) &dirVirtual;
-	dir->table;*/
 
 void mmu_mapear_pagina( unsigned int dirVirtual, 
 						unsigned int cr3, 
@@ -126,7 +118,6 @@ void mmu_mapear_pagina( unsigned int dirVirtual,
 	pt_entry* pt;// = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
 
 	unsigned char presente = pd[id_directory].p;
-
 	if(presente == 0){
 		pt = (pt_entry*) mmu_proxima_pagina_fisica_libre();
 		vaciar_pageTable(pt);
@@ -136,9 +127,7 @@ void mmu_mapear_pagina( unsigned int dirVirtual,
 	{
 		pt = (pt_entry*) ((pd[id_directory].dir)<<12);  //FRIJOLITO
 	}
-
 	llenar_entry_pt(&pt[id_table], fisica);
-
 	tlbflush();
 }
 
@@ -155,28 +144,29 @@ void mmu_unmapear_pagina(unsigned int dirVirtual, unsigned int cr3){
 
 unsigned int mmu_calcular_dir_tarea(unsigned int x, unsigned int y){
 	// FIRJOLITO CHEQUEO DE X E Y y no negativo
-	return 0x400000 + ( (x + (80*y) ) * 4096) ;
+	unsigned int suma = ( (x + 80*y)  * 4096);
+	//suma = 0x3B0000 + suma;
+	suma = 3866624 + suma;
+	return suma;
 }
 
 unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel, unsigned int dir_fisica_codigo_en_mapa){
 	//rcr3 lee el cr3
 	unsigned int cr3 = cr3_kernel;
 	//Calcular la nueva dir fisica del codigo de la tarea
-	
 	//Mapear el kernel a esta nueva dir fisica
 	mmu_mapear_pagina(dir_fisica_codigo_en_mapa, cr3, dir_fisica_codigo_en_mapa);
+
 	//Copiar el codigo de la tarea a la dir fisica
 	int i;
-
 	/* Se copia el codigo de la tarea del Kernel al Mapa */
 	char* dir_virtual_codigo = (char*)dir_fisica_codigo_en_kernel;
 	char* dir_virtual_mapa = (char*)dir_fisica_codigo_en_mapa;
-
 	for(i=0;i<4096;i++) {
 		dir_virtual_mapa[i] = dir_virtual_codigo[i];
 	}
-
 	//Desmapear
+
 	mmu_unmapear_pagina(dir_fisica_codigo_en_mapa, cr3);
 
 	//Pedir memo libre -> esto es el  nuevo Cr3
@@ -196,11 +186,11 @@ unsigned int mmu_inicializar_dir_tarea(unsigned int dir_fisica_codigo_en_kernel,
 
 unsigned int mmu_mapear_tarea(unsigned int dir_codigo, unsigned int x, unsigned int y){
 	unsigned int dir_fisica_tarea = mmu_calcular_dir_tarea(x,y);
+	breakpoint();
 	return mmu_inicializar_dir_tarea (dir_codigo, dir_fisica_tarea);
 }
 
 void mmu_mapear_tarea_solo_mapa(unsigned int dir_virtual, unsigned int x, unsigned int y){
-	breakpoint();
 	unsigned int dir_fisica_tarea = mmu_calcular_dir_tarea(x,y);
 	mmu_mapear_pagina(dir_virtual,rcr3(),dir_fisica_tarea);
 }

@@ -29,7 +29,6 @@ void task() {
   __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");  __asm __volatile("nop\n");    
   unsigned int x, y, i;
   int pos[2];
-  breakpoint();
   syscall_donde(pos); 
   unsigned int* yo = (unsigned int*)(0x08000000);
   unsigned int* otro = (unsigned int*)(0x08000000+0x1000);
@@ -38,8 +37,8 @@ void task() {
       for(x=pos[0];x<80;x++) {
           syscall_soy(0x841); 
           syscall_mapear(x,y);
+          breakpoint();
           for(i=0;i<1024;i++) otro[i] = yo[i]; //INFECTAR
-            breakpoint();
       }
     }
   }

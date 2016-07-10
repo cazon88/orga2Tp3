@@ -101,14 +101,14 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
         }
 
     /*Banner pie*/
-    for (j = 44; j < 50; ++j){    
+    for (j = 45; j < 50; ++j){    
     for (i = 0; i < 80; ++i){
             print_uno(' ', i, j, C_BG_BLACK);
         }
     }
 
     /*Cuadrados de puntos Rojo y Azul*/
-    for (j = 44; j < 50; ++j){
+    for (j = 45; j < 50; ++j){
         for (i = 47; i < 53; ++i){
             print_uno(' ', i, j, C_BG_RED);
             print_uno(' ', i+6, j, C_BG_BLUE);
@@ -116,7 +116,7 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
     }
 
     /*Inicial score*/
-    print_int(0,48,46,C_FG_LIGHT_RED + C_BG_RED);
+    print_int(20,48,46,C_FG_LIGHT_RED + C_BG_RED);
     print_int(0,54,46,C_FG_LIGHT_BLUE + C_BG_BLUE);
 
     /*Vidas*/

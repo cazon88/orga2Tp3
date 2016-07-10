@@ -126,6 +126,11 @@ unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infec
 }
 
 unsigned short sched_proximo_indice() {
+
+  if(totalA == 0 && totalB == 0 && totalH == 0){
+    return 0;
+  }
+
   //int original;
   int j = 0;
   if(tipoActual == 0){
@@ -181,7 +186,7 @@ unsigned short sched_proximo_indice() {
         actualA = (j + i) % 5;
 
         if(jugadorA[actualA].viva == 1){
-          breakpoint();
+
           return (jugadorA[actualA].gdt << 3); // Shifteado 3 porque los primeros dos bits es el RPL y el tercer bit es TI 
         }
 
