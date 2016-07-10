@@ -59,11 +59,11 @@ void print_int(unsigned int n, unsigned int x, unsigned int y, unsigned short at
 }
 
 void pintar_a(unsigned int x, unsigned int y) {
-    print_uno('a', x, y, C_BG_RED + C_FG_WHITE);
+    print_uno(' ', x, y, C_BG_RED + C_FG_WHITE);
 }
 
 void pintar_b(unsigned int x, unsigned int y) {
-    print_uno('b', x, y, C_BG_BLUE + C_FG_WHITE);
+    print_uno(' ', x, y, C_BG_BLUE + C_FG_WHITE);
 }
 
 void pintar_h(unsigned int x, unsigned int y) {
@@ -75,20 +75,21 @@ void pintar_gris(unsigned int x, unsigned int y) {
 }
 
 void pintar_infectada_a(unsigned int x, unsigned int y) {
-    print_uno(' ', x, y, C_BG_RED);
+    print_uno('A', x, y, C_BG_RED);
 }
 
 void pintar_infectada_b(unsigned int x, unsigned int y) {
-    print_uno(' ', x, y, C_BG_RED);
+    print_uno('B', x, y, C_BG_RED);
 }
 
-void pintar_palabra_vidas(unsigned int x, unsigned int y) {
-    print_uno('v', x,   y, C_FG_WHITE);
-    print_uno('i', x+1, y, C_FG_WHITE);
-    print_uno('d', x+2, y, C_FG_WHITE);
-    print_uno('a', x+3, y, C_FG_WHITE);
-    print_uno('s', x+4, y, C_FG_WHITE);
+void pintar_letra_a(unsigned int x, unsigned int y){
+    print_uno('A', x, y, C_FG_DARK_GREY);
 }
+
+void pintar_letra_b(unsigned int x, unsigned int y){
+    print_uno('B', x, y, C_FG_DARK_GREY);
+}
+
 
 void pintar_pantalla(unsigned int x_a, unsigned int y_a,
                      unsigned int x_b, unsigned int y_b) {
@@ -115,22 +116,12 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
         }
     }
 
-    /*Inicial score*/
-    print_int(20,48,46,C_FG_LIGHT_RED + C_BG_RED);
-    print_int(0,54,46,C_FG_LIGHT_BLUE + C_BG_BLUE);
-
     /*Vidas*/
-    pintar_palabra_vidas(41,46);
-    pintar_palabra_vidas(60,46);
+    print("vidas",41,46,C_FG_WHITE);
+    print("vidas",60,46,C_FG_WHITE);
 
     /*<A   B>*/
-    print_uno('<', 13,   46, C_FG_WHITE);
-    print_uno('A', 14,   46, C_FG_WHITE);
-    for(i=0; i<7; ++i){
-        print_uno(' ', i+15,   46, C_FG_WHITE);    
-    }
-    print_uno('B', 21,   46, C_FG_WHITE);
-    print_uno('>', 22,   46, C_FG_WHITE);
+    print("<A   B>",14,46,C_FG_WHITE);
 
     /* Pintar jugadores*/
     pintar_a(x_a,y_a);

@@ -66,10 +66,10 @@ void game_lanzar_jug2(){
 void game_soy(unsigned int yoSoy) {
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
-		pintar_a(tarea_actual()->x, tarea_actual()->y);
+		pintar_infectada_a(tarea_actual()->x, tarea_actual()->y);
 	}else if(yoSoy == 0x325){
 		tarea_actual()->infec = B;
-		pintar_b(tarea_actual()->x, tarea_actual()->y);
+		pintar_infectada_b(tarea_actual()->x, tarea_actual()->y);
 	}else{
 		tarea_actual()->infec= N;
 		pintar_h(tarea_actual()->x, tarea_actual()->y);
@@ -91,10 +91,13 @@ void game_donde(unsigned int* pos) {
 *	Según el tipo de tarea, la dirección de código que copia.
 */
 void game_mapear(int x, int y) {
+
 	if(tarea_actual()->infec == A){
 		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+		pintar_letra_a(x,y);
 	}else if (tarea_actual()->infec == B){
 		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+		pintar_letra_b(x,y);
 	}else{
 		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
 	}
@@ -549,8 +552,45 @@ void game_mover_B_izquierda(){
 }
 
 void actualizar_vidas(){
-	print_int(gStatus.tareasRestantesA,44,47,C_FG_LIGHT_RED + C_BG_RED);
-    print_int(gStatus.tareasRestantesB,63,47,C_FG_LIGHT_BLUE + C_BG_BLUE);
+	print_int(gStatus.tareasRestantesA,43,47,C_FG_LIGHT_RED + C_BG_RED);
+    print_int(gStatus.tareasRestantesB,62,47,C_FG_LIGHT_BLUE + C_BG_BLUE);
 }
+
+void actualizar_puntaje(){
+	int i;
+	int j;
+	unsigned int resA = 0;
+	unsigned int resB = 0;
+	//Ciclo A
+	for (i = 0; i < 15; ++i){
+		if (npc[i].infec == A && npc[i].viva == 1){
+			resA++;
+		}else if(npc[i].infec == B && npc[i].viva == 1){
+			resB++;
+		}
+	}
+
+	j = 0;
+	for (j = 0; j < 5; ++j){
+		if (jugadorB[j].infec == A && jugadorB[j].viva == 1 ){
+			resA++;
+		}
+	}
+
+	j = 0;
+	for (j = 0; j < 5; ++j){
+		if (jugadorA[j].infec == B && jugadorA[j].viva == 1){
+			resB++;
+		}
+	}
+
+	gStatus.puntajeA = resA;
+	gStatus.puntajeB = resB;
+
+	print_int(resA,49,47,C_FG_LIGHT_RED + C_BG_RED);
+  	print_int(resB,55,47,C_FG_LIGHT_BLUE + C_BG_BLUE);
+
+}
+
 
 
