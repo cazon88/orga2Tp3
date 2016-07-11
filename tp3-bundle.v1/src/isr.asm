@@ -209,7 +209,27 @@ _isr33:
     cmp eax, 0x36
     je .RShift
 
+    ;cmp eax, 0x15
+    ;je .letraY
+
     jne .fin
+
+    ;.letraY:
+
+    ;mov r12, 
+    ;mov r13
+    ;mov r14
+    ;mov r15
+    ;mov rbx
+    ;push eax
+    ;push ebx
+    ;push ecx
+    ;push edx
+    ;push esi
+
+    ;call imprimir_debugger
+    ;popad
+    ;jmp .fin
 
     .letraW:
     call game_mover_A_arriba
@@ -297,6 +317,7 @@ jmp .fin
 .fin:
 popad
 iret
+
 
 ;;
 ;; Rutinas de atención de las SYSCALLS

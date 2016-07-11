@@ -155,3 +155,67 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
     pintar_b(x_b,y_b);
 
 }
+
+void imprimir_debugger( unsigned int stack0, unsigned int stack1, unsigned int stack2, unsigned int stack3, unsigned int stack4, unsigned int stack5,
+                        unsigned int eax, unsigned int ebx, unsigned int ecx, unsigned int edx, unsigned int esi, unsigned int edi, unsigned int esp,
+                        unsigned int ebp, unsigned int eip, unsigned int cs, unsigned int ds, unsigned int es, unsigned int fs, unsigned int gs,
+                        unsigned int ss, unsigned int eflags, unsigned int cr0, unsigned int cr2, unsigned int cr3, unsigned int cr4){
+    int i, j;
+     /* bordes negros */
+    for (i = 25; i < 55; ++i){
+        print_uno(' ', i, 6, C_BG_BLACK);
+        print_uno(' ', i, 42, C_BG_BLACK);  
+    }
+    for (j = 6; j < 43; ++j){
+        print_uno(' ', 25, j, C_BG_BLACK);
+        print_uno(' ', 54, j, C_BG_BLACK);  
+    }
+    /*  TODO GRIS */
+    for (i = 26; i < 54; ++i){
+        for (j = 8; j < 42; ++j){
+            print_uno(' ', i, j, C_BG_LIGHT_GREY);
+        }
+    }
+     /*  CONTEXTO */
+    print("EAX", 27, 9, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(eax, 30, 9, C_FG_WHITE);
+    print("EBX", 27, 11, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(ebx, 30, 11, C_FG_WHITE);
+    print("ECX", 27, 13, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(ecx, 30, 13, C_FG_WHITE);
+    print("EDX", 27, 15, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(edx, 30, 15, C_FG_WHITE);
+    print("ESI", 27, 17, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(esi, 30, 17, C_FG_WHITE);
+    print("EDI", 27, 19, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(edi, 30, 19, C_FG_WHITE);
+    print("EBP", 27, 21, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(ebp, 30, 21, C_FG_WHITE);
+    print("ESP", 27, 23, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(esp, 30, 23, C_FG_WHITE);
+    print("EIP", 27, 25, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(eip, 30, 25, C_FG_WHITE);
+    print("CS", 28, 27, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(cs, 30, 27, C_FG_WHITE);
+    print("DS", 28, 29, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(ds, 30, 29, C_FG_WHITE);
+    print("ES", 28, 31, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(es, 30, 31, C_FG_WHITE);
+    print("FS", 28, 33, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(fs, 30, 33, C_FG_WHITE);
+    print("GS", 28, 35, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(gs, 30, 35, C_FG_WHITE);
+    print("SS", 28, 37, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(ss, 30, 37, C_FG_WHITE);
+    print("EFLAGS", 28, 39, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(eflags, 30, 39, C_FG_WHITE);
+    print("CR0", 40, 9, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(cr0, 44, 9, C_FG_WHITE);
+    print("CR2", 40, 11, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(cr2, 44, 11, C_FG_WHITE);
+    print("CR3", 40, 13, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(cr3, 44, 13, C_FG_WHITE);
+    print("CR4", 40, 15, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_int(cr4, 44, 15, C_FG_WHITE);
+    
+}

@@ -38,8 +38,8 @@ void task() {
   unsigned int* otro = (unsigned int*)(0x08000000+0x1000);
   while(1) {
       syscall_soy(0x325);
-      x = newrand(&val) % 80;
-      y = newrand(&val) % 44;
+      x = (newrand(&val) % 78) +1;
+      y = (newrand(&val) % 42) +1;
       syscall_mapear(x,y);
       for(i=0;i<1024;i++) otro[i] = yo[i];
   }
