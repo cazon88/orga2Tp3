@@ -17,8 +17,6 @@
 #define TOTAL_TAREAS_A	5
 #define TOTAL_TAREAS_B	5
 
-
-
 gameStatus gStatus = {
 /*vidasA*/				(unsigned int) 0,	//cantidad corriendo simultaneamente. <=5
 /*vidasB*/				(unsigned int) 0,
@@ -74,6 +72,63 @@ void game_soy(unsigned int yoSoy) {
 		tarea_actual()->infec= N;
 		pintar_h(tarea_actual()->x, tarea_actual()->y);
 	}
+
+	int i,j,k,y,x;
+
+    for (x = 0; x < 79; ++x){
+        for (y = 1; y < 44; ++y){
+
+        if((x != gStatus.cursorAX) && (x != gStatus.cursorBX) && 
+        	(y != gStatus.cursorAY) && (y != gStatus.cursorAY)){
+        	pintar_gris(x,y);
+		
+
+		for (i= 0; i < TOTAL_TAREAS_H; ++i){
+			
+			if (npc[i].viva == 1 && 
+				(npc[i].x == x) && (npc[i].y == y) ){
+				if (npc[i].infec == A){
+					pintar_infectada_a(x,y);
+				}else if (npc[i].infec == B){
+					pintar_infectada_b(x,y);
+				} else if (npc[i].infec == N){
+					pintar_h(x,y);
+				}
+				
+			}
+		}
+
+		for (j = 0; j < TOTAL_TAREAS_A; ++j){
+			if (jugadorA[i].viva == 1 && 
+				(jugadorA[i].x == x) && (jugadorA[i].y == y) ){
+					if (jugadorA[i].infec == A){
+					pintar_infectada_a(x,y);
+				}else if (jugadorA[i].infec == B){
+					pintar_infectada_b(x,y);
+				} else if (jugadorA[i].infec == N){
+					pintar_h(x,y);
+				}
+			}
+		}
+
+		for (k = 0; k < TOTAL_TAREAS_B; ++k){
+			if (jugadorB[i].viva == 1 && 
+				(jugadorB[i].x == x) && (jugadorB[i].y == y) ){
+				if (jugadorB[i].infec == A){
+					pintar_infectada_a(x,y);
+				}else if (jugadorB[i].infec == B){
+					pintar_infectada_b(x,y);
+				} else if (jugadorB[i].infec == N){
+					pintar_h(x,y);
+				}
+			}
+		}
+
+			}
+        }
+    }
+
+
 }
 
 /*
