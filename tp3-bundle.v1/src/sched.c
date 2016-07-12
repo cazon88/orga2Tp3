@@ -129,9 +129,9 @@ unsigned int agregar_tarea_a_scheduler(unsigned short x, unsigned short y, infec
 
 unsigned short sched_proximo_indice() {
 
-  if(totalA == 0 && totalB == 0 && totalH == 0){
+  if(totalA + totalB + totalH == 1){
     return 0;
-  }
+  }  
 
   //int original;
   int j = 0;
@@ -179,6 +179,7 @@ unsigned short sched_proximo_indice() {
 
   if(tipoActual == 2){
   tipoActual = 0; 
+
     if(totalA == 0){
      return sched_proximo_indice();
     }
