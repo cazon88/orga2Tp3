@@ -92,20 +92,23 @@ void game_donde(unsigned int* pos) {
 */
 void game_mapear(int x, int y) {
 
-	if(tarea_actual()->infec == A){
-		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
-		pintar_letra_a(x,y);
-	}else if (tarea_actual()->infec == B){
-		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
-		pintar_letra_b(x,y);
+	if ( x >=0  && x <80 && y > 0 && y < 45){
+		if(tarea_actual()->infec == A){
+			mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+			pintar_letra_a(x,y);
+		}else if (tarea_actual()->infec == B){
+			mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+			pintar_letra_b(x,y);
+		}else{
+			mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+		}		
 	}else{
-		mmu_mapear_tarea_solo_mapa(0x8001000, x, y);
+		matar_tarea();
 	}
-
 }	
 
 /* **************************
-*	MOVIMIENTO DE CURSORES  *
+*	MOVIMIENTO DE CURSORES w *
 *************************** */
 
 void game_mover_A_arriba(){
