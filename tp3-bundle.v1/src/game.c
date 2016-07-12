@@ -62,6 +62,7 @@ void game_lanzar_jug2(){
 * tarea del color que le corresponde
 */
 void game_soy(unsigned int yoSoy) {
+/*
 	int i,j,k,y,x;
 
     for (x = 0; x < 79; ++x){
@@ -117,7 +118,7 @@ void game_soy(unsigned int yoSoy) {
 			}
         }
     }
-
+*/
 	if(yoSoy == 0x841){
 		tarea_actual()->infec = A;
 		pintar_infectada_a(tarea_actual()->x, tarea_actual()->y);
