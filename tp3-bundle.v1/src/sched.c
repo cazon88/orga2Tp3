@@ -7,6 +7,8 @@
 
 #include "sched.h"
 
+unsigned int pausado = 0;
+
 unsigned int gdt_a_proxima = 37;
 unsigned int gdt_b_proxima = 43; 
 
@@ -212,7 +214,18 @@ void matar_tarea(){
 }
 
 
+// 0 = esta activo
+// 1 = esta pausado
+void reanudarpausar(){
+  if(pausado == 0){
+    pausado = 1;
+  }else{
+    pausado = 0;
+  }
+}
 
-
+unsigned int estaPausado(){
+return pausado;
+}
 
 

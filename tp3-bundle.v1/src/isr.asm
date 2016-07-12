@@ -17,6 +17,8 @@ extern fin_intr_pic1
 ;; Sched
 extern sched_proximo_indice
 extern matar_tarea
+extern reanudarpausar
+extern estaPausado
 
 ;; Teclado
 extern game_mover_A_arriba
@@ -39,6 +41,7 @@ extern game_lanzar_jug2
 ;;
 extern actualizar_vidas
 extern actualizar_puntaje
+extern imprimir_debugger
 
 error_mp_msg_0: db     'Error! INTERRUPCION, numero: 0'
 error_mp_len_0: equ    $ - error_mp_msg_0
@@ -156,6 +159,9 @@ _isr32:
     pushad
     call proximo_reloj
     call fin_intr_pic1
+    call estaPausado
+    cmp eax, 0
+    jne .fin
     call sched_proximo_indice
     cmp eax, 0
     je .fin
@@ -173,11 +179,23 @@ _isr32:
 
 global _isr33
 _isr33:
+;    xchg bx, bx
     pushad
+    push eax
+    pushf
 
     in al, 0x60
 
     ;xchg bx, bx
+
+    cmp eax, 0x15
+    je .letraY
+
+    push eax
+    call estaPausado
+    cmp eax, 0
+    jne .estoyPausado
+    pop eax
 
     cmp eax, 0x11
     je .letraW
@@ -209,27 +227,77 @@ _isr33:
     cmp eax, 0x36
     je .RShift
 
-    ;cmp eax, 0x15
-    ;je .letraY
-
     jne .fin
 
-    ;.letraY:
+    .letraY:
 
-    ;mov r12, 
-    ;mov r13
-    ;mov r14
-    ;mov r15
-    ;mov rbx
-    ;push eax
-    ;push ebx
-    ;push ecx
-    ;push edx
-    ;push esi
+;    push eax
 
-    ;call imprimir_debugger
-    ;popad
-    ;jmp .fin
+;    pushf
+
+    mov eax, esp
+    add eax, 40
+    push eax
+
+    mov eax, cr4
+    push eax
+
+    mov eax, cr3
+    push eax
+
+    mov eax, cr2
+    push eax
+
+    mov eax, cr0
+    push eax
+
+    mov eax, [esp+76]
+    push eax
+    mov eax, [esp+76]
+    push eax
+    mov eax, [esp+76]
+    push eax
+    mov eax, [esp+76]
+    push eax
+    mov eax, [esp+76]
+    push eax
+
+    mov eax, 0
+    mov ax, ss
+    push eax
+
+    mov eax, 0
+    mov ax, gs
+    push eax
+    
+    mov eax, 0
+    mov ax, fs
+    push eax
+
+    mov eax, 0
+    mov ax, es
+    push eax
+
+    mov eax, 0
+    mov ax, ds
+    push eax
+
+    mov eax, 0
+    mov ax, cs
+    push eax
+
+
+    push edi
+    push esi
+    push ebp
+    push ebx
+    push edx
+    push ecx
+    call imprimir_debugger
+    add esp, 88 
+    call reanudarpausar
+;    xchg bx, bx
+    jmp .fin
 
     .letraW:
     call game_mover_A_arriba
@@ -273,10 +341,15 @@ _isr33:
 
     .fin:
     call fin_intr_pic1
-
+    add esp, 8
     popad
     iret
 
+.estoyPausado:
+    call fin_intr_pic1
+    add esp, 12
+    popad
+    iret
 
 ;;
 ;; Rutina de atención MISTERIO

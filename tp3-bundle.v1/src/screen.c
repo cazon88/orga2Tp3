@@ -7,6 +7,8 @@
 
 #include "screen.h"
 
+ca save[37][30];
+
 void print(const char * text, unsigned int x, unsigned int y, unsigned short attr) {
     ca (*p)[VIDEO_COLS] = (ca (*)[VIDEO_COLS]) VIDEO_SCREEN;
     int i;
@@ -156,11 +158,43 @@ void pintar_pantalla(unsigned int x_a, unsigned int y_a,
 
 }
 
-void imprimir_debugger( unsigned int stack0, unsigned int stack1, unsigned int stack2, unsigned int stack3, unsigned int stack4, unsigned int stack5,
-                        unsigned int eax, unsigned int ebx, unsigned int ecx, unsigned int edx, unsigned int esi, unsigned int edi, unsigned int esp,
-                        unsigned int ebp, unsigned int eip, unsigned int cs, unsigned int ds, unsigned int es, unsigned int fs, unsigned int gs,
-                        unsigned int ss, unsigned int eflags, unsigned int cr0, unsigned int cr2, unsigned int cr3, unsigned int cr4){
+void imprimir_debugger( unsigned int ecx, unsigned int edx, 
+                        unsigned int ebx, unsigned int ebp, 
+                        unsigned int esi, unsigned int edi, 
+                        unsigned int cs, 
+                        unsigned int ds, unsigned int es, 
+                        unsigned int fs, unsigned int gs,
+                        unsigned int ss, 
+                        unsigned int stack0, unsigned int stack1, 
+                        unsigned int stack2, unsigned int stack3, 
+                        unsigned int stack4, unsigned int cr0, 
+                        unsigned int cr2, unsigned int cr3, 
+                        unsigned int cr4, unsigned int esp, 
+                        unsigned int eflags, 
+                        unsigned int eax){
     int i, j;
+    unsigned int pausa = estaPausado();
+    ca (*p)[VIDEO_COLS] = (ca (*)[VIDEO_COLS]) VIDEO_SCREEN;
+
+    if(pausa==1){
+        //escribo
+            for (i = 25; i < 55; ++i){
+                for (j = 6; j < 43; ++j){  
+                p[j][i].a = save[j][i].a;
+                p[j][i].c = save[j][i].c;
+                }
+            }
+
+    }else{
+        //guardo
+        
+            for (i = 25; i < 55; ++i){
+                for (j = 6; j < 43; ++j){  
+                save[j][i].a = p[j][i].a;
+                save[j][i].c = p[j][i].c;
+                }
+            }            
+
      /* bordes negros */
     for (i = 25; i < 55; ++i){
         print_uno(' ', i, 6, C_BG_BLACK);
@@ -178,44 +212,50 @@ void imprimir_debugger( unsigned int stack0, unsigned int stack1, unsigned int s
     }
      /*  CONTEXTO */
     print("EAX", 27, 9, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(eax, 30, 9, C_FG_WHITE);
-    print("EBX", 27, 11, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(ebx, 30, 11, C_FG_WHITE);
-    print("ECX", 27, 13, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(ecx, 30, 13, C_FG_WHITE);
-    print("EDX", 27, 15, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(edx, 30, 15, C_FG_WHITE);
-    print("ESI", 27, 17, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(esi, 30, 17, C_FG_WHITE);
-    print("EDI", 27, 19, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(edi, 30, 19, C_FG_WHITE);
-    print("EBP", 27, 21, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(ebp, 30, 21, C_FG_WHITE);
-    print("ESP", 27, 23, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(esp, 30, 23, C_FG_WHITE);
-    print("EIP", 27, 25, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(eip, 30, 25, C_FG_WHITE);
+    print_hex(eax, 8, 30, 9, C_FG_WHITE);
+    print("ECX", 27, 11, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(ecx, 8, 30, 11, C_FG_WHITE);
+    print("EDX", 27, 13, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(edx, 8, 30, 13, C_FG_WHITE);
+    print("EBX", 27, 15, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(ebx, 8, 30, 15, C_FG_WHITE);
+    print("ESP", 27, 17, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(esp, 8, 30, 17, C_FG_WHITE);
+    print("EBP", 27, 19, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(ebp, 8, 30, 19, C_FG_WHITE);
+    print("ESI", 27, 21, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(esi, 8, 30, 21, C_FG_WHITE);
+    print("EDI", 27, 23, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(edi, 8, 30, 23, C_FG_WHITE);
     print("CS", 28, 27, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(cs, 30, 27, C_FG_WHITE);
+    print_hex(cs, 8, 30, 27, C_FG_WHITE);
     print("DS", 28, 29, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(ds, 30, 29, C_FG_WHITE);
+    print_hex(ds, 8, 30, 29, C_FG_WHITE);
     print("ES", 28, 31, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(es, 30, 31, C_FG_WHITE);
+    print_hex(es, 8, 30, 31, C_FG_WHITE);
     print("FS", 28, 33, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(fs, 30, 33, C_FG_WHITE);
+    print_hex(fs, 8, 30, 33, C_FG_WHITE);
     print("GS", 28, 35, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(gs, 30, 35, C_FG_WHITE);
+    print_hex(gs, 8, 30, 35, C_FG_WHITE);
     print("SS", 28, 37, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(ss, 30, 37, C_FG_WHITE);
-    print("EFLAGS", 28, 39, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(eflags, 30, 39, C_FG_WHITE);
+    print_hex(ss, 8, 30, 37, C_FG_WHITE);
+    print("FLG", 27, 39, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(eflags, 8, 30, 39, C_FG_WHITE);
     print("CR0", 40, 9, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(cr0, 44, 9, C_FG_WHITE);
+    print_hex(cr0, 8, 44, 9, C_FG_WHITE);
     print("CR2", 40, 11, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(cr2, 44, 11, C_FG_WHITE);
+    print_hex(cr2, 8, 44, 11, C_FG_WHITE);
     print("CR3", 40, 13, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(cr3, 44, 13, C_FG_WHITE);
+    print_hex(cr3, 8, 44, 13, C_FG_WHITE);
     print("CR4", 40, 15, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
-    print_int(cr4, 44, 15, C_FG_WHITE);
-    
+    print_hex(cr4, 8, 44, 15, C_FG_WHITE);
+
+    print("STACK:", 40, 19, C_BG_LIGHT_GREY + C_FG_DARK_GREY);
+    print_hex(stack0, 8, 44, 21, C_FG_WHITE);
+    print_hex(stack1, 8, 44, 22, C_FG_WHITE);
+    print_hex(stack2, 8, 44, 23, C_FG_WHITE);
+    print_hex(stack3, 8, 44, 24, C_FG_WHITE);
+    print_hex(stack4, 8, 44, 25, C_FG_WHITE);
+
+}    
 }
